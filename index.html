@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BillEasy</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1f5fbf">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#f1f5fb;margin:0;color:#1d2433}
+header{background:linear-gradient(135deg,#1f5fbf,#3a8ee6);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-size:22px;letter-spacing:.5px}
+.brand small{display:block;font-size:12px;opacity:.85}
+select{padding:6px;border-radius:6px;border:1px solid #cfd7e6;font-size:14px;background:#fff}
+header select{border:0}
+.wrap{max-width:900px;margin:auto;padding:12px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+h3{margin:0 0 8px;color:#1f5fbf}
+label{display:block;margin:10px 0 4px;font-size:14px;color:#444}
+input{width:100%;padding:9px;border:1px solid #cfd7e6;border-radius:8px;font-size:15px;background:#fff}
+button{background:#1f5fbf;color:#fff;border:0;padding:10px 14px;border-radius:8px;font-size:15px;cursor:pointer;margin:6px 6px 0 0}
+button.green{background:#2e8b57}
+button.wa{background:#25d366}
+button.red{background:#c0392b}
+button.gray{background:#6b7280}
+button.light{background:#e3ebf7;color:#1d2433}
+button.on{background:#1f5fbf;color:#fff}
+button.sm{padding:6px 9px;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-align:middle}
+.tot{font-size:18px;font-weight:bold;text-align:right;margin-top:12px;line-height:1.7}
+.paid{color:#2e8b57;font-weight:bold}
+.due{color:#c0392b;font-weight:bold}
+.low{color:#c0392b;font-weight:bold}
+.summary{display:flex;gap:10px;flex-wrap:wrap}
+.summary div{flex:1;min-width:130px;background:#f5f8fd;padding:12px;border-radius:10px;text-align:center;font-size:14px}
+.summary b{display:block;font-size:19px;margin-top:4px}
+.sugg{background:#fff;border:1px solid #cfd7e6;border-radius:8px;margin-top:4px;max-height:220px;overflow:auto}
+.sugg div{padding:8px 10px;cursor:pointer;border-bottom:1px solid #eef1f6;display:flex;gap:8px;align-items:center}
+.sugg div:hover{background:#eef4fc}
+.thumb{width:42px;height:42px;object-fit:cover;border-radius:6px;background:#eef1f6;border:1px solid #ddd}
+.ph{width:42px;height:42px;border-radius:6px;background:#eef1f6;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+.cust-row{cursor:pointer}
+.cust-row:hover{background:#f5f8fd}
+.line td input{padding:6px}
+.view{display:none}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10;overflow:auto;padding:20px}
+#modal .box{background:#fff;max-width:760px;margin:auto;border-radius:12px;padding:16px}
+#print{display:none}
+.bill{font-size:14px}
+.qr{width:140px;height:140px;border:1px solid #eee;border-radius:8px}
+@media print{
+  body *{visibility:hidden}
+  #print,#print *{visibility:visible}
+  #print{display:block;position:absolute;left:0;top:0;width:100%;padding:20px}
+}
+.bill{font-family:var(--bfont,system-ui,sans-serif)}
+.bill .title{font-size:20px;font-weight:bold;color:var(--bcolor,#1f5fbf);text-align:var(--balign,left);margin-bottom:4px}
+.bill h2{color:var(--bcolor,#1f5fbf)!important;text-align:var(--balign,left)}
+.bill .tot{text-align:right}
+.tpl-classic table td,.tpl-classic table th{border:1px solid #999;padding:6px}
+.tpl-classic table th{background:#f0f0f0}
+.tpl-modern table th{background:var(--bcolor,#1f5fbf);color:#fff;border:none;padding:8px}
+.tpl-modern table td{border-bottom:1px solid #eee;padding:7px}
+.tpl-modern .tot b{color:var(--bcolor,#1f5fbf)}
+.tpl-minimal table td,.tpl-minimal table th{border:none;border-bottom:1px solid #ddd;padding:6px}
+.tpl-minimal table th{color:var(--bcolor,#1f5fbf)}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+      <rect width="44" height="44" rx="12" fill="#fff"/>
+      <path d="M12 8h20v28l-3-2-3 2-3-2-3 2-3-2-3 2z" fill="#1f5fbf"/>
+      <path d="M16 15h12M16 20h12M16 25h7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="33" cy="33" r="7" fill="#2e8b57"/>
+      <text x="33" y="37" font-size="10" fill="#fff" text-anchor="middle" font-family="Arial" font-weight="bold">₹</text>
+    </svg>
+    <div><b>BillEasy</b><small id="tagline"></small></div>
+  </div>
+  <select id="langSel" onchange="setLang(this.value)"></select>
+</header>
+
+<div class="wrap">
+  <div class="tabs">
+    <button id="t-new" onclick="showTab('new')"></button>
+    <button id="t-list" class="light" onclick="showTab('list')"></button>
+    <button id="t-items" class="light" onclick="showTab('items')"></button>
+    <button id="t-purch" class="light" onclick="showTab('purch')"></button>
+    <button id="t-cust" class="light" onclick="showTab('cust')"></button>
+    <button id="t-settings" class="light" onclick="showTab('settings')"></button>
+  </div>
+  <div id="newView" class="view"></div>
+  <div id="listView" class="view"></div>
+  <div id="itemsView" class="view"></div>
+  <div id="purchView" class="view"></div>
+  <div id="custView" class="view"></div>
+  <div id="settingsView" class="view"></div>
+</div>
+
+<div id="lock" style="display:none;position:fixed;inset:0;background:#1f5fbf;z-index:20;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px">
+  <h2 style="margin:0">BillEasy</h2>
+  <div>PIN दर्ज करें / Enter PIN</div>
+  <input id="pinIn" type="password" inputmode="numeric" style="width:200px;text-align:center;font-size:22px;padding:8px;border-radius:8px;border:0" onkeydown="if(event.key==='Enter')unlock()">
+  <button class="green" onclick="unlock()">खोलें / Open</button>
+  <div id="pinErr" style="color:#ffd3d3"></div>
+</div>
+<div id="modal"><div class="box"><div id="modalBody"></div></div></div>
+<div id="print"></div>
+
+<script>
+/* ---------- Translations (newer keys fall back to English) ---------- */
+const UNITS = ['pcs','kg','g','liter','ml','meter','dozen','box','gram'];
+const LANGS = {
+  hi:{ name:'हिन्दी', tag:'आसान बिलिंग', new:'नया बिल', list:'सभी बिल', items:'सामान की सूची', purch:'खरीद', cust:'ग्राहक', set:'सेटिंग्स',
+    cust1:'ग्राहक की जानकारी', cname:'ग्राहक का नाम', phone:'फ़ोन नंबर', date:'तारीख', gstin:'GSTIN', email:'ईमेल', address:'पता',
+    lines:'सामान / सेवाएँ', desc:'विवरण', qty:'मात्रा', rate:'दर', amount:'राशि', gst:'GST %', hsn:'HSN कोड', unit:'इकाई',
+    add:'+ सामान जोड़ें', freeLine:'+ बिना सूची के सामान', total:'कुल देय', sub:'उप-योग', save:'बिल सेव करें', prev:'पूर्वावलोकन',
+    print:'प्रिंट / PDF', wa:'WhatsApp पर भेजें', share:'शेयर करें', reset:'नया फ़ॉर्म', recv:'मिला हुआ पैसा', due:'बाकी पैसा',
+    count:'कुल बिल', paid:'भुगतान हो गया', unpaid:'बाकी', markPaid:'पेड करें', markDue:'बाकी करें', del:'हटाएँ', empty:'अभी कोई बिल नहीं है।',
+    biz:'आपका व्यवसाय / नाम', saveSet:'सेटिंग्स सेव करें', saveDone:'सेटिंग्स सेव हो गईं', backup:'बैकअप',
+    backupDo:'बैकअप डाउनलोड करें', restore:'बैकअप फ़ाइल से वापस लाएँ', billTo:'ग्राहक', billNo:'बिल नंबर', thanks:'धन्यवाद!',
+    close:'बंद करें', confDel:'यह बिल हमेशा के लिए हटाएँ?', confReset:'फ़ॉर्म खाली करें?', needName:'ग्राहक का नाम लिखें',
+    needLine:'कम से कम एक सामान लिखें', saved:'बिल सेव हो गया', restored:'डेटा वापस आ गया', badFile:'सही बैकअप फ़ाइल नहीं है',
+    search:'नाम, फ़ोन या HSN से खोजें', suggest:'पिछले ग्राहक', noCust:'कोई ग्राहक नहीं मिला', allCust:'सभी ग्राहक',
+    billed:'कुल बिल की राशि', openDue:'बाकी राशि', history:'पूरा इतिहास', newFor:'इनके लिए नया बिल', back:'वापस',
+    custSaved:'जानकारी सेव हो गई', upi:'UPI ID (QR के लिए)', qrTitle:'पेमेंट QR कोड', cfields:'अतिरिक्त फ़ील्ड (कॉमा से अलग करें)',
+    cfieldsHint:'ये फ़ील्ड हर ग्राहक के फ़ॉर्म में दिखेंगे', qrDownload:'QR डाउनलोड करें', bills:'बिल', edit:'बदलाव सेव करें',
+    photo:'फ़ोटो', sale:'बिक्री दर', buy:'खरीद दर', stock:'स्टॉक', openStock:'शुरुआती स्टॉक', saveItem:'सामान सेव करें',
+    clearForm:'नया सामान', noItems:'अभी कोई सामान नहीं है। ऊपर से सामान जोड़ें।', findItem:'सामान खोजें', lowStock:'कम स्टॉक',
+    supplier:'किससे खरीदा (दुकान / व्यक्ति)', buyTotal:'कुल खरीद', savePurch:'खरीद दर्ज करें', noPurch:'अभी कोई खरीद दर्ज नहीं है।',
+    purchSaved:'खरीद दर्ज हो गई और स्टॉक बढ़ गया', pickItem:'पहले सामान चुनें', itemSaved:'सामान सेव हो गया',
+    needItemName:'सामान का नाम लिखें', u_pcs:'पीस', u_kg:'किलो', u_g:'ग्राम', u_liter:'लीटर', u_ml:'मिलीलीटर',
+    u_meter:'मीटर', u_dozen:'दर्जन', u_box:'डिब्बा', u_gram:'ग्राम (सोना/चाँदी)', itemName:'सामान का नाम', itemHsn:'HSN कोड',
+    itemGst:'GST %', itemUnit:'इकाई (कg, pcs, liter...)', choosePhoto:'फ़ोटो चुनें', tabHsn:'HSN / GST सूची',
+    city:'शहर', bankSec:'बैंक विवरण (बिल पर छपेगा)', bankName:'बैंक का नाम', accNo:'खाता नंबर', ifsc:'IFSC कोड', holder:'खाता धारक का नाम',
+    showSec:'बिल पर क्या दिखे (चालू / बंद करें)', s_bizName:'दुकान / व्यवसाय का नाम', s_addr:'पता', s_city:'शहर', s_phone:'फ़ोन नंबर',
+    s_gstin:'आपका GSTIN', s_bank:'बैंक विवरण (पूरा ब्लॉक)', s_bankName:'बैंक का नाम', s_accNo:'खाता नंबर', s_ifsc:'IFSC कोड',
+    s_upi:'UPI ID', s_qr:'QR कोड', s_photo:'सामान की फ़ोटो', s_hsn:'HSN कोड', s_gstCol:'GST कॉलम', s_custPhone:'ग्राहक का फ़ोन',
+    s_custGstin:'ग्राहक का GSTIN', s_custAddr:'ग्राहक का पता', s_custExtra:'ग्राहक के अतिरिक्त फ़ील्ड', s_thanks:'धन्यवाद संदेश',
+    s_logo:'दुकान का लोगो', s_qtyCol:'मात्रा कॉलम', s_rateCol:'दर कॉलम', s_gstAmtCol:'GST राशि कॉलम',
+    s_amtCol:'राशि (GST से पहले) कॉलम', s_lineTotalCol:'कुल (GST सहित) कॉलम', s_paidStamp:'PAID की मुहर (भुगतान होने पर)',
+    s_signature:'हस्ताक्षर की जगह', s_terms:'शर्तें / नोट्स', s_footer:'नीचे का संदेश',
+    paperSec:'प्रिंट का आकार', paper:'कागज़', paperA4:'A4 (सामान्य प्रिंटर)', paperThermal:'थर्मल 80mm (छोटा बिल प्रिंटर)',
+    logoUp:'दुकान का लोगो चुनें', termsTxt:'शर्तें / नोट्स (बिल पर छपेंगी)', footerTxt:'नीचे का संदेश', authSign:'अधिकृत हस्ताक्षर',
+    preGst:'राशि (GST से पहले)', gstAmt:'GST राशि', lineTotal:'कुल (GST सहित)',
+    importTitle:'Excel, PDF या दूसरे सॉफ़्टवेयर से सूची जोड़ें', importBtn:'सूची जोड़ें',
+    importHelp:'सूची कॉपी करके नीचे पेस्ट करें, या CSV/TXT फ़ाइल चुनें। क्रम: नाम, HSN, GST %, इकाई (kg, pcs, liter...), बिक्री दर, खरीद दर, स्टॉक। कॉमा, टैब या दो-तीन स्पेस से अलग हों।',
+    importDone:'{a} नए सामान जुड़े, {u} सामान अपडेट हुए',
+    xlsxLoaded:'Excel फ़ाइल पढ़ ली गई: {n} पंक्तियाँ। जाँचकर "सूची जोड़ें" दबाएँ।',
+    xlsxNoLib:'Excel पढ़ने के लिए इंटरनेट चालू करें और पेज दोबारा खोलें। CSV फ़ाइल बिना इंटरनेट भी चलती है।',
+    badXlsx:'यह Excel फ़ाइल नहीं पढ़ी जा सकी',
+    backupFolderTitle:'ऑटो बैकअप फ़ोल्डर', backupHelp:'फ़ोल्डर चुनने के बाद हर बदलाव पर ऐप वहाँ billeasy-backup.json अपने आप सेव करता रहेगा। ऐप बंद करते समय अलग से कुछ करने की ज़रूरत नहीं।',
+    backupFolder:'फ़ोल्डर चुनें', backupNone:'अभी कोई बैकअप फ़ोल्डर नहीं चुना गया', backupOk:'सुरक्षित फ़ोल्डर: {f}',
+    backupGrant:'बैकअप की अनुमति दें', backupAuto:'हर बदलाव पर अपने आप बैकअप', backupSet:'बैकअप फ़ोल्डर सेट हो गया',
+    backupNotSupported:'यह ब्राउज़र फ़ोल्डर बैकअप सपोर्ट नहीं करता। Chrome या Edge (कंप्यूटर) में खोलें।',
+    backupModeTitle:'बैकअप का तरीका चुनें', backupManual:'मैन्युअल: मैं खुद "बैकअप डाउनलोड करें" दबाऊँगा',
+    billNoSec:'बिल नंबर', billNoMode:'बिल नंबर कैसे लिखा जाए', billNoAuto:'अपने आप (सीरीज़ से)', billNoManual:'मैन्युअल (हर बिल पर खुद लिखें)',
+    billPrefix:'प्रीफ़िक्स (जैसे INV- या 2026/)', billNext:'अगला बिल नंबर', needBillNo:'बिल नंबर लिखें', dupBillNo:'यह बिल नंबर पहले से मौजूद है',
+    entrySec:'सामान जोड़ने का तरीका', entryMode:'बिल में सामान कैसे जुड़े', entryManual:'मैन्युअल (नाम या HSN से खोजकर)',
+    entryScan:'स्कैनिंग (बारकोड स्कैन करके)', scanCode:'बारकोड स्कैन / टाइप करें', scanHint:'बारकोड स्कैन करें या लिखकर Enter दबाएँ',
+    camScan:'कैमरा से स्कैन', camNo:'इस फ़ोन या ब्राउज़र में कैमरा स्कैन उपलब्ध नहीं है। बारकोड स्कैनर या टाइप का इस्तेमाल करें।',
+    camHelp:'बारकोड कैमरे के सामने रखें', noBarcode:'इस बारकोड का कोई सामान नहीं मिला', bc:'बारकोड',
+    minQty:'न्यूनतम मात्रा (इससे कम होने पर अलर्ट)', stockDate:'स्टॉक की तारीख', buyNow:'खरीदें', lowAlert:'कम स्टॉक',
+    pinSec:'ऐप पासवर्ड (PIN)', pinOn:'ऐप खोलते समय PIN माँगें', pinNew:'नया PIN (4 से 6 अंक)', pinHint:'जैसे 1234',
+    pinNote:'PIN भूल जाएँ तो ऐप खोलना मुश्किल होगा। ब्राउज़र का साइट डेटा साफ़ करने पर बिल भी चले जाएँगे, इसलिए बैकअप ज़रूर रखें।',
+    designSec:'बिल डिज़ाइन (आप अपने हिसाब से बदलें)', tplLabel:'बिल का ढाँचा', tplClassic:'क्लासिक (बॉक्स वाली टेबल)', tplModern:'मॉडर्न (रंगीन हेडर)', tplMinimal:'मिनिमल (सादा)', dColor:'मुख्य रंग', dFont:'अक्षर (फ़ॉन्ट)', fontSys:'सामान्य', fontSerif:'किताबी (Serif)', fontRound:'साफ़ (Verdana)', dAlign:'शीर्ष की सीध', alignL:'बायाँ', alignC:'बीच में', alignR:'दायाँ', dTitle:'बिल का शीर्षक (जैसे टैक्स इनवॉइस, बिल, कैश मेमो)', designHint:'बदलाव तुरंत नीचे के नमूने में दिखेगा। सभी बिल और प्रिंट पर भी यही डिज़ाइन लगेगा।',
+    pinBad:'PIN 4 से 6 अंकों का होना चाहिए', pinNeed:'PIN चालू करने के लिए नया PIN लिखें', pinWrong:'गलत PIN',
+    exportItems:'सामान की सूची Excel में डाउनलोड करें', exportBills:'सभी बिल Excel में डाउनलोड करें' },
+  en:{ name:'English', tag:'Billing made easy', new:'New Bill', list:'All Bills', items:'Item List', purch:'Purchase', cust:'Customers', set:'Settings',
+    cust1:'Customer Details', cname:'Customer name', phone:'Phone number', date:'Date', gstin:'GSTIN', email:'Email', address:'Address',
+    lines:'Items / Services', desc:'Description', qty:'Qty', rate:'Rate', amount:'Amount', gst:'GST %', hsn:'HSN code', unit:'Unit',
+    add:'+ Add item', freeLine:'+ Item not in list', total:'Total due', sub:'Subtotal', save:'Save bill', prev:'Preview',
+    print:'Print / PDF', wa:'Send on WhatsApp', share:'Share', reset:'New form', recv:'Received', due:'Pending', count:'Total bills',
+    paid:'Paid', unpaid:'Unpaid', markPaid:'Mark paid', markDue:'Mark unpaid', del:'Delete', empty:'No bills yet.',
+    biz:'Your business / name', saveSet:'Save settings', saveDone:'Settings saved', backup:'Backup', backupDo:'Download backup',
+    restore:'Restore from backup file', billTo:'Bill to', billNo:'Bill no.', thanks:'Thank you!', close:'Close',
+    confDel:'Delete this bill permanently?', confReset:'Clear the form?', needName:'Enter customer name',
+    needLine:'Add at least one item', saved:'Bill saved', restored:'Data restored', badFile:'Not a valid backup file',
+    search:'Search by name, phone or HSN', suggest:'Previous customers', noCust:'No customer found', allCust:'All customers',
+    billed:'Total billed', openDue:'Pending amount', history:'Full history', newFor:'New bill for this customer', back:'Back',
+    custSaved:'Details saved', upi:'UPI ID (for QR)', qrTitle:'Payment QR code', cfields:'Extra fields (comma separated)',
+    cfieldsHint:'These fields appear in every customer form', qrDownload:'Download QR', bills:'Bills', edit:'Save changes',
+    photo:'Photo', sale:'Sale rate', buy:'Purchase rate', stock:'Stock', openStock:'Opening stock', saveItem:'Save item',
+    clearForm:'New item', noItems:'No items yet. Add your first item above.', findItem:'Find item', lowStock:'Low stock',
+    supplier:'Bought from (shop / person)', buyTotal:'Total purchase', savePurch:'Record purchase', noPurch:'No purchases yet.',
+    purchSaved:'Purchase recorded and stock increased', pickItem:'Choose an item first', itemSaved:'Item saved',
+    needItemName:'Enter item name', u_pcs:'Pcs', u_kg:'Kg', u_g:'Gram', u_liter:'Liter', u_ml:'ml',
+    u_meter:'Meter', u_dozen:'Dozen', u_box:'Box', u_gram:'Gram (gold/silver)', itemName:'Item name', itemHsn:'HSN code',
+    itemGst:'GST %', itemUnit:'Unit', choosePhoto:'Choose photo', tabHsn:'HSN / GST list',
+    city:'City', bankSec:'Bank details (printed on bill)', bankName:'Bank name', accNo:'Account number', ifsc:'IFSC code', holder:'Account holder name',
+    showSec:'What to show on bill (on / off)', s_bizName:'Business name', s_addr:'Address', s_city:'City', s_phone:'Phone',
+    s_gstin:'Your GSTIN', s_bank:'Bank details (whole block)', s_bankName:'Bank name', s_accNo:'Account number', s_ifsc:'IFSC code',
+    s_upi:'UPI ID', s_qr:'QR code', s_photo:'Item photo', s_hsn:'HSN code', s_gstCol:'GST column', s_custPhone:'Customer phone',
+    s_custGstin:'Customer GSTIN', s_custAddr:'Customer address', s_custExtra:'Customer extra fields', s_thanks:'Thank-you note',
+    s_logo:'Shop logo', s_qtyCol:'Quantity column', s_rateCol:'Rate column', s_gstAmtCol:'GST amount column',
+    s_amtCol:'Amount before GST column', s_lineTotalCol:'Total with GST column', s_paidStamp:'PAID stamp (when paid)',
+    s_signature:'Signature space', s_terms:'Terms / notes', s_footer:'Footer message',
+    paperSec:'Print size', paper:'Paper', paperA4:'A4 (normal printer)', paperThermal:'Thermal 80mm (small bill printer)',
+    logoUp:'Choose shop logo', termsTxt:'Terms / notes (printed on bill)', footerTxt:'Footer message', authSign:'Authorised signatory',
+    preGst:'Amount (before GST)', gstAmt:'GST amount', lineTotal:'Total (with GST)',
+    importTitle:'Add list from Excel, PDF or other software', importBtn:'Add list',
+    importHelp:'Copy the list and paste below, or choose a CSV/TXT file. Order: name, HSN, GST %, unit (kg, pcs, liter...), sale rate, purchase rate, stock. Separate by comma, tab or 2+ spaces.',
+    importDone:'{a} items added, {u} items updated',
+    xlsxLoaded:'Excel file read: {n} rows. Check them, then press "Add list".',
+    xlsxNoLib:'To read Excel, turn on internet and reload the page. CSV files work without internet.',
+    badXlsx:'This Excel file could not be read',
+    backupFolderTitle:'Auto backup folder', backupHelp:'After you choose a folder, the app keeps saving billeasy-backup.json there after every change. Nothing extra is needed when you close the app.',
+    backupFolder:'Choose folder', backupNone:'No backup folder chosen yet', backupOk:'Saving to: {f}',
+    backupGrant:'Allow backup access', backupAuto:'Auto backup after every change', backupSet:'Backup folder set',
+    backupNotSupported:'This browser does not support folder backup. Open in Chrome or Edge on a computer.',
+    backupModeTitle:'Choose backup method', backupManual:'Manual: I press "Download backup" myself',
+    billNoSec:'Bill numbering', billNoMode:'How bill numbers are written', billNoAuto:'Automatic (series)', billNoManual:'Manual (type each time)',
+    billPrefix:'Prefix (e.g. INV- or 2026/)', billNext:'Next bill number', needBillNo:'Enter bill number', dupBillNo:'This bill number already exists',
+    entrySec:'How items are added to a bill', entryMode:'Items are added by', entryManual:'Manual (search by name or HSN)',
+    entryScan:'Scanning (scan barcode)', scanCode:'Scan / type barcode', scanHint:'Scan barcode or type and press Enter',
+    camScan:'Scan with camera', camNo:'Camera scanning is not available on this phone or browser. Use a barcode scanner or typing.',
+    camHelp:'Hold the barcode in front of the camera', noBarcode:'No item found for this barcode', bc:'Barcode',
+    minQty:'Minimum quantity (alert below this)', stockDate:'Stock date', buyNow:'Buy', lowAlert:'Low stock',
+    pinSec:'App password (PIN)', pinOn:'Ask for PIN when opening the app', pinNew:'New PIN (4 to 6 digits)', pinHint:'e.g. 1234',
+    pinNote:'If you forget the PIN, the app cannot be opened. Clearing the browser site data also deletes your bills, so keep backups.',
+    designSec:'Bill design (customise as you like)', tplLabel:'Bill layout', tplClassic:'Classic (boxed table)', tplModern:'Modern (coloured header)', tplMinimal:'Minimal (plain)', dColor:'Main colour', dFont:'Font', fontSys:'Standard', fontSerif:'Serif (book style)', fontRound:'Clean (Verdana)', dAlign:'Header alignment', alignL:'Left', alignC:'Centre', alignR:'Right', dTitle:'Bill title (e.g. Tax Invoice, Bill, Cash Memo)', designHint:'Changes show instantly in the sample below and apply to all bills and prints.',
+    pinBad:'PIN must be 4 to 6 digits', pinNeed:'Enter a new PIN to turn PIN on', pinWrong:'Wrong PIN',
+    exportItems:'Download item list as Excel', exportBills:'Download all bills as Excel' }
+};
+
+/* ---------- Data ---------- */
+const blankSettings = { name:'', addr:'', city:'', phone:'', gstin:'', upi:'', gst:0, next:1, lang:'hi', cfields:[], billPrefix:'INV-', billNoMode:'auto', entryMode:'manual', pinOn:false, pinHash:'', pinSalt:'' };
+const SHOW_KEYS = ['logo','bizName','addr','city','phone','gstin','bank','bankName','accNo','ifsc','upi','qr','photo','hsn','qtyCol','rateCol','gstCol','gstAmtCol','amtCol','lineTotalCol','custPhone','custGstin','custAddr','custExtra','paidStamp','signature','terms','footer','thanks'];
+const DEFAULT_SHOW = Object.fromEntries(SHOW_KEYS.map(k => [k, true]));
+DEFAULT_SHOW.signature = false;
+DEFAULT_SHOW.terms = false;
+let db = normalize(JSON.parse(localStorage.getItem('billeasy4') || 'null'));
+function normalize(d){
+  d = d || {};
+  d.settings = Object.assign({}, blankSettings, d.settings || {});
+  d.settings.cfields = d.settings.cfields || [];
+  d.settings.bank = Object.assign({ holder:'', name:'', acc:'', ifsc:'' }, d.settings.bank || {});
+  d.settings.show = Object.assign({}, DEFAULT_SHOW, d.settings.show || {});
+  d.settings.backupMode = d.settings.backupMode === 'auto' ? 'auto' : 'manual';
+  d.settings.design = Object.assign({ template:'classic', color:'#1f5fbf', font:'system', align:'left', title:'टैक्स इनवॉइस / बिल' }, d.settings.design || {});
+  d.customers = d.customers || [];
+  d.items = d.items || [];
+  d.purchases = d.purchases || [];
+  d.invoices = (d.invoices || []).map(inv => {
+    if(!inv.lines) inv.lines = (inv.items || []).map(l => ({ iid:null, n:l.n, hsn:'', unit:'pcs', q:l.q, r:l.r, gst:d.settings.gst||0 }));
+    return inv;
+  });
+  return d;
+}
+let cur = blankInv();
+let tab = 'new';
+let selCid = null;
+let itemDraft = blankItem();
+let purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
+let editMode = false;
+
+function t(k){ return (LANGS[db.settings.lang] || LANGS.hi)[k] || LANGS.en[k] || k; }
+function save(){ localStorage.setItem('billeasy4', JSON.stringify(db)); autoBackup(); }
+
+/* ---------- Automatic backup to a chosen folder ---------- */
+let backupDir = null;
+let lastBackup = '';
+function idbOp(mode, fn){
+  return new Promise((res, rej) => {
+    const req = indexedDB.open('billeasy-cfg', 1);
+    req.onupgradeneeded = () => req.result.createObjectStore('kv');
+    req.onsuccess = () => {
+      const tx = req.result.transaction('kv', mode);
+      const r = fn(tx.objectStore('kv'));
+      tx.oncomplete = () => res(r.result);
+      tx.onerror = () => rej(tx.error);
+    };
+    req.onerror = () => rej(req.error);
+  });
+}
+async function restoreBackupHandle(){
+  try{ backupDir = (await idbOp('readonly', st => st.get('dir'))) || null; }catch(e){ backupDir = null; }
+}
+async function pickBackupFolder(){
+  if(!window.showDirectoryPicker){ alert(t('backupNotSupported')); return; }
+  try{
+    backupDir = await window.showDirectoryPicker({ mode:'readwrite' });
+    await idbOp('readwrite', st => st.put(backupDir, 'dir'));
+    await writeBackup();
+    alert(t('backupSet'));
+    renderSettings();
+  }catch(e){ /* user cancelled */ }
+}
+async function grantBackup(){
+  if(!backupDir) return;
+  if((await backupDir.requestPermission({ mode:'readwrite' })) === 'granted'){ await writeBackup(); renderSettings(); }
+}
+async function writeBackup(){
+  if(!backupDir || db.settings.backupMode !== 'auto') return;
+  try{
+    if((await backupDir.queryPermission({ mode:'readwrite' })) !== 'granted') return;
+    const fh = await backupDir.getFileHandle('billeasy-backup.json', { create:true });
+    const w = await fh.createWritable();
+    await w.write(JSON.stringify(db, null, 2));
+    await w.close();
+    lastBackup = new Date().toLocaleString();
+  }catch(e){ /* keep working even if backup fails */ }
+}
+function autoBackup(){ writeBackup(); }
+function setBackupMode(m){
+  db.settings.backupMode = m;
+  save();
+  renderSettings();
+  if(m === 'auto' && !backupDir) pickBackupFolder();
+}
+function digits(s){ return String(s||'').replace(/\D/g,''); }
+function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function money(n){ return '₹' + Number(n||0).toFixed(2); }
+function uLabel(u){ return t('u_' + u) || u; }
+function unitSelect(sel, onchange){
+  return `<select onchange="${onchange}">${UNITS.map(u => `<option value="${u}" ${u===sel?'selected':''}>${uLabel(u)}</option>`).join('')}</select>`;
+}
+function blankInv(){
+  return { cid:null, cn:'', cp:'', cgstin:'', cemail:'', caddr:'', cextra:{}, cd:new Date().toISOString().slice(0,10), lines:[] };
+}
+function blankItem(){
+  return { id:null, name:'', photo:'', hsn:'', gst:db.settings.gst||0, unit:'pcs', sale:0, buy:0, stock:0, bc:'', minQty:0, stockDate:'' };
+}
+function totals(inv){
+  let sub = 0, gstAmt = 0;
+  (inv.lines||[]).forEach(l => {
+    const amt = (Number(l.q)||0) * (Number(l.r)||0);
+    sub += amt; gstAmt += amt * (Number(l.gst)||0) / 100;
+  });
+  return { sub, gstAmt, total: sub + gstAmt };
+}
+function itemById(id){ return db.items.find(i => i.id === id); }
+function qrUrl(amount){
+  if(!db.settings.upi) return '';
+  let link = 'upi://pay?pa=' + encodeURIComponent(db.settings.upi) + '&pn=' + encodeURIComponent(db.settings.name || 'BillEasy') + '&cu=INR';
+  if(amount) link += '&am=' + Number(amount).toFixed(2);
+  return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(link);
+}
+function readPhoto(file, cb){
+  const r = new FileReader();
+  r.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const m = 160 / Math.max(img.width, img.height, 1);
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * Math.min(m,1)); c.height = Math.round(img.height * Math.min(m,1));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      cb(c.toDataURL('image/jpeg', 0.7));
+    };
+    img.src = r.result;
+  };
+  r.readAsDataURL(file);
+}
+
+/* ---------- Language and tabs ---------- */
+function applyLang(){
+  document.documentElement.lang = db.settings.lang;
+  document.getElementById('tagline').textContent = t('tag');
+  document.getElementById('t-new').textContent = t('new');
+  document.getElementById('t-list').textContent = t('list');
+  document.getElementById('t-items').textContent = t('items');
+  document.getElementById('t-purch').textContent = t('purch');
+  document.getElementById('t-cust').textContent = t('cust');
+  document.getElementById('t-settings').textContent = t('set');
+  document.getElementById('langSel').innerHTML = Object.keys(LANGS).map(k =>
+    `<option value="${k}" ${k===db.settings.lang?'selected':''}>${LANGS[k].name}</option>`).join('');
+}
+function setLang(l){ db.settings.lang = l; save(); applyLang(); showTab(tab); }
+function showTab(x){
+  tab = x;
+  ['new','list','items','purch','cust','settings'].forEach(k => {
+    document.getElementById(k+'View').style.display = k===x ? 'block' : 'none';
+    document.getElementById('t-'+k).className = k===x ? 'on' : 'light';
+  });
+  if(x==='new') renderNew();
+  if(x==='list') renderList();
+  if(x==='items') renderItems();
+  if(x==='purch') renderPurch();
+  if(x==='cust') renderCustomers();
+  if(x==='settings'){ renderSettings(); renderDesignPreview(); }
+}
+
+/* ---------- Customer lookup ---------- */
+function findByPhone(p){ const d = digits(p); return d ? db.customers.find(c => digits(c.phone) === d) : null; }
+function custMatches(q){
+  const s = q.trim().toLowerCase(), d = digits(q);
+  if(!s) return [];
+  return db.customers.filter(c => c.name.toLowerCase().includes(s) || (d && digits(c.phone).includes(d))).slice(0,5);
+}
+function updateCustSugg(){
+  const box = document.getElementById('custSugg'); if(!box) return;
+  const list = custMatches(cur.cn || cur.cp);
+  box.innerHTML = list.map(c => `<div onclick="pickCustomer('${c.id}')"><b>${esc(c.name)}</b> ${esc(c.phone)}</div>`).join('');
+}
+function pickCustomer(id){
+  const c = db.customers.find(x => x.id === id); if(!c) return;
+  cur.cid = c.id; cur.cn = c.name; cur.cp = c.phone || '';
+  cur.cgstin = c.gstin || ''; cur.cemail = c.email || ''; cur.caddr = c.address || '';
+  cur.cextra = Object.assign({}, c.extra || {});
+  renderNew();
+}
+function phoneChanged(v){
+  cur.cp = v;
+  const c = findByPhone(v);
+  if(c) pickCustomer(c.id); else { cur.cid = null; updateCustSugg(); }
+}
+function customerFields(src){
+  const extra = db.settings.cfields.map(f => `
+    <div><label>${esc(f)}</label><input value="${esc((src.cextra||{})[f]||'')}" oninput="cur.cextra['${esc(f)}']=this.value"></div>`).join('');
+  return `<div class="grid2">
+    <div><label>${t('gstin')}</label><input value="${esc(src.cgstin)}" oninput="cur.cgstin=this.value"></div>
+    <div><label>${t('email')}</label><input value="${esc(src.cemail)}" oninput="cur.cemail=this.value"></div>
+    <div style="grid-column:1/-1"><label>${t('address')}</label><input value="${esc(src.caddr)}" oninput="cur.caddr=this.value"></div>
+    ${extra}</div>`;
+}
+
+/* ---------- New bill with catalogue lines ---------- */
+function renderNew(){
+  document.getElementById('newView').innerHTML = `
+  <div class="card">
+    <h3>${t('cust1')}</h3>
+    <div class="grid2">
+      <div>
+        <label>${t('cname')}</label>
+        <input value="${esc(cur.cn)}" oninput="cur.cn=this.value;cur.cid=null;updateCustSugg()" placeholder="${t('suggest')}">
+        <div id="custSugg" class="sugg"></div>
+      </div>
+      <div>
+        <label>${t('phone')}</label>
+        <input value="${esc(cur.cp)}" onchange="phoneChanged(this.value)" oninput="cur.cp=this.value;updateCustSugg()">
+      </div>
+    </div>
+    ${customerFields(cur)}
+    <label>${t('date')}</label>
+    <input type="date" value="${cur.cd}" oninput="cur.cd=this.value">
+    ${db.settings.billNoMode === 'manual' ? `<label>${t('billNo')}</label><input value="${esc(cur.no||'')}" oninput="cur.no=this.value" placeholder="${t('needBillNo')}">` : ''}
+  </div>
+  <div class="card">
+    <h3>${t('lines')}</h3>
+    <label>${t('scanCode')}</label>
+    <div style="display:flex;gap:6px"><input id="scanIn" placeholder="${t('scanHint')}" onkeydown="if(event.key==='Enter'){scanCode(this.value);}"><button class="light" onclick="openCamScan()">${t('camScan')}</button></div>
+    <label>${t('findItem')}</label>
+    <input id="itemSearch" placeholder="${t('search')}" oninput="updateItemSugg()">
+    <div id="itemSugg" class="sugg"></div>
+    <div style="overflow-x:auto;margin-top:10px">
+    <table>
+      <tr><th>${t('desc')}</th><th>${t('hsn')}</th><th>${t('unit')}</th><th>${t('qty')}</th><th>${t('rate')}</th><th>${t('gst')}</th><th>${t('preGst')}</th><th>${t('gstAmt')}</th><th>${t('lineTotal')}</th><th></th></tr>
+      ${cur.lines.map((l,i) => `
+      <tr class="line">
+        <td><input value="${esc(l.n)}" oninput="cur.lines[${i}].n=this.value"></td>
+        <td><input value="${esc(l.hsn)}" style="width:90px" oninput="cur.lines[${i}].hsn=this.value"></td>
+        <td>${unitSelect(l.unit, `cur.lines[${i}].unit=this.value`)}</td>
+        <td><input type="number" min="0" step="any" value="${l.q}" style="width:80px" oninput="cur.lines[${i}].q=this.value;calc()"></td>
+        <td><input type="number" min="0" step="any" value="${l.r}" style="width:90px" oninput="cur.lines[${i}].r=this.value;calc()"></td>
+        <td><input type="number" min="0" step="any" value="${l.gst}" style="width:70px" oninput="cur.lines[${i}].gst=this.value;calc()"></td>
+        <td id="amt${i}">${money((Number(l.q)||0)*(Number(l.r)||0))}</td>
+        <td id="gamt${i}">${money(((Number(l.q)||0)*(Number(l.r)||0))*(Number(l.gst)||0)/100)}</td>
+        <td id="lt${i}">${money(((Number(l.q)||0)*(Number(l.r)||0))*(1+(Number(l.gst)||0)/100))}</td>
+        <td><button class="red sm" onclick="delLine(${i})">✕</button></td>
+      </tr>`).join('')}
+    </table></div>
+    <button class="light" onclick="addFreeLine()">${t('freeLine')}</button>
+    <div class="tot" id="tot"></div>
+  </div>
+  <div class="card">
+    <button class="green" onclick="saveInv()">${t('save')}</button>
+    <button onclick="previewCur()">${t('prev')}</button>
+    <button class="gray" onclick="resetCur()">${t('reset')}</button>
+  </div>`;
+  calc(); updateCustSugg();
+  if(db.settings.entryMode === 'scan'){ const si = document.getElementById('scanIn'); if(si) si.focus(); }
+}
+function calc(){
+  cur.lines.forEach((l, i) => {
+    const a = (Number(l.q)||0) * (Number(l.r)||0);
+    const g = a * (Number(l.gst)||0) / 100;
+    const set = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = money(v); };
+    set('amt' + i, a); set('gamt' + i, g); set('lt' + i, a + g);
+  });
+  const el = document.getElementById('tot'); if(!el) return;
+  const x = totals(cur);
+  el.innerHTML = `${t('sub')}: ${money(x.sub)}<br>GST: ${money(x.gstAmt)}<br>${t('total')}: ${money(x.total)}`;
+}
+function updateItemSugg(){
+  const box = document.getElementById('itemSugg'); if(!box) return;
+  const q = document.getElementById('itemSearch').value.trim().toLowerCase();
+  if(!q){ box.innerHTML = ''; return; }
+  const list = db.items.filter(i => i.name.toLowerCase().includes(q) || (i.hsn||'').toLowerCase().includes(q)).slice(0,6);
+  box.innerHTML = list.map(i => `<div onclick="addFromItem('${i.id}')">
+    ${i.photo ? `<img class="thumb" src="${i.photo}">` : `<span class="ph">📦</span>`}
+    <span><b>${esc(i.name)}</b> · ${money(i.sale)} / ${uLabel(i.unit)} · GST ${i.gst}%</span></div>`).join('');
+}
+function addFromItem(id){
+  const it = itemById(id); if(!it) return;
+  cur.lines.push({ iid:it.id, n:it.name, hsn:it.hsn||'', unit:it.unit||'pcs', q:1, r:it.sale||0, gst:it.gst||0 });
+  renderNew();
+}
+function addFreeLine(){
+  cur.lines.push({ iid:null, n:'', hsn:'', unit:'pcs', q:1, r:0, gst:db.settings.gst||0 });
+  renderNew();
+}
+function delLine(i){ cur.lines.splice(i,1); renderNew(); }
+function resetCur(){ if(confirm(t('confReset'))){ cur = blankInv(); renderNew(); } }
+
+function upsertCustomer(){
+  let c = cur.cid ? db.customers.find(x => x.id === cur.cid) : null;
+  if(!c) c = findByPhone(cur.cp);
+  if(!c){ c = { id:'C'+Date.now() }; db.customers.push(c); }
+  c.name = cur.cn.trim(); c.phone = cur.cp.trim(); c.gstin = cur.cgstin.trim();
+  c.email = cur.cemail.trim(); c.address = cur.caddr.trim(); c.extra = Object.assign({}, cur.cextra);
+  return c.id;
+}
+function applyDesign(){
+  const D = db.settings.design;
+  const fonts = { system:'system-ui,sans-serif', serif:'Georgia,"Times New Roman",serif', rounded:'Verdana,Geneva,sans-serif' };
+  const root = document.documentElement.style;
+  root.setProperty('--bfont', fonts[D.font] || fonts.system);
+  root.setProperty('--bcolor', D.color);
+  root.setProperty('--balign', D.align);
+}
+function designChanged(){
+  const d = db.settings.design;
+  d.template = document.getElementById('dTpl').value;
+  d.color = document.getElementById('dColor').value;
+  d.font = document.getElementById('dFont').value;
+  d.align = document.getElementById('dAlign').value;
+  d.title = document.getElementById('dTitle').value.trim() || d.title;
+  save(); applyDesign(); renderDesignPreview();
+}
+function sampleInvoice(){
+  const inv = { no:'INV-0001', cid:null, cn:'राम कुमार', cp:'9876543210', cgstin:'08ABCDE1234F1Z5',
+    cemail:'', caddr:'जयपुर, राजस्थान', cextra:{}, cd:todayYMD(), paid:true,
+    lines:[
+      { iid:null, n:'चावल', hsn:'1006', unit:'kg', q:5, r:60, gst:5 },
+      { iid:null, n:'साबुन', hsn:'3401', unit:'pcs', q:2, r:35, gst:18 }
+    ] };
+  inv.total = totals(inv).total;
+  return inv;
+}
+function renderDesignPreview(){
+  const el = document.getElementById('designPreview');
+  if(el) el.innerHTML = invoiceHTML(sampleInvoice());
+}
+function pickLogo(input){
+  const f = input.files[0]; if(!f) return;
+  readPhoto(f, d => { db.settings.logo = d; save(); renderSettings(); });
+}
+function billNumber(){
+  if(db.settings.billNoMode === 'manual') return (cur.no || '').trim();
+  return (db.settings.billPrefix || '') + String(db.settings.next).padStart(4, '0');
+}
+function randHex(){ return [...crypto.getRandomValues(new Uint8Array(8))].map(x => x.toString(16).padStart(2,'0')).join(''); }
+async function sha(str){
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('');
+}
+function showLockIfNeeded(){
+  if(db.settings.pinOn && db.settings.pinHash){
+    document.getElementById('lock').style.display = 'flex';
+    document.getElementById('pinIn').focus();
+  }
+}
+async function unlock(){
+  const v = document.getElementById('pinIn').value.trim();
+  if((await sha(db.settings.pinSalt + v)) === db.settings.pinHash){
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('pinIn').value = '';
+    document.getElementById('pinErr').textContent = '';
+  } else {
+    document.getElementById('pinErr').textContent = t('pinWrong');
+  }
+}
+function buildInv(cid){
+  const lines = cur.lines.filter(l => l.n.trim()).map(l => ({
+    iid:l.iid, n:l.n.trim(), hsn:(l.hsn||'').trim(), unit:l.unit||'pcs',
+    q:Number(l.q)||0, r:Number(l.r)||0, gst:Number(l.gst)||0 }));
+  const inv = { no: billNumber(), cid,
+    cn:cur.cn.trim(), cp:cur.cp.trim(), cgstin:cur.cgstin.trim(), cemail:cur.cemail.trim(),
+    caddr:cur.caddr.trim(), cextra:Object.assign({}, cur.cextra), cd:cur.cd, lines, paid:false };
+  inv.total = totals(inv).total;
+  return inv;
+}
+function validCur(){
+  if(!cur.cn.trim()){ alert(t('needName')); return false; }
+  if(db.settings.billNoMode === 'manual'){
+    const no = (cur.no || '').trim();
+    if(!no){ alert(t('needBillNo')); return false; }
+    if(db.invoices.some(i => i.no === no)){ alert(t('dupBillNo')); return false; }
+  }
+  if(!cur.lines.some(l => l.n.trim())){ alert(t('needLine')); return false; }
+  return true;
+}
+function saveInv(){
+  if(!validCur()) return;
+  const cid = upsertCustomer();
+  const inv = buildInv(cid);
+  inv.lines.forEach(l => {
+    const it = l.iid && itemById(l.iid);
+    if(it) it.stock = (Number(it.stock)||0) - l.q;
+  });
+  db.invoices.push(inv); db.settings.next++; save();
+  alert(t('saved') + ': ' + inv.no + lowStockNote());
+  cur = blankInv(); showTab('list');
+}
+function previewCur(){ if(validCur()) openPreview(buildInv(cur.cid)); }
+
+/* ---------- All bills ---------- */
+function renderList(){
+  const paid = db.invoices.filter(i=>i.paid).reduce((a,i)=>a+i.total,0);
+  const due  = db.invoices.filter(i=>!i.paid).reduce((a,i)=>a+i.total,0);
+  document.getElementById('listView').innerHTML = `
+  <div class="card summary">
+    <div>${t('recv')}<b class="paid">${money(paid)}</b></div>
+    <div>${t('due')}<b class="due">${money(due)}</b></div>
+    <div>${t('count')}<b>${db.invoices.length}</b></div>
+  </div>
+  <div class="card">
+    <input id="billSearch" placeholder="${t('search')}" oninput="renderBillRows()">
+    <button class="light sm" onclick="exportBillsXlsx()" style="margin-top:8px">${t('exportBills')}</button>
+    <div id="billRows" style="margin-top:10px"></div>
+  </div>`;
+  renderBillRows();
+}
+function renderBillRows(){
+  const el = document.getElementById('billRows'); if(!el) return;
+  const q = document.getElementById('billSearch').value.trim().toLowerCase();
+  const d = digits(q);
+  const list = [...db.invoices].reverse().filter(i => !q || i.no.toLowerCase().includes(q) ||
+    i.cn.toLowerCase().includes(q) || (d && digits(i.cp).includes(d)));
+  el.innerHTML = !db.invoices.length ? `<p>${t('empty')}</p>` : `<table>${list.map(i => `
+    <tr>
+      <td>${i.no}</td><td>${esc(i.cn)}</td><td>${i.cd}</td><td>${money(i.total)}</td>
+      <td class="${i.paid?'paid':'due'}">${i.paid?t('paid'):t('unpaid')}</td>
+      <td>
+        <button class="light sm" onclick="openPreviewNo('${i.no}')">${t('prev')}</button>
+        <button class="light sm" onclick="togglePaid('${i.no}')">${i.paid?t('markDue'):t('markPaid')}</button>
+        <button class="red sm" onclick="delInv('${i.no}')">${t('del')}</button>
+      </td>
+    </tr>`).join('')}</table>`;
+}
+function togglePaid(no){ const inv = db.invoices.find(i=>i.no===no); if(inv){ inv.paid=!inv.paid; save(); renderBillRows(); } }
+function delInv(no){
+  if(!confirm(t('confDel'))) return;
+  const inv = db.invoices.find(i=>i.no===no);
+  if(inv) inv.lines.forEach(l => { const it = l.iid && itemById(l.iid); if(it) it.stock = (Number(it.stock)||0) + l.q; });
+  db.invoices = db.invoices.filter(i=>i.no!==no); save(); renderBillRows();
+}
+
+/* ---------- Item list (sale and purchase rates, HSN, GST, photo, stock) ---------- */
+function renderItems(){
+  const d = itemDraft;
+  document.getElementById('itemsView').innerHTML = `
+  <div class="card">
+    <h3>${editMode ? t('edit') : t('itemSaved').replace(/.*/, t('items'))}</h3>
+    <div class="grid2">
+      <div><label>${t('itemName')}</label><input value="${esc(d.name)}" oninput="itemDraft.name=this.value"></div>
+      <div><label>${t('itemHsn')}</label><input value="${esc(d.hsn)}" oninput="itemDraft.hsn=this.value"></div>
+      <div><label>${t('itemGst')}</label><input type="number" min="0" step="any" value="${d.gst}" oninput="itemDraft.gst=this.value"></div>
+      <div><label>${t('itemUnit')}</label>${unitSelect(d.unit, 'itemDraft.unit=this.value')}</div>
+      <div><label>${t('sale')}</label><input type="number" min="0" step="any" value="${d.sale}" oninput="itemDraft.sale=this.value"></div>
+      <div><label>${t('buy')}</label><input type="number" min="0" step="any" value="${d.buy}" oninput="itemDraft.buy=this.value"></div>
+      <div><label>${editMode ? t('stock') : t('openStock')}</label><input type="number" min="0" step="any" value="${d.stock}" oninput="itemDraft.stock=this.value"></div>
+      <div><label>${t('bc')}</label><input value="${esc(d.bc||'')}" oninput="itemDraft.bc=this.value"></div>
+      <div><label>${t('minQty')}</label><input type="number" min="0" step="any" value="${d.minQty||0}" oninput="itemDraft.minQty=this.value"></div>
+      <div><label>${t('stockDate')}</label><input type="date" value="${d.stockDate||''}" oninput="itemDraft.stockDate=this.value"></div>
+      <div><label>${t('photo')}</label><input type="file" accept="image/*" onchange="pickItemPhoto(this)"></div>
+    </div>
+    ${d.photo ? `<img class="thumb" style="width:70px;height:70px;margin-top:8px" src="${d.photo}">` : ''}
+    <div style="margin-top:8px">
+      <button class="green" onclick="saveItem()">${t('saveItem')}</button>
+      <button class="gray" onclick="newItem()">${t('clearForm')}</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>${t('importTitle')}</h3>
+    <p style="font-size:13px;color:#666">${t('importHelp')}</p>
+    <textarea id="impText" rows="6" style="width:100%;padding:9px;border:1px solid #cfd7e6;border-radius:8px;font-size:14px" placeholder="चावल, 1006, 5, kg, 60, 50, 100&#10;साबुन, 3401, 18, pcs, 35"></textarea>
+    <input type="file" accept=".csv,.txt,.tsv,.xlsx,.xls" onchange="importFile(this)" style="margin-top:8px">
+    <div><button class="green" onclick="importText()">${t('importBtn')}</button></div>
+  </div>
+  <div class="card">
+    <input id="itemList" placeholder="${t('search')}" oninput="renderItemRows()">
+    <button class="light sm" onclick="exportItemsXlsx()" style="margin-top:8px">${t('exportItems')}</button>
+    <div id="itemRows" style="margin-top:10px;overflow-x:auto"></div>
+  </div>`;
+  renderItemRows();
+}
+function renderItemRows(){
+  const el = document.getElementById('itemRows'); if(!el) return;
+  const q = (document.getElementById('itemList')||{value:''}).value.trim().toLowerCase();
+  const list = db.items.filter(i => !q || i.name.toLowerCase().includes(q) || (i.hsn||'').toLowerCase().includes(q));
+  if(!db.items.length){ el.innerHTML = `<p>${t('noItems')}</p>`; return; }
+  el.innerHTML = `<table>
+    <tr><th></th><th>${t('desc')}</th><th>${t('hsn')}</th><th>${t('gst')}</th><th>${t('unit')}</th>
+        <th>${t('sale')}</th><th>${t('buy')}</th><th>${t('stock')}</th><th></th></tr>
+    ${list.map(i => `<tr>
+      <td>${i.photo ? `<img class="thumb" src="${i.photo}">` : `<span class="ph">📦</span>`}</td>
+      <td><b>${esc(i.name)}</b></td><td>${esc(i.hsn)}</td><td>${i.gst}%</td><td>${uLabel(i.unit)}</td>
+      <td>${money(i.sale)}</td><td>${money(i.buy)}</td>
+      <td class="${(Number(i.stock)||0) <= 0 || (i.minQty && (Number(i.stock)||0) <= Number(i.minQty)) ? 'low' : ''}">${Number(i.stock)||0} ${uLabel(i.unit)}${i.minQty && (Number(i.stock)||0) <= Number(i.minQty) ? `<br><button class="sm" onclick="buyItem('${i.id}')">${t('buyNow')}</button>` : ''}</td>
+      <td><button class="light sm" onclick="editItem('${i.id}')">✎</button>
+          <button class="red sm" onclick="delItem('${i.id}')">${t('del')}</button></td>
+    </tr>`).join('')}</table>`;
+}
+function pickItemPhoto(input){
+  const f = input.files[0]; if(!f) return;
+  readPhoto(f, data => { itemDraft.photo = data; renderItems(); });
+}
+function saveItem(){
+  const d = itemDraft;
+  if(!d.name.trim()){ alert(t('needItemName')); return; }
+  const rec = { id: d.id || ('I'+Date.now()), name:d.name.trim(), photo:d.photo||'', hsn:(d.hsn||'').trim(),
+    gst:Number(d.gst)||0, unit:d.unit||'pcs', sale:Number(d.sale)||0, buy:Number(d.buy)||0, stock:Number(d.stock)||0, bc:(d.bc||'').trim(), minQty:Number(d.minQty)||0, stockDate:d.stockDate||'' };
+  const idx = db.items.findIndex(i => i.id === rec.id);
+  if(idx >= 0) db.items[idx] = rec; else db.items.push(rec);
+  save(); alert(t('itemSaved')); newItem();
+}
+function editItem(id){
+  const it = itemById(id); if(!it) return;
+  itemDraft = Object.assign({}, it); editMode = true; renderItems();
+  window.scrollTo(0,0);
+}
+function delItem(id){
+  if(!confirm(t('confDel').replace('?', '?'))) return;
+  db.items = db.items.filter(i => i.id !== id); save(); renderItems();
+}
+function newItem(){ itemDraft = blankItem(); editMode = false; renderItems(); }
+
+function exportItemsXlsx(){
+  if(typeof XLSX === 'undefined'){ alert(t('xlsxNoLib')); return; }
+  const rows = db.items.map(i => ({ name:i.name, hsn:i.hsn, gst:i.gst, unit:i.unit, sale_rate:i.sale,
+    purchase_rate:i.buy, stock:i.stock, barcode:i.bc||'', min_qty:i.minQty||0, stock_date:i.stockDate||'' }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Items');
+  XLSX.writeFile(wb, 'billeasy-items.xlsx');
+}
+function exportBillsXlsx(){
+  if(typeof XLSX === 'undefined'){ alert(t('xlsxNoLib')); return; }
+  const rows = [];
+  db.invoices.forEach(inv => {
+    inv.lines.forEach(l => {
+      const pre = l.q * l.r, g = pre * l.gst / 100;
+      rows.push({ bill_no:inv.no, date:inv.cd, customer:inv.cn, phone:inv.cp, customer_gstin:inv.cgstin||'',
+        item:l.n, hsn:l.hsn||'', unit:l.unit, qty:l.q, rate:l.r, gst_percent:l.gst,
+        before_gst:pre, gst_amount:g, total_with_gst:pre + g, paid:inv.paid ? 'yes' : 'no' });
+    });
+  });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Bills');
+  XLSX.writeFile(wb, 'billeasy-bills.xlsx');
+}
+
+function buyItem(id){
+  const it = itemById(id); if(!it) return;
+  purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:id,
+    q: Math.max(1, (Number(it.minQty)||0) * 2 - (Number(it.stock)||0)), r: it.buy || 0 };
+  showTab('purch');
+}
+function lowStockNote(){
+  const low = db.items.filter(i => i.minQty && (Number(i.stock)||0) <= Number(i.minQty));
+  return low.length ? '\n\n' + t('lowAlert') + ': ' + low.map(i => i.name + ' (' + (Number(i.stock)||0) + ')').join(', ') : '';
+}
+function scanCode(code){
+  code = String(code || '').trim(); if(!code) return;
+  const it = db.items.find(i => (i.bc || '') === code);
+  if(!it){ alert(t('noBarcode')); return; }
+  const ex = cur.lines.find(l => l.iid === it.id);
+  if(ex) ex.q = (Number(ex.q) || 0) + 1;
+  else cur.lines.push({ iid:it.id, n:it.name, hsn:it.hsn||'', unit:it.unit||'pcs', q:1, r:it.sale||0, gst:it.gst||0 });
+  renderNew();
+}
+let camStream = null, camTimer = null;
+async function openCamScan(){
+  if(!('BarcodeDetector' in window) || !navigator.mediaDevices){ alert(t('camNo')); return; }
+  try{ camStream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } }); }
+  catch(e){ alert(t('camNo')); return; }
+  document.getElementById('modalBody').innerHTML = `<video id="cam" autoplay playsinline style="width:100%;border-radius:8px"></video>
+    <p style="font-size:13px;color:#666">${t('camHelp')}</p><button class="gray" onclick="stopCam()">${t('close')}</button>`;
+  document.getElementById('modal').style.display = 'block';
+  const v = document.getElementById('cam');
+  v.srcObject = camStream;
+  const det = new BarcodeDetector({ formats:['ean_13','ean_8','upc_a','upc_e','code_128','qr_code'] });
+  camTimer = setInterval(async () => {
+    try{
+      const codes = await det.detect(v);
+      if(codes.length){ const code = codes[0].rawValue; stopCam(); scanCode(code); }
+    }catch(e){}
+  }, 400);
+}
+function stopCam(){
+  if(camTimer){ clearInterval(camTimer); camTimer = null; }
+  if(camStream){ camStream.getTracks().forEach(x => x.stop()); camStream = null; }
+  document.getElementById('modal').style.display = 'none';
+}
+
+function parseRows(text){
+  return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
+    const c = l.includes('\t') ? l.split('\t') : l.includes(',') ? l.split(',') : l.split(/\s{2,}/);
+    return c.map(x => x.trim());
+  }).filter(c => c[0] && !/^(name|नाम|item|सामान)$/i.test(c[0]));
+}
+function importText(){
+  const rows = parseRows(document.getElementById('impText').value);
+  let added = 0, updated = 0;
+  rows.forEach((c, idx) => {
+    const name = c[0], hsn = c[1] || '', gst = Number(c[2]) || 0;
+    const unit = UNITS.includes((c[3]||'').toLowerCase()) ? c[3].toLowerCase() : 'pcs';
+    const sale = Number(c[4]) || 0, buy = Number(c[5]) || 0, stock = Number(c[6]) || 0;
+    const ex = db.items.find(i => i.name.toLowerCase() === name.toLowerCase());
+    if(ex){
+      Object.assign(ex, { hsn, gst, unit, sale });
+      if(buy) ex.buy = buy;
+      if(c[6] !== undefined && c[6] !== '') ex.stock = stock;
+      updated++;
+    } else {
+      db.items.push({ id:'I' + Date.now() + idx, name, photo:'', hsn, gst, unit, sale, buy, stock });
+      added++;
+    }
+  });
+  save();
+  alert(t('importDone').replace('{a}', added).replace('{u}', updated));
+  renderItems();
+}
+function importFile(input){
+  const f = input.files[0]; if(!f) return;
+  if(/\.(xlsx|xls)$/i.test(f.name)){
+    if(typeof XLSX === 'undefined'){ alert(t('xlsxNoLib')); return; }
+    const r = new FileReader();
+    r.onload = e => {
+      try{
+        const wb = XLSX.read(e.target.result, { type:'array' });
+        const lines = [];
+        wb.SheetNames.forEach(sn => {
+          XLSX.utils.sheet_to_json(wb.Sheets[sn], { header:1, defval:'' }).forEach(row => {
+            if(row.some(c => String(c).trim() !== ''))
+              lines.push(row.map(c => String(c).replace(/[\t\r\n]+/g, ' ')).join('\t'));
+          });
+        });
+        document.getElementById('impText').value = lines.join('\n');
+        alert(t('xlsxLoaded').replace('{n}', lines.length));
+      }catch(err){ alert(t('badXlsx')); }
+    };
+    r.readAsArrayBuffer(f);
+  } else {
+    const r = new FileReader();
+    r.onload = e => { document.getElementById('impText').value = e.target.result; };
+    r.readAsText(f);
+  }
+}
+
+/* ---------- Purchase entries (stock in) ---------- */
+function renderPurch(){
+  const opts = db.items.map(i => `<option value="${i.id}" ${i.id===purchDraft.iid?'selected':''}>${esc(i.name)}</option>`).join('');
+  const total = (Number(purchDraft.q)||0) * (Number(purchDraft.r)||0);
+  document.getElementById('purchView').innerHTML = `
+  <div class="card">
+    <h3>${t('purch')}</h3>
+    ${db.items.length ? `
+    <div class="grid2">
+      <div><label>${t('supplier')}</label><input value="${esc(purchDraft.supplier)}" oninput="purchDraft.supplier=this.value"></div>
+      <div><label>${t('date')}</label><input type="date" value="${purchDraft.date}" oninput="purchDraft.date=this.value"></div>
+      <div><label>${t('desc')}</label><select onchange="purchDraft.iid=this.value;purchDraft.r=(itemById(this.value)||{}).buy||0;renderPurch()"><option value="">—</option>${opts}</select></div>
+      <div><label>${t('qty')}</label><input type="number" min="0" step="any" value="${purchDraft.q}" oninput="purchDraft.q=this.value;purchCalc()"></div>
+      <div><label>${t('buy')}</label><input type="number" min="0" step="any" value="${purchDraft.r}" oninput="purchDraft.r=this.value;purchCalc()"></div>
+      <div><label>${t('buyTotal')}</label><input id="ptot" value="${money(total)}" disabled></div>
+    </div>
+    <button class="green" onclick="savePurch()">${t('savePurch')}</button>` : `<p>${t('noItems')}</p>`}
+  </div>
+  <div class="card">
+    ${db.purchases.length ? `<div style="overflow-x:auto"><table>
+      <tr><th>${t('date')}</th><th>${t('supplier')}</th><th>${t('desc')}</th><th>${t('qty')}</th><th>${t('buy')}</th><th>${t('buyTotal')}</th></tr>
+      ${[...db.purchases].reverse().map(p => `<tr><td>${p.date}</td><td>${esc(p.supplier)}</td><td>${esc(p.n)}</td>
+        <td>${p.q} ${uLabel(p.unit)}</td><td>${money(p.r)}</td><td>${money(p.q*p.r)}</td></tr>`).join('')}
+    </table></div>` : `<p>${t('noPurch')}</p>`}
+  </div>`;
+}
+function purchCalc(){ const el = document.getElementById('ptot'); if(el) el.value = money((Number(purchDraft.q)||0)*(Number(purchDraft.r)||0)); }
+function savePurch(){
+  const it = itemById(purchDraft.iid);
+  if(!it){ alert(t('pickItem')); return; }
+  const q = Number(purchDraft.q)||0, r = Number(purchDraft.r)||0;
+  it.stock = (Number(it.stock)||0) + q;
+  it.buy = r;
+  db.purchases.push({ id:'P'+Date.now(), date:purchDraft.date, supplier:purchDraft.supplier.trim(), iid:it.id, n:it.name, unit:it.unit, q, r });
+  save(); alert(t('purchSaved'));
+  purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
+  renderPurch();
+}
+
+/* ---------- Customers and history ---------- */
+function custBills(cid){ return db.invoices.filter(i => i.cid === cid); }
+function renderCustomers(){
+  if(selCid){ renderCustDetail(); return; }
+  document.getElementById('custView').innerHTML = `
+  <div class="card">
+    <h3>${t('allCust')}</h3>
+    <input id="custSearch" placeholder="${t('search')}" oninput="renderCustRows()">
+    <div id="custRows" style="margin-top:10px"></div>
+  </div>`;
+  renderCustRows();
+}
+function renderCustRows(){
+  const el = document.getElementById('custRows'); if(!el) return;
+  const q = document.getElementById('custSearch').value.trim().toLowerCase();
+  const d = digits(q);
+  const list = db.customers.filter(c => !q || c.name.toLowerCase().includes(q) || (d && digits(c.phone).includes(d)));
+  if(!list.length){ el.innerHTML = `<p>${t('noCust')}</p>`; return; }
+  el.innerHTML = `<table>${list.map(c => {
+    const bills = custBills(c.id);
+    const due = bills.filter(i=>!i.paid).reduce((a,i)=>a+i.total,0);
+    return `<tr class="cust-row" onclick="openCust('${c.id}')">
+      <td><b>${esc(c.name)}</b><br><small>${esc(c.phone)}</small></td>
+      <td>${bills.length} ${t('bills')}</td>
+      <td>${money(bills.reduce((a,i)=>a+i.total,0))}<br><small class="due">${money(due)}</small></td></tr>`;
+  }).join('')}</table>`;
+}
+function openCust(id){ selCid = id; renderCustomers(); }
+function closeCust(){ selCid = null; renderCustomers(); }
+function renderCustDetail(){
+  const c = db.customers.find(x => x.id === selCid);
+  if(!c){ selCid = null; renderCustomers(); return; }
+  const bills = custBills(c.id).slice().reverse();
+  const billed = bills.reduce((a,i)=>a+i.total,0);
+  const due = bills.filter(i=>!i.paid).reduce((a,i)=>a+i.total,0);
+  const cf = db.settings.cfields.map(f => `<div><label>${esc(f)}</label><input id="e_x_${esc(f)}" value="${esc((c.extra||{})[f]||'')}"></div>`).join('');
+  document.getElementById('custView').innerHTML = `
+  <div class="card"><button class="light sm" onclick="closeCust()">← ${t('back')}</button></div>
+  <div class="card">
+    <h3>${esc(c.name)} · ${esc(c.phone)}</h3>
+    <div class="summary" style="margin-bottom:12px">
+      <div>${t('bills')}<b>${bills.length}</b></div>
+      <div>${t('billed')}<b>${money(billed)}</b></div>
+      <div>${t('openDue')}<b class="due">${money(due)}</b></div>
+    </div>
+    <div class="grid2">
+      <div><label>${t('cname')}</label><input id="e_n" value="${esc(c.name)}"></div>
+      <div><label>${t('phone')}</label><input id="e_p" value="${esc(c.phone)}"></div>
+      <div><label>${t('gstin')}</label><input id="e_g" value="${esc(c.gstin||'')}"></div>
+      <div><label>${t('email')}</label><input id="e_e" value="${esc(c.email||'')}"></div>
+      <div style="grid-column:1/-1"><label>${t('address')}</label><input id="e_a" value="${esc(c.address||'')}"></div>
+      ${cf}
+    </div>
+    <button class="green" onclick="saveCustEdit()">${t('edit')}</button>
+    <button onclick="newBillFor('${c.id}')">${t('newFor')}</button>
+  </div>
+  <div class="card">
+    <h3>${t('history')}</h3>
+    ${bills.length ? `<div style="overflow-x:auto"><table>${bills.map(i => `<tr>
+      <td>${i.no}</td><td>${i.cd}</td><td>${money(i.total)}</td>
+      <td class="${i.paid?'paid':'due'}">${i.paid?t('paid'):t('unpaid')}</td>
+      <td><button class="light sm" onclick="openPreviewNo('${i.no}')">${t('prev')}</button>
+          <button class="light sm" onclick="togglePaid('${i.no}');renderCustDetail()">${i.paid?t('markDue'):t('markPaid')}</button></td>
+    </tr>`).join('')}</table></div>` : `<p>${t('empty')}</p>`}
+  </div>`;
+}
+function saveCustEdit(){
+  const c = db.customers.find(x => x.id === selCid); if(!c) return;
+  c.name = document.getElementById('e_n').value.trim();
+  c.phone = document.getElementById('e_p').value.trim();
+  c.gstin = document.getElementById('e_g').value.trim();
+  c.email = document.getElementById('e_e').value.trim();
+  c.address = document.getElementById('e_a').value.trim();
+  c.extra = c.extra || {};
+  db.settings.cfields.forEach(f => { const el = document.getElementById('e_x_'+f); if(el) c.extra[f] = el.value.trim(); });
+  save(); alert(t('custSaved')); renderCustDetail();
+}
+function newBillFor(id){
+  const c = db.customers.find(x => x.id === id); if(!c) return;
+  cur = blankInv(); selCid = null;
+  cur.cid = c.id; cur.cn = c.name; cur.cp = c.phone || '';
+  cur.cgstin = c.gstin || ''; cur.cemail = c.email || ''; cur.caddr = c.address || '';
+  cur.cextra = Object.assign({}, c.extra || {});
+  showTab('new');
+}
+
+/* ---------- Invoice view, preview, print, share ---------- */
+function invoiceHTML(inv){
+  const x = totals(inv), s = db.settings;
+  const S = db.settings.show;
+  const D = db.settings.design;
+  const qr = S.qr ? qrUrl(x.total) : '';
+  const extra = Object.keys(inv.cextra||{}).filter(k => inv.cextra[k]).map(k => `<br>${esc(k)}: ${esc(inv.cextra[k])}`).join('');
+  const rows = inv.lines.map(l => {
+    const it = l.iid && itemById(l.iid);
+    const amt = l.q * l.r;
+    return `<tr>
+      ${S.photo ? `<td>${it && it.photo ? `<img src="${it.photo}" style="width:34px;height:34px;object-fit:cover;border-radius:4px">` : ''}</td>` : ''}
+      <td>${esc(l.n)}</td>${S.hsn ? `<td>${esc(l.hsn)}</td>` : ''}${S.qtyCol ? `<td>${l.q} ${uLabel(l.unit)}</td>` : ''}${S.rateCol ? `<td>${money(l.r)}</td>` : ''}
+      ${S.gstCol ? `<td>${l.gst}%</td>` : ''}${S.gstAmtCol ? `<td>${money(amt * l.gst / 100)}</td>` : ''}${S.amtCol ? `<td>${money(amt)}</td>` : ''}${S.lineTotalCol ? `<td>${money(amt * (1 + l.gst / 100))}</td>` : ''}</tr>`;
+  }).join('');
+  return `
+    <div class="bill tpl-${D.template}" style="${db.settings.paper === 'thermal' ? 'max-width:80mm;margin:auto' : ''}">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          ${S.logo && s.logo ? `<img src="${s.logo}" style="width:56px;height:56px;object-fit:contain;display:block;margin-bottom:4px">` : ''}
+          <div class="title">${esc(D.title)}</div>
+          <h2 style="margin:0">${S.bizName ? (esc(s.name) || 'BillEasy') : ''}</h2>
+          <div>${S.addr ? esc(s.addr) : ''}${S.city && s.city ? (S.addr && s.addr ? ', ' : '') + esc(s.city) : ''}</div>
+          <div>${S.phone ? esc(s.phone) : ''}</div>
+          ${S.gstin && s.gstin ? `<div>GSTIN: ${esc(s.gstin)}</div>` : ''}
+        </div>
+        <div style="text-align:right"><b>${t('billNo')}:</b> ${inv.no}<br><b>${t('date')}:</b> ${inv.cd}</div>
+      </div>
+      <hr>
+      <div><b>${t('billTo')}:</b> ${esc(inv.cn)}<br>${S.custPhone ? esc(inv.cp) : ''}
+        ${S.custGstin && inv.cgstin ? `<br>GSTIN: ${esc(inv.cgstin)}` : ''}${S.custAddr && inv.caddr ? `<br>${esc(inv.caddr)}` : ''}${S.custExtra ? extra : ''}</div>
+      <div style="overflow-x:auto"><table style="margin-top:14px">
+        <tr>${S.photo ? '<th></th>' : ''}<th>${t('desc')}</th>${S.hsn ? `<th>${t('hsn')}</th>` : ''}${S.qtyCol ? `<th>${t('qty')}</th>` : ''}${S.rateCol ? `<th>${t('rate')}</th>` : ''}${S.gstCol ? `<th>${t('gst')}</th>` : ''}${S.gstAmtCol ? `<th>${t('gstAmt')}</th>` : ''}${S.amtCol ? `<th>${t('preGst')}</th>` : ''}${S.lineTotalCol ? `<th>${t('lineTotal')}</th>` : ''}</tr>
+        ${rows}
+      </table></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-top:10px">
+        <div>${qr ? `<img class="qr" src="${qr}" alt="QR"><div><small>${S.upi ? esc(s.upi) : ''}</small></div>` : ''}</div>
+        <div class="tot">
+          ${t('sub')}: ${money(x.sub)}<br>
+          GST: ${money(x.gstAmt)}<br>
+          <b>${t('total')}: ${money(x.total)}</b>
+        </div>
+      </div>
+      ${S.bank && (s.bank.holder || s.bank.name || s.bank.acc || s.bank.ifsc) ? `<div style="margin-top:14px;padding:10px;border:1px solid #dde5f0;border-radius:8px"><b>${t('bankSec')}</b><br>
+        ${s.bank.holder ? esc(s.bank.holder) + '<br>' : ''}
+        ${S.bankName && s.bank.name ? t('bankName') + ': ' + esc(s.bank.name) + '<br>' : ''}
+        ${S.accNo && s.bank.acc ? t('accNo') + ': ' + esc(s.bank.acc) + '<br>' : ''}
+        ${S.ifsc && s.bank.ifsc ? t('ifsc') + ': ' + esc(s.bank.ifsc) : ''}
+      </div>` : ''}
+      ${S.terms && s.terms ? `<div style="font-size:12px;margin-top:14px;white-space:pre-wrap">${esc(s.terms)}</div>` : ''}
+      ${S.paidStamp && inv.paid ? `<div style="color:#2e8b57;font-weight:bold;font-size:22px;border:3px solid #2e8b57;display:inline-block;padding:4px 12px;margin-top:12px">PAID</div>` : ''}
+      ${S.signature ? `<div style="margin-top:30px;text-align:right">____________________<br>${t('authSign')}</div>` : ''}
+      ${S.thanks ? `<p style="margin-top:20px">${t('thanks')}</p>` : ''}
+      ${S.footer && s.footer ? `<div style="font-size:12px;text-align:center;margin-top:10px">${esc(s.footer)}</div>` : ''}
+    </div>`;
+}
+function openPreview(inv){
+  const data = JSON.stringify(inv).replace(/'/g,'&#39;');
+  document.getElementById('modalBody').innerHTML = invoiceHTML(inv) + `
+    <div style="margin-top:12px">
+      <button onclick='printInv(${data})'>${t('print')}</button>
+      <button class="wa" onclick='sendWA(${data})'>${t('wa')}</button>
+      <button class="green" onclick='shareInv(${data})'>${t('share')}</button>
+      <button class="gray" onclick="closePreview()">${t('close')}</button>
+    </div>`;
+  document.getElementById('modal').style.display = 'block';
+}
+function openPreviewNo(no){ const inv = db.invoices.find(i=>i.no===no); if(inv) openPreview(inv); }
+function closePreview(){ document.getElementById('modal').style.display = 'none'; }
+function printInv(inv){ document.getElementById('print').innerHTML = invoiceHTML(inv); window.print(); }
+function shareText(inv){
+  const x = totals(inv), s = db.settings;
+  const lines = inv.lines.map(l => `• ${l.n} x${l.q} ${uLabel(l.unit)} = ${money(l.q*l.r)}`).join('\n');
+  return `*${s.name || 'BillEasy'}*\n${t('billNo')}: ${inv.no}\n${t('billTo')}: ${inv.cn}\n\n${lines}\n\nGST: ${money(x.gstAmt)}\n${t('total')}: *${money(x.total)}*` +
+    (s.upi ? `\nUPI: ${s.upi}` : '') + `\n\n${t('thanks')}`;
+}
+function sendWA(inv){
+  let num = digits(inv.cp);
+  if(num.length === 10) num = '91' + num;
+  window.open((num ? 'https://wa.me/' + num : 'https://wa.me/') + '?text=' + encodeURIComponent(shareText(inv)), '_blank');
+}
+function shareInv(inv){
+  if(navigator.share) navigator.share({ title: inv.no, text: shareText(inv) }).catch(()=>{});
+  else sendWA(inv);
+}
+
+/* ---------- Settings, QR and backup ---------- */
+function renderSettings(){
+  const s = db.settings, qr = qrUrl(0);
+  document.getElementById('settingsView').innerHTML = `
+  <div class="card">
+    <h3>${t('biz')}</h3>
+    <div class="grid2">
+      <div><label>${t('biz')}</label><input id="sn" value="${esc(s.name)}"></div>
+      <div><label>${t('phone')}</label><input id="sp" value="${esc(s.phone)}"></div>
+      <div><label>${t('gstin')}</label><input id="sgi" value="${esc(s.gstin)}"></div>
+      <div><label>${t('upi')}</label><input id="su" value="${esc(s.upi)}" placeholder="name@upi"></div>
+      <div style="grid-column:1/-1"><label>${t('address')}</label><input id="sa" value="${esc(s.addr)}"></div>
+      <div><label>${t('gst')}</label><input id="sg" type="number" min="0" step="any" value="${s.gst}"></div>
+      <div><label>${t('cfields')}</label><input id="scf" value="${esc(s.cfields.join(', '))}"></div>
+    </div>
+    <p style="font-size:13px;color:#666">${t('cfieldsHint')}</p>
+    <h3 style="margin-top:16px">${t('bankSec')}</h3>
+    <div class="grid2">
+      <div><label>${t('holder')}</label><input id="bn_holder" value="${esc(s.bank.holder)}"></div>
+      <div><label>${t('bankName')}</label><input id="bn_name" value="${esc(s.bank.name)}"></div>
+      <div><label>${t('accNo')}</label><input id="bn_acc" value="${esc(s.bank.acc)}"></div>
+      <div><label>${t('ifsc')}</label><input id="bn_ifsc" value="${esc(s.bank.ifsc)}"></div>
+      <div><label>${t('city')}</label><input id="sc_city" value="${esc(s.city)}"></div>
+    </div>
+    <h3 style="margin-top:16px">${t('showSec')}</h3>
+    <div class="grid2">
+      ${SHOW_KEYS.map(k => `<label style="display:flex;gap:8px;align-items:center;margin:4px 0"><input type="checkbox" id="sh_${k}" ${s.show[k]?'checked':''} style="width:auto"> ${t('s_'+k)}</label>`).join('')}
+    </div>
+    <h3 style="margin-top:16px">${t('billNoSec')}</h3>
+    <div class="grid3">
+      <div><label>${t('billNoMode')}</label><select id="bnm"><option value="auto" ${db.settings.billNoMode !== 'manual' ? 'selected' : ''}>${t('billNoAuto')}</option><option value="manual" ${db.settings.billNoMode === 'manual' ? 'selected' : ''}>${t('billNoManual')}</option></select></div>
+      <div><label>${t('billPrefix')}</label><input id="bpf" value="${esc(db.settings.billPrefix)}"></div>
+      <div><label>${t('billNext')}</label><input id="bnx" type="number" min="1" value="${db.settings.next}"></div>
+    </div>
+    <h3 style="margin-top:16px">${t('entrySec')}</h3>
+    <div class="grid2">
+      <div><label>${t('entryMode')}</label><select id="entm"><option value="manual" ${db.settings.entryMode !== 'scan' ? 'selected' : ''}>${t('entryManual')}</option><option value="scan" ${db.settings.entryMode === 'scan' ? 'selected' : ''}>${t('entryScan')}</option></select></div>
+    </div>
+    <h3 style="margin-top:16px">${t('designSec')}</h3>
+    <div class="grid2">
+      <div><label>${t('tplLabel')}</label><select id="dTpl" onchange="designChanged()">
+        <option value="classic" ${db.settings.design.template === 'classic' ? 'selected' : ''}>${t('tplClassic')}</option>
+        <option value="modern" ${db.settings.design.template === 'modern' ? 'selected' : ''}>${t('tplModern')}</option>
+        <option value="minimal" ${db.settings.design.template === 'minimal' ? 'selected' : ''}>${t('tplMinimal')}</option>
+      </select></div>
+      <div><label>${t('dColor')}</label><input id="dColor" type="color" value="${db.settings.design.color}" onchange="designChanged()" style="height:42px"></div>
+      <div><label>${t('dFont')}</label><select id="dFont" onchange="designChanged()">
+        <option value="system" ${db.settings.design.font === 'system' ? 'selected' : ''}>${t('fontSys')}</option>
+        <option value="serif" ${db.settings.design.font === 'serif' ? 'selected' : ''}>${t('fontSerif')}</option>
+        <option value="rounded" ${db.settings.design.font === 'rounded' ? 'selected' : ''}>${t('fontRound')}</option>
+      </select></div>
+      <div><label>${t('dAlign')}</label><select id="dAlign" onchange="designChanged()">
+        <option value="left" ${db.settings.design.align === 'left' ? 'selected' : ''}>${t('alignL')}</option>
+        <option value="center" ${db.settings.design.align === 'center' ? 'selected' : ''}>${t('alignC')}</option>
+        <option value="right" ${db.settings.design.align === 'right' ? 'selected' : ''}>${t('alignR')}</option>
+      </select></div>
+      <div style="grid-column:1/-1"><label>${t('dTitle')}</label><input id="dTitle" value="${esc(db.settings.design.title)}" onchange="designChanged()"></div>
+    </div>
+    <p style="font-size:13px;color:#666">${t('designHint')}</p>
+    <div style="border:1px dashed #9bb3d9;padding:10px;border-radius:8px;overflow:auto;background:#fff"><div id="designPreview"></div></div>
+    <h3 style="margin-top:16px">${t('paperSec')}</h3>
+    <div class="grid2">
+      <div><label>${t('paper')}</label><select id="paper"><option value="a4" ${db.settings.paper !== 'thermal' ? 'selected' : ''}>${t('paperA4')}</option><option value="thermal" ${db.settings.paper === 'thermal' ? 'selected' : ''}>${t('paperThermal')}</option></select></div>
+      <div><label>${t('logoUp')}</label><input type="file" accept="image/*" onchange="pickLogo(this)">${db.settings.logo ? `<img src="${db.settings.logo}" style="width:56px;height:56px;object-fit:contain;margin-top:6px">` : ''}</div>
+      <div style="grid-column:1/-1"><label>${t('termsTxt')}</label><textarea id="termsTxt" rows="3" style="width:100%;padding:9px;border:1px solid #cfd7e6;border-radius:8px">${esc(db.settings.terms || '')}</textarea></div>
+      <div style="grid-column:1/-1"><label>${t('footerTxt')}</label><input id="footerTxt" value="${esc(db.settings.footer || '')}"></div>
+    </div>
+    <h3 style="margin-top:16px">${t('pinSec')}</h3>
+    <label style="display:flex;gap:8px;align-items:center"><input id="pin_on" type="checkbox" ${db.settings.pinOn ? 'checked' : ''} style="width:auto"> ${t('pinOn')}</label>
+    <div class="grid2"><div><label>${t('pinNew')}</label><input id="pin_new" type="password" inputmode="numeric" placeholder="${t('pinHint')}"></div></div>
+    <p style="font-size:13px;color:#666">${t('pinNote')}</p>
+    <button class="green" onclick="saveSettings()">${t('saveSet')}</button>
+  </div>
+  <div class="card">
+    <h3>${t('qrTitle')}</h3>
+    ${qr ? `<img class="qr" src="${qr}" alt="QR"><br><a href="${qr}" target="_blank"><button class="light">${t('qrDownload')}</button></a>`
+         : `<p style="font-size:13px;color:#666">${t('upi')}</p>`}
+  </div>
+  <div class="card">
+    <h3>${t('backup')}</h3>
+    <button onclick="exportData()">${t('backupDo')}</button>
+    <h3 style="margin-top:14px">${t('backupFolderTitle')}</h3>
+    <p style="font-size:13px;color:#666">${t('backupHelp')}</p>
+    <p>${backupDir ? t('backupOk').replace('{f}', esc(backupDir.name)) + (lastBackup ? ' · ' + lastBackup : '') : t('backupNone')}</p>
+    <button class="green" onclick="pickBackupFolder()">${t('backupFolder')}</button>
+    ${backupDir ? `<button class="light" onclick="grantBackup()">${t('backupGrant')}</button>` : ''}
+    <h3 style="margin-top:14px">${t('backupModeTitle')}</h3>
+    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${db.settings.backupMode !== 'auto' ? 'checked' : ''} onchange="setBackupMode('manual')" style="width:auto"> ${t('backupManual')}</label>
+    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${db.settings.backupMode === 'auto' ? 'checked' : ''} onchange="setBackupMode('auto')" style="width:auto"> ${t('backupAuto')}</label>
+    <label>${t('restore')}</label>
+    <input type="file" accept=".json" onchange="importData(this)">
+  </div>`;
+}
+async function saveSettings(){
+  const s = db.settings;
+  s.name = document.getElementById('sn').value.trim();
+  s.phone = document.getElementById('sp').value.trim();
+  s.gstin = document.getElementById('sgi').value.trim();
+  s.upi = document.getElementById('su').value.trim();
+  s.addr = document.getElementById('sa').value.trim();
+  s.gst = Number(document.getElementById('sg').value) || 0;
+  s.cfields = document.getElementById('scf').value.split(',').map(x=>x.trim()).filter(Boolean);
+  s.city = document.getElementById('sc_city').value.trim();
+  s.bank = {
+    holder: document.getElementById('bn_holder').value.trim(),
+    name: document.getElementById('bn_name').value.trim(),
+    acc: document.getElementById('bn_acc').value.trim(),
+    ifsc: document.getElementById('bn_ifsc').value.trim()
+  };
+  SHOW_KEYS.forEach(k => { s.show[k] = document.getElementById('sh_' + k).checked; });
+  s.billNoMode = document.getElementById('bnm').value;
+  s.billPrefix = document.getElementById('bpf').value;
+  s.next = Math.max(1, Number(document.getElementById('bnx').value) || s.next);
+  s.entryMode = document.getElementById('entm').value;
+  s.paper = document.getElementById('paper').value;
+  s.terms = document.getElementById('termsTxt').value.trim();
+  s.footer = document.getElementById('footerTxt').value.trim();
+  s.pinOn = document.getElementById('pin_on').checked;
+  const newPin = document.getElementById('pin_new').value.trim();
+  if(!s.pinOn){ s.pinHash = ''; s.pinSalt = ''; }
+  else if(newPin){
+    if(!/^\d{4,6}$/.test(newPin)){ alert(t('pinBad')); return; }
+    s.pinSalt = randHex();
+    s.pinHash = await sha(s.pinSalt + newPin);
+  }
+  else if(!s.pinHash){ alert(t('pinNeed')); s.pinOn = false; }
+  save(); alert(t('saveDone')); renderSettings();
+}
+function exportData(){
+  const blob = new Blob([JSON.stringify(db)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'billeasy-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+function importData(input){
+  const f = input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    try{
+      const obj = JSON.parse(e.target.result);
+      if(!obj.settings || !Array.isArray(obj.invoices)) throw new Error();
+      db = normalize(obj); save(); applyLang(); alert(t('restored')); showTab('list');
+    }catch(err){ alert(t('badFile')); }
+  };
+  r.readAsText(f);
+}
+
+save();
+applyLang();
+showTab('new');
+restoreBackupHandle();
+showLockIfNeeded();
+</script>
+<div id="licLock" style="display:none;position:fixed;inset:0;background:#1f5fbf;z-index:30;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px;padding:20px;text-align:center">
+  <h2 style="margin:0">BillEasy</h2>
+  <div id="licMsg"></div>
+  <input id="licIn" placeholder="BE-YYYYMMDD-XXXX" style="width:260px;text-align:center;font-size:18px;padding:8px;border-radius:8px;border:0">
+  <button class="green" onclick="activateLic()">सक्रिय करें / Activate</button>
+  <div id="licErr" style="color:#ffd3d3"></div>
+</div>
+<script>
+/* ---- License settings: change LIC_SECRET before publishing and keep it private ---- */
+const LIC_SECRET = 'BILLEASY-CHANGE-THIS-SECRET';
+const LIC_CONTACT = 'आपका UPI ID या फ़ोन नंबर यहाँ लिखें';
+const TRIAL_DAYS = 30;
+/* true = सबके लिए मुफ़्त (कोई ट्रायल या लॉक नहीं). बाद में पेड व्यवस्था चालू करने के लिए false करें. */
+const FREE_MODE = true;
+
+function todayYMD(){ return new Date().toISOString().slice(0,10); }
+function daysBetween(a, b){ return Math.floor((new Date(b) - new Date(a)) / 86400000); }
+function checkLicense(){
+  const today = todayYMD();
+  if(FREE_MODE){
+    const tg = document.getElementById('tagline');
+    tg.textContent = tg.textContent.split(' · ')[0] + ' · मुफ़्त / Free';
+    return;
+  }
+  if(!db.settings.trialStart){ db.settings.trialStart = today; save(); }
+  const trialLeft = TRIAL_DAYS - daysBetween(db.settings.trialStart, today);
+  const tag = document.getElementById('tagline');
+  const base = tag.textContent.split(' · ')[0];
+  if(db.settings.licUntil && db.settings.licUntil >= today){
+    tag.textContent = base + ' · सक्रिय / Active'; return;
+  }
+  if(trialLeft > 0){
+    tag.textContent = base + ' · ट्रायल: ' + trialLeft + ' दिन'; return;
+  }
+  document.getElementById('licMsg').innerHTML =
+    'ट्रायल समाप्त हो गया है।<br>पूरे ऐप के लिए ₹999 प्रति 3 महीने।<br>भुगतान के बाद सक्रियण कोड लें: ' + LIC_CONTACT;
+  document.getElementById('licLock').style.display = 'flex';
+}
+async function activateLic(){
+  const code = document.getElementById('licIn').value.trim().toUpperCase();
+  const err = document.getElementById('licErr');
+  const m = code.match(/^BE-(\d{8})-([0-9A-F]{4})$/);
+  if(!m){ err.textContent = 'कोड सही फ़ॉर्मेट में नहीं है'; return; }
+  const ymd = m[1].slice(0,4) + '-' + m[1].slice(4,6) + '-' + m[1].slice(6,8);
+  const h = await sha(LIC_SECRET + ymd);
+  if(h.slice(0,4).toUpperCase() !== m[2]){ err.textContent = 'कोड गलत है'; return; }
+  if(ymd < todayYMD()){ err.textContent = 'यह कोड समाप्त हो चुका है'; return; }
+  db.settings.licUntil = ymd; save();
+  err.textContent = '';
+  document.getElementById('licLock').style.display = 'none';
+  checkLicense();
+}
+applyDesign();
+checkLicense();
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(() => {}); }
+</script>
+</body>
+</html>

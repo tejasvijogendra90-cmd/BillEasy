@@ -8,7 +8,9 @@
 <meta name="theme-color" content="#1f5fbf">
 <link rel="icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://api.qrserver.com; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <style>
 *{box-sizing:border-box}
 body{font-family:system-ui,sans-serif;background:#f1f5fb;margin:0;color:#1d2433}
@@ -97,6 +99,7 @@ td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-a
     <button id="t-list" class="light" onclick="showTab('list')"></button>
     <button id="t-items" class="light" onclick="showTab('items')"></button>
     <button id="t-purch" class="light" onclick="showTab('purch')"></button>
+    <button id="t-ledger" class="light" onclick="showTab('ledger')"></button>
     <button id="t-cust" class="light" onclick="showTab('cust')"></button>
     <button id="t-settings" class="light" onclick="showTab('settings')"></button>
   </div>
@@ -104,6 +107,7 @@ td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-a
   <div id="listView" class="view"></div>
   <div id="itemsView" class="view"></div>
   <div id="purchView" class="view"></div>
+  <div id="ledgerView" class="view"></div>
   <div id="custView" class="view"></div>
   <div id="settingsView" class="view"></div>
 </div>
@@ -127,7 +131,7 @@ const LANGS = {
     lines:'सामान / सेवाएँ', desc:'विवरण', qty:'मात्रा', rate:'दर', amount:'राशि', gst:'GST %', hsn:'HSN कोड', unit:'इकाई',
     add:'+ सामान जोड़ें', freeLine:'+ बिना सूची के सामान', total:'कुल देय', sub:'उप-योग', save:'बिल सेव करें', prev:'पूर्वावलोकन',
     print:'प्रिंट / PDF', wa:'WhatsApp पर भेजें', share:'शेयर करें', reset:'नया फ़ॉर्म', recv:'मिला हुआ पैसा', due:'बाकी पैसा',
-    count:'कुल बिल', paid:'भुगतान हो गया', unpaid:'बाकी', markPaid:'पेड करें', markDue:'बाकी करें', del:'हटाएँ', empty:'अभी कोई बिल नहीं है।',
+    count:'कुल बिल', paid:'पेड (भुगतान हो गया)', unpaid:'पेंडिंग', markPaid:'पेड करें', markDue:'बाकी करें', del:'हटाएँ', empty:'अभी कोई बिल नहीं है।',
     biz:'आपका व्यवसाय / नाम', saveSet:'सेटिंग्स सेव करें', saveDone:'सेटिंग्स सेव हो गईं', backup:'बैकअप',
     backupDo:'बैकअप डाउनलोड करें', restore:'बैकअप फ़ाइल से वापस लाएँ', billTo:'ग्राहक', billNo:'बिल नंबर', thanks:'धन्यवाद!',
     close:'बंद करें', confDel:'यह बिल हमेशा के लिए हटाएँ?', confReset:'फ़ॉर्म खाली करें?', needName:'ग्राहक का नाम लिखें',
@@ -175,6 +179,16 @@ const LANGS = {
     pinSec:'ऐप पासवर्ड (PIN)', pinOn:'ऐप खोलते समय PIN माँगें', pinNew:'नया PIN (4 से 6 अंक)', pinHint:'जैसे 1234',
     pinNote:'PIN भूल जाएँ तो ऐप खोलना मुश्किल होगा। ब्राउज़र का साइट डेटा साफ़ करने पर बिल भी चले जाएँगे, इसलिए बैकअप ज़रूर रखें।',
     designSec:'बिल डिज़ाइन (आप अपने हिसाब से बदलें)', tplLabel:'बिल का ढाँचा', tplClassic:'क्लासिक (बॉक्स वाली टेबल)', tplModern:'मॉडर्न (रंगीन हेडर)', tplMinimal:'मिनिमल (सादा)', dColor:'मुख्य रंग', dFont:'अक्षर (फ़ॉन्ट)', fontSys:'सामान्य', fontSerif:'किताबी (Serif)', fontRound:'साफ़ (Verdana)', dAlign:'शीर्ष की सीध', alignL:'बायाँ', alignC:'बीच में', alignR:'दायाँ', dTitle:'बिल का शीर्षक (जैसे टैक्स इनवॉइस, बिल, कैश मेमो)', designHint:'बदलाव तुरंत नीचे के नमूने में दिखेगा। सभी बिल और प्रिंट पर भी यही डिज़ाइन लगेगा।',
+    ledger:'हिसाब (खाता)', recvDue:'ग्राहकों से लेना बाकी', payDue:'सप्लायरों को देना बाकी', payEntry:'भुगतान दर्ज करें',
+    selParty:'पार्टी चुनें (ग्राहक या सप्लायर)', payAmt:'राशि', payMode:'तरीका', savePay:'भुगतान सेव करें', pendingList:'बकाया पार्टियाँ',
+    noPending:'कोई बकाया नहीं है।', payHistory:'भुगतान का इतिहास', noPay:'अभी कोई भुगतान दर्ज नहीं है।', recvLbl:'मिला', paidLbl:'दिया',
+    mCash:'नकद', mBank:'बैंक ट्रांसफ़र', mCheque:'चेक', pickParty:'पार्टी चुनें', badAmt:'सही राशि लिखें',
+    gstinBad:'GSTIN का फ़ॉर्मेट या चेक-अंक सही नहीं लगता। फिर भी सेव करें?',
+    askBackupPass:'बैकअप का पासवर्ड लिखें (याद रखें, इसके बिना बैकअप नहीं खुलेगा)', passNeed:'बैकअप के लिए पासवर्ड ज़रूरी है',
+    askRestorePass:'बैकअप फ़ाइल का पासवर्ड लिखें',
+    payStatus:'भुगतान की स्थिति', pending:'पेंडिंग (बाकी)', paidYes:'पेड (भुगतान हो गया)', editingBill:'बिल बदला जा रहा है:',
+    cancel:'रद्द करें', updateBill:'बदलाव सेव करें', billEdit:'बिल बदलें', editBtn:'बदलें', newAmt:'नई राशि लिखें',
+    billLabel:'बिल', purchLabel:'खरीद',
     pinBad:'PIN 4 से 6 अंकों का होना चाहिए', pinNeed:'PIN चालू करने के लिए नया PIN लिखें', pinWrong:'गलत PIN',
     exportItems:'सामान की सूची Excel में डाउनलोड करें', exportBills:'सभी बिल Excel में डाउनलोड करें' },
   en:{ name:'English', tag:'Billing made easy', new:'New Bill', list:'All Bills', items:'Item List', purch:'Purchase', cust:'Customers', set:'Settings',
@@ -182,7 +196,7 @@ const LANGS = {
     lines:'Items / Services', desc:'Description', qty:'Qty', rate:'Rate', amount:'Amount', gst:'GST %', hsn:'HSN code', unit:'Unit',
     add:'+ Add item', freeLine:'+ Item not in list', total:'Total due', sub:'Subtotal', save:'Save bill', prev:'Preview',
     print:'Print / PDF', wa:'Send on WhatsApp', share:'Share', reset:'New form', recv:'Received', due:'Pending', count:'Total bills',
-    paid:'Paid', unpaid:'Unpaid', markPaid:'Mark paid', markDue:'Mark unpaid', del:'Delete', empty:'No bills yet.',
+    paid:'Paid', unpaid:'Pending', markPaid:'Mark paid', markDue:'Mark unpaid', del:'Delete', empty:'No bills yet.',
     biz:'Your business / name', saveSet:'Save settings', saveDone:'Settings saved', backup:'Backup', backupDo:'Download backup',
     restore:'Restore from backup file', billTo:'Bill to', billNo:'Bill no.', thanks:'Thank you!', close:'Close',
     confDel:'Delete this bill permanently?', confReset:'Clear the form?', needName:'Enter customer name',
@@ -230,6 +244,16 @@ const LANGS = {
     pinSec:'App password (PIN)', pinOn:'Ask for PIN when opening the app', pinNew:'New PIN (4 to 6 digits)', pinHint:'e.g. 1234',
     pinNote:'If you forget the PIN, the app cannot be opened. Clearing the browser site data also deletes your bills, so keep backups.',
     designSec:'Bill design (customise as you like)', tplLabel:'Bill layout', tplClassic:'Classic (boxed table)', tplModern:'Modern (coloured header)', tplMinimal:'Minimal (plain)', dColor:'Main colour', dFont:'Font', fontSys:'Standard', fontSerif:'Serif (book style)', fontRound:'Clean (Verdana)', dAlign:'Header alignment', alignL:'Left', alignC:'Centre', alignR:'Right', dTitle:'Bill title (e.g. Tax Invoice, Bill, Cash Memo)', designHint:'Changes show instantly in the sample below and apply to all bills and prints.',
+    ledger:'Ledger', recvDue:'To receive from customers', payDue:'To pay to suppliers', payEntry:'Record payment',
+    selParty:'Choose party (customer or supplier)', payAmt:'Amount', payMode:'Mode', savePay:'Save payment', pendingList:'Pending parties',
+    noPending:'No pending amounts.', payHistory:'Payment history', noPay:'No payments recorded yet.', recvLbl:'Received', paidLbl:'Paid',
+    mCash:'Cash', mBank:'Bank transfer', mCheque:'Cheque', pickParty:'Choose a party', badAmt:'Enter a valid amount',
+    gstinBad:'GSTIN format or check digit looks wrong. Save anyway?',
+    askBackupPass:'Enter a backup password (remember it, the backup cannot be opened without it)', passNeed:'A backup password is required',
+    askRestorePass:'Enter the backup file password',
+    payStatus:'Payment status', pending:'Pending', paidYes:'Paid', editingBill:'Editing bill:',
+    cancel:'Cancel', updateBill:'Update bill', billEdit:'Edit bill', editBtn:'Edit', newAmt:'Enter new amount',
+    billLabel:'Bill', purchLabel:'Purchase',
     pinBad:'PIN must be 4 to 6 digits', pinNeed:'Enter a new PIN to turn PIN on', pinWrong:'Wrong PIN',
     exportItems:'Download item list as Excel', exportBills:'Download all bills as Excel' }
 };
@@ -241,20 +265,64 @@ const DEFAULT_SHOW = Object.fromEntries(SHOW_KEYS.map(k => [k, true]));
 DEFAULT_SHOW.signature = false;
 DEFAULT_SHOW.terms = false;
 let db = normalize(JSON.parse(localStorage.getItem('billeasy4') || 'null'));
+/* ---- Security: clean every value that comes from storage or a backup file ----
+   A backup file can come from anyone, so ids, bill numbers, dates, numbers,
+   pictures and design values are forced into safe shapes before use. */
+function safeId(v){ return String(v ?? '').replace(/[^A-Za-z0-9_-]/g, '').slice(0, 40); }
+function safeTxt(v, max){ return String(v ?? '').replace(/[<>"'`\\&]/g, '').slice(0, max || 60); }
+function safeStr(v, max){ return String(v ?? '').slice(0, max || 500); }
+function safeNum(v){ const n = Number(v); return isFinite(n) ? n : 0; }
+function safeDate(v){ v = String(v ?? ''); return /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : ''; }
+function safeImg(v){ v = String(v ?? ''); return /^data:image\/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+/=]+$/.test(v) ? v : ''; }
+function pick(v, list, def){ return list.includes(v) ? v : def; }
+function arr(v){ return Array.isArray(v) ? v.filter(x => x && typeof x === 'object') : []; }
 function normalize(d){
-  d = d || {};
-  d.settings = Object.assign({}, blankSettings, d.settings || {});
-  d.settings.cfields = d.settings.cfields || [];
-  d.settings.bank = Object.assign({ holder:'', name:'', acc:'', ifsc:'' }, d.settings.bank || {});
-  d.settings.show = Object.assign({}, DEFAULT_SHOW, d.settings.show || {});
-  d.settings.backupMode = d.settings.backupMode === 'auto' ? 'auto' : 'manual';
-  d.settings.design = Object.assign({ template:'classic', color:'#1f5fbf', font:'system', align:'left', title:'टैक्स इनवॉइस / बिल' }, d.settings.design || {});
-  d.customers = d.customers || [];
-  d.items = d.items || [];
-  d.purchases = d.purchases || [];
-  d.invoices = (d.invoices || []).map(inv => {
-    if(!inv.lines) inv.lines = (inv.items || []).map(l => ({ iid:null, n:l.n, hsn:'', unit:'pcs', q:l.q, r:l.r, gst:d.settings.gst||0 }));
-    return inv;
+  d = (d && typeof d === 'object') ? d : {};
+  const s = d.settings = Object.assign({}, blankSettings, (d.settings && typeof d.settings === 'object') ? d.settings : {});
+  ['name','addr','city','phone','gstin','upi','terms','footer'].forEach(k => { s[k] = safeStr(s[k], k === 'terms' ? 2000 : 300); });
+  s.gst = safeNum(s.gst); s.next = Math.max(1, Math.floor(safeNum(s.next)) || 1);
+  s.lang = pick(s.lang, Object.keys(LANGS), 'hi');
+  s.billPrefix = safeTxt(s.billPrefix, 20);
+  s.billNoMode = pick(s.billNoMode, ['auto','manual'], 'auto');
+  s.entryMode = pick(s.entryMode, ['manual','scan'], 'manual');
+  s.paper = pick(s.paper, ['a4','thermal'], 'a4');
+  s.logo = safeImg(s.logo);
+  s.cfields = (Array.isArray(s.cfields) ? s.cfields : []).map(f => safeTxt(f, 40)).filter(Boolean).slice(0, 20);
+  const b = (s.bank && typeof s.bank === 'object') ? s.bank : {};
+  s.bank = { holder:safeStr(b.holder,100), name:safeStr(b.name,100), acc:safeStr(b.acc,40), ifsc:safeStr(b.ifsc,20) };
+  const sh = Object.assign({}, DEFAULT_SHOW, (s.show && typeof s.show === 'object') ? s.show : {});
+  s.show = Object.fromEntries(SHOW_KEYS.map(k => [k, !!sh[k]]));
+  s.backupMode = s.backupMode === 'auto' ? 'auto' : 'manual';
+  const D = Object.assign({ template:'classic', color:'#1f5fbf', font:'system', align:'left', title:'टैक्स इनवॉइस / बिल' }, (s.design && typeof s.design === 'object') ? s.design : {});
+  s.design = { template:pick(D.template, ['classic','modern','minimal'], 'classic'),
+    color:/^#[0-9a-fA-F]{6}$/.test(D.color) ? D.color : '#1f5fbf',
+    font:pick(D.font, ['system','serif','rounded'], 'system'),
+    align:pick(D.align, ['left','center','right'], 'left'), title:safeStr(D.title, 100) };
+  s.pinOn = !!s.pinOn; s.pinHash = /^[0-9a-f]*$/.test(s.pinHash || '') ? (s.pinHash || '') : '';
+  s.pinSalt = /^[0-9a-f]*$/.test(s.pinSalt || '') ? (s.pinSalt || '') : '';
+  s.trialStart = safeDate(s.trialStart) || undefined; s.licUntil = safeDate(s.licUntil) || undefined;
+  const extra = x => { const o = {}; if(x && typeof x === 'object') Object.keys(x).slice(0, 20).forEach(k => { const kk = safeTxt(k, 40); if(kk) o[kk] = safeStr(x[k], 300); }); return o; };
+  const line = l => ({ iid:l.iid ? safeId(l.iid) : null, n:safeStr(l.n, 200), hsn:safeStr(l.hsn, 20),
+    unit:pick(l.unit, UNITS, 'pcs'), q:safeNum(l.q), r:safeNum(l.r), gst:safeNum(l.gst) });
+  d.customers = arr(d.customers).map(c => ({ id:safeId(c.id) || ('C' + randHex()), name:safeStr(c.name, 200), phone:safeStr(c.phone, 30),
+    gstin:safeStr(c.gstin, 20), email:safeStr(c.email, 100), address:safeStr(c.address, 300), extra:extra(c.extra) }));
+  d.items = arr(d.items).map(i => ({ id:safeId(i.id) || ('I' + randHex()), name:safeStr(i.name, 200), photo:safeImg(i.photo), hsn:safeStr(i.hsn, 20),
+    gst:safeNum(i.gst), unit:pick(i.unit, UNITS, 'pcs'), sale:safeNum(i.sale), buy:safeNum(i.buy), stock:safeNum(i.stock),
+    bc:safeStr(i.bc, 60), minQty:safeNum(i.minQty), stockDate:safeDate(i.stockDate) }));
+  d.suppliers = arr(d.suppliers).map(x => ({ id:safeId(x.id) || ('S' + randHex()), name:safeStr(x.name, 200),
+    phone:safeStr(x.phone, 30), gstin:safeStr(x.gstin, 20), address:safeStr(x.address, 300) }));
+  d.purchases = arr(d.purchases).map(p => Object.assign({}, p, { id:p.id ? safeId(p.id) : p.id, sid:p.sid ? safeId(p.sid) : p.sid,
+    iid:p.iid ? safeId(p.iid) : p.iid, date:safeDate(p.date), q:safeNum(p.q), r:safeNum(p.r),
+    supplier:safeStr(p.supplier, 200), n:safeStr(p.n, 200), unit:pick(p.unit, UNITS, 'pcs') }));
+  d.payments = arr(d.payments).map(p => ({ id:safeId(p.id) || ('Y' + randHex()), ty:pick(p.ty, ['c','s'], 'c'), pid:safeId(p.pid),
+    amt:safeNum(p.amt), date:safeDate(p.date), mode:safeStr(p.mode, 30), note:safeStr(p.note, 300),
+    auto:!!p.auto, inv:p.inv !== undefined ? safeTxt(p.inv, 40) : undefined }));
+  d.invoices = arr(d.invoices).map(inv => {
+    const lines = Array.isArray(inv.lines) ? inv.lines : (Array.isArray(inv.items) ? inv.items.map(l => ({ n:l.n, q:l.q, r:l.r, gst:s.gst })) : []);
+    return { no:safeTxt(inv.no, 40), cid:inv.cid ? safeId(inv.cid) : null, cn:safeStr(inv.cn, 200), cp:safeStr(inv.cp, 30),
+      cgstin:safeStr(inv.cgstin, 20), cemail:safeStr(inv.cemail, 100), caddr:safeStr(inv.caddr, 300), cextra:extra(inv.cextra),
+      cd:safeDate(inv.cd), lines:lines.filter(l => l && typeof l === 'object').map(line),
+      paid:!!inv.paid, pmode:safeStr(inv.pmode, 30), total:safeNum(inv.total) };
   });
   return d;
 }
@@ -264,9 +332,22 @@ let selCid = null;
 let itemDraft = blankItem();
 let purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
 let editMode = false;
+let editingNo = null;
 
 function t(k){ return (LANGS[db.settings.lang] || LANGS.hi)[k] || LANGS.en[k] || k; }
-function save(){ localStorage.setItem('billeasy4', JSON.stringify(db)); autoBackup(); }
+function save(){ db = normalize(db); localStorage.setItem('billeasy4', JSON.stringify(db)); autoBackup(); }
+
+/* ---- Security: slow down guessing of PIN and activation code ----
+   After 5 wrong tries the app waits 30 sec, then 1 min, 2 min ... (max 1 hour).
+   The count is kept in storage, so closing and opening the app does not reset it. */
+function guardState(k){ try{ return JSON.parse(localStorage.getItem('be_guard_' + k) || '{}'); }catch(e){ return {}; } }
+function guardWait(k){ const g = guardState(k); return Math.max(0, Math.ceil(((g.until || 0) - Date.now()) / 1000)); }
+function guardFail(k){
+  const g = guardState(k); g.n = (g.n || 0) + 1;
+  if(g.n >= 5) g.until = Date.now() + Math.min(3600, 30 * Math.pow(2, g.n - 5)) * 1000;
+  localStorage.setItem('be_guard_' + k, JSON.stringify(g));
+}
+function guardOk(k){ localStorage.removeItem('be_guard_' + k); }
 
 /* ---------- Automatic backup to a chosen folder ---------- */
 let backupDir = null;
@@ -327,7 +408,7 @@ function unitSelect(sel, onchange){
   return `<select onchange="${onchange}">${UNITS.map(u => `<option value="${u}" ${u===sel?'selected':''}>${uLabel(u)}</option>`).join('')}</select>`;
 }
 function blankInv(){
-  return { cid:null, cn:'', cp:'', cgstin:'', cemail:'', caddr:'', cextra:{}, cd:new Date().toISOString().slice(0,10), lines:[] };
+  return { cid:null, cn:'', cp:'', cgstin:'', cemail:'', caddr:'', cextra:{}, cd:new Date().toISOString().slice(0,10), lines:[], paid:false, pmode:'' };
 }
 function blankItem(){
   return { id:null, name:'', photo:'', hsn:'', gst:db.settings.gst||0, unit:'pcs', sale:0, buy:0, stock:0, bc:'', minQty:0, stockDate:'' };
@@ -371,6 +452,7 @@ function applyLang(){
   document.getElementById('t-list').textContent = t('list');
   document.getElementById('t-items').textContent = t('items');
   document.getElementById('t-purch').textContent = t('purch');
+  document.getElementById('t-ledger').textContent = t('ledger');
   document.getElementById('t-cust').textContent = t('cust');
   document.getElementById('t-settings').textContent = t('set');
   document.getElementById('langSel').innerHTML = Object.keys(LANGS).map(k =>
@@ -379,7 +461,7 @@ function applyLang(){
 function setLang(l){ db.settings.lang = l; save(); applyLang(); showTab(tab); }
 function showTab(x){
   tab = x;
-  ['new','list','items','purch','cust','settings'].forEach(k => {
+  ['new','list','items','purch','ledger','cust','settings'].forEach(k => {
     document.getElementById(k+'View').style.display = k===x ? 'block' : 'none';
     document.getElementById('t-'+k).className = k===x ? 'on' : 'light';
   });
@@ -387,6 +469,7 @@ function showTab(x){
   if(x==='list') renderList();
   if(x==='items') renderItems();
   if(x==='purch') renderPurch();
+  if(x==='ledger') renderLedger();
   if(x==='cust') renderCustomers();
   if(x==='settings'){ renderSettings(); renderDesignPreview(); }
 }
@@ -429,7 +512,7 @@ function customerFields(src){
 function renderNew(){
   document.getElementById('newView').innerHTML = `
   <div class="card">
-    <h3>${t('cust1')}</h3>
+    <h3>${t('cust1')}</h3>${editingNo ? `<p style="background:#fff3cd;padding:6px;border-radius:6px">${t('editingBill')} <b>${editingNo}</b> <button class="gray sm" onclick="cancelEdit()">${t('cancel')}</button></p>` : ''}
     <div class="grid2">
       <div>
         <label>${t('cname')}</label>
@@ -474,7 +557,15 @@ function renderNew(){
     <div class="tot" id="tot"></div>
   </div>
   <div class="card">
-    <button class="green" onclick="saveInv()">${t('save')}</button>
+    <div style="margin:8px 0">
+      <label>${t('payStatus')}</label>
+      <select onchange="cur.paid=this.value==='1';renderNew()">
+        <option value="0" ${cur.paid ? '' : 'selected'}>${t('pending')}</option>
+        <option value="1" ${cur.paid ? 'selected' : ''}>${t('paidYes')}</option>
+      </select>
+      ${cur.paid ? `<select onchange="cur.pmode=this.value">${[t('mCash'),'UPI',t('mBank'),t('mCheque')].map(m => `<option ${cur.pmode === m ? 'selected' : ''}>${m}</option>`).join('')}</select>` : ''}
+    </div>
+    <button class="green" onclick="saveInv()">${editingNo ? t('updateBill') : t('save')}</button>
     <button onclick="previewCur()">${t('prev')}</button>
     <button class="gray" onclick="resetCur()">${t('reset')}</button>
   </div>`;
@@ -565,6 +656,41 @@ async function sha(str){
   const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('');
 }
+function hexToBytes(h){ return Uint8Array.from(h.match(/../g).map(x => parseInt(x, 16))); }
+function bytesToHex(b){ return [...b].map(x => x.toString(16).padStart(2,'0')).join(''); }
+async function pbkdf2hex(pin, saltHex){
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits({ name:'PBKDF2', salt:hexToBytes(saltHex), iterations:200000, hash:'SHA-256' }, key, 256);
+  return bytesToHex(new Uint8Array(bits));
+}
+async function deriveAes(pass, salt){
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name:'PBKDF2', salt, iterations:200000, hash:'SHA-256' }, km, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']);
+}
+async function encryptBackup(json, pass){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveAes(pass, salt);
+  const ct = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, new TextEncoder().encode(json));
+  return JSON.stringify({ enc:1, salt:bytesToHex(salt), iv:bytesToHex(iv), data:bytesToHex(new Uint8Array(ct)) });
+}
+async function decryptBackup(obj, pass){
+  const key = await deriveAes(pass, hexToBytes(obj.salt));
+  const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv:hexToBytes(obj.iv) }, key, hexToBytes(obj.data));
+  return new TextDecoder().decode(pt);
+}
+let idleTimer = null;
+function resetIdle(){
+  clearTimeout(idleTimer);
+  if(db.settings.pinOn && db.settings.pinHash){
+    idleTimer = setTimeout(() => {
+      document.getElementById('lock').style.display = 'flex';
+      document.getElementById('pinIn').value = '';
+    }, 5 * 60 * 1000);
+  }
+}
+['click','keydown','touchstart','mousemove'].forEach(ev => document.addEventListener(ev, resetIdle, { passive:true }));
+
 function showLockIfNeeded(){
   if(db.settings.pinOn && db.settings.pinHash){
     document.getElementById('lock').style.display = 'flex';
@@ -572,12 +698,24 @@ function showLockIfNeeded(){
   }
 }
 async function unlock(){
+  const wait = guardWait('pin');
+  if(wait){ document.getElementById('pinErr').textContent = 'बहुत बार गलत PIN। ' + wait + ' सेकंड बाद फिर कोशिश करें / Too many tries, wait ' + wait + ' sec'; return; }
   const v = document.getElementById('pinIn').value.trim();
-  if((await sha(db.settings.pinSalt + v)) === db.settings.pinHash){
+  const calc = db.settings.pinVer === 2 ? await pbkdf2hex(v, db.settings.pinSalt) : await sha(db.settings.pinSalt + v);
+  if(calc === db.settings.pinHash){
+    guardOk('pin');
+    if(db.settings.pinVer !== 2){
+      /* old, weaker PIN format: upgrade it to the stronger one */
+      db.settings.pinSalt = randHex();
+      db.settings.pinHash = await pbkdf2hex(v, db.settings.pinSalt);
+      db.settings.pinVer = 2; save();
+    }
     document.getElementById('lock').style.display = 'none';
     document.getElementById('pinIn').value = '';
     document.getElementById('pinErr').textContent = '';
   } else {
+    guardFail('pin');
+    document.getElementById('pinIn').value = '';
     document.getElementById('pinErr').textContent = t('pinWrong');
   }
 }
@@ -593,10 +731,11 @@ function buildInv(cid){
 }
 function validCur(){
   if(!cur.cn.trim()){ alert(t('needName')); return false; }
+  if(cur.cgstin && !validGSTIN(cur.cgstin.trim()) && !confirm(t('gstinBad'))) return false;
   if(db.settings.billNoMode === 'manual'){
     const no = (cur.no || '').trim();
     if(!no){ alert(t('needBillNo')); return false; }
-    if(db.invoices.some(i => i.no === no)){ alert(t('dupBillNo')); return false; }
+    if(db.invoices.some(i => i.no === no && i.no !== editingNo)){ alert(t('dupBillNo')); return false; }
   }
   if(!cur.lines.some(l => l.n.trim())){ alert(t('needLine')); return false; }
   return true;
@@ -609,8 +748,24 @@ function saveInv(){
     const it = l.iid && itemById(l.iid);
     if(it) it.stock = (Number(it.stock)||0) - l.q;
   });
-  db.invoices.push(inv); db.settings.next++; save();
+  if(editingNo){
+    const old = db.invoices.find(i => i.no === editingNo);
+    if(old){
+      old.lines.forEach(l => { const it = l.iid && itemById(l.iid); if(it) it.stock = (Number(it.stock)||0) + l.q; });
+      db.payments = db.payments.filter(p => !(p.auto && p.inv === old.no));
+      db.invoices = db.invoices.filter(i => i !== old);
+    }
+    inv.no = editingNo;
+  } else {
+    db.settings.next++;
+  }
+  inv.paid = !!cur.paid;
+  inv.pmode = cur.pmode || t('mCash');
+  db.invoices.push(inv);
+  if(inv.paid) addAutoPayment(inv);
+  save();
   alert(t('saved') + ': ' + inv.no + lowStockNote());
+  editingNo = null;
   cur = blankInv(); showTab('list');
 }
 function previewCur(){ if(validCur()) openPreview(buildInv(cur.cid)); }
@@ -645,11 +800,12 @@ function renderBillRows(){
       <td>
         <button class="light sm" onclick="openPreviewNo('${i.no}')">${t('prev')}</button>
         <button class="light sm" onclick="togglePaid('${i.no}')">${i.paid?t('markDue'):t('markPaid')}</button>
+        <button class="light sm" onclick="editInv('${i.no}')">${t('billEdit')}</button>
         <button class="red sm" onclick="delInv('${i.no}')">${t('del')}</button>
       </td>
     </tr>`).join('')}</table>`;
 }
-function togglePaid(no){ const inv = db.invoices.find(i=>i.no===no); if(inv){ inv.paid=!inv.paid; save(); renderBillRows(); } }
+
 function delInv(no){
   if(!confirm(t('confDel'))) return;
   const inv = db.invoices.find(i=>i.no===no);
@@ -875,6 +1031,14 @@ function renderPurch(){
       <div><label>${t('buy')}</label><input type="number" min="0" step="any" value="${purchDraft.r}" oninput="purchDraft.r=this.value;purchCalc()"></div>
       <div><label>${t('buyTotal')}</label><input id="ptot" value="${money(total)}" disabled></div>
     </div>
+    <div style="margin:8px 0">
+      <label>${t('payStatus')}</label>
+      <select onchange="purchDraft.paid=this.value==='1';renderPurch()">
+        <option value="0" ${purchDraft.paid ? '' : 'selected'}>${t('pending')}</option>
+        <option value="1" ${purchDraft.paid ? 'selected' : ''}>${t('paidYes')}</option>
+      </select>
+      ${purchDraft.paid ? `<select onchange="purchDraft.pmode=this.value">${[t('mCash'),'UPI',t('mBank'),t('mCheque')].map(m => `<option ${purchDraft.pmode === m ? 'selected' : ''}>${m}</option>`).join('')}</select>` : ''}
+    </div>
     <button class="green" onclick="savePurch()">${t('savePurch')}</button>` : `<p>${t('noItems')}</p>`}
   </div>
   <div class="card">
@@ -892,10 +1056,139 @@ function savePurch(){
   const q = Number(purchDraft.q)||0, r = Number(purchDraft.r)||0;
   it.stock = (Number(it.stock)||0) + q;
   it.buy = r;
-  db.purchases.push({ id:'P'+Date.now(), date:purchDraft.date, supplier:purchDraft.supplier.trim(), iid:it.id, n:it.name, unit:it.unit, q, r });
+  db.purchases.push({ id:'P'+Date.now(), date:purchDraft.date, supplier:purchDraft.supplier.trim(), sid:upsertSupplier(purchDraft.supplier), iid:it.id, n:it.name, unit:it.unit, q, r });
+  if(purchDraft.paid){
+    const pr = db.purchases[db.purchases.length - 1];
+    db.payments.push({ id:'A' + Date.now() + Math.floor(Math.random() * 1000), ty:'s', pid:pr.sid, amt:pr.q * pr.r,
+      date:pr.date, mode:purchDraft.pmode || t('mCash'), note:t('purchLabel') + ' ' + pr.n, auto:true, inv:pr.id });
+  }
   save(); alert(t('purchSaved'));
   purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
   renderPurch();
+}
+
+/* ---------- Bill payment link and editing ---------- */
+function addAutoPayment(inv){
+  db.payments.push({ id:'A' + Date.now() + Math.floor(Math.random() * 1000), ty:'c', pid:inv.cid, amt:inv.total,
+    date:inv.cd, mode:inv.pmode || t('mCash'), note:t('billLabel') + ' ' + inv.no, auto:true, inv:inv.no });
+}
+function editInv(no){
+  const inv = db.invoices.find(i => i.no === no); if(!inv) return;
+  editingNo = no;
+  cur = { cid:inv.cid, cn:inv.cn, cp:inv.cp, cgstin:inv.cgstin || '', cemail:inv.cemail || '', caddr:inv.caddr || '',
+    cextra:Object.assign({}, inv.cextra || {}), cd:inv.cd, gst:db.settings.gst || 0, no:inv.no,
+    paid:!!inv.paid, pmode:inv.pmode || '', lines:inv.lines.map(l => Object.assign({}, l)) };
+  showTab('new');
+}
+function cancelEdit(){
+  editingNo = null;
+  cur = blankInv();
+  renderNew();
+}
+function togglePaid(no){
+  const inv = db.invoices.find(i => i.no === no); if(!inv) return;
+  inv.paid = !inv.paid;
+  db.payments = db.payments.filter(p => !(p.auto && p.inv === no));
+  if(inv.paid) addAutoPayment(inv);
+  save(); renderBillRows();
+}
+
+/* ---------- Ledger: parties, balances, payments ---------- */
+function upsertSupplier(name){
+  const n = (name || '').trim();
+  if(!n) return null;
+  let s = db.suppliers.find(x => x.name.toLowerCase() === n.toLowerCase());
+  if(!s){ s = { id:'S' + Date.now(), name:n, phone:'', gstin:'', address:'' }; db.suppliers.push(s); }
+  return s.id;
+}
+function partyBalance(ty, id){
+  if(ty === 'c'){
+    const sale = db.invoices.filter(i => i.cid === id).reduce((a,i) => a + i.total, 0);
+    const got = db.payments.filter(p => p.ty === 'c' && p.pid === id).reduce((a,p) => a + p.amt, 0);
+    return sale - got;
+  }
+  const buy = db.purchases.filter(p => p.sid === id).reduce((a,p) => a + p.q * p.r, 0);
+  const paid = db.payments.filter(p => p.ty === 's' && p.pid === id).reduce((a,p) => a + p.amt, 0);
+  return buy - paid;
+}
+function partyName(ty, id){
+  const p = ty === 'c' ? db.customers.find(x => x.id === id) : db.suppliers.find(x => x.id === id);
+  return p ? p.name : '';
+}
+function validGSTIN(g){
+  if(!g) return true;
+  if(!/^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/.test(g)) return false;
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let sum = 0;
+  for(let i = 0; i < 14; i++){
+    const p = chars.indexOf(g[i]) * (i % 2 === 0 ? 1 : 2);
+    sum += Math.floor(p / 36) + (p % 36);
+  }
+  return chars[(36 - (sum % 36)) % 36] === g[14];
+}
+function renderLedger(){
+  const parties = [
+    ...db.customers.map(c => ({ key:'c:'+c.id, name:c.name, ty:'c', id:c.id, bal:partyBalance('c', c.id) })),
+    ...db.suppliers.map(s => ({ key:'s:'+s.id, name:s.name, ty:'s', id:s.id, bal:partyBalance('s', s.id) }))
+  ];
+  const recv = parties.filter(p => p.ty === 'c' && p.bal > 0.005).reduce((a,p) => a + p.bal, 0);
+  const pay  = parties.filter(p => p.ty === 's' && p.bal > 0.005).reduce((a,p) => a + p.bal, 0);
+  const pend = parties.filter(p => p.bal > 0.005);
+  document.getElementById('ledgerView').innerHTML = `
+  <div class="card summary">
+    <div>${t('recvDue')}<b class="due">${money(recv)}</b></div>
+    <div>${t('payDue')}<b class="low">${money(pay)}</b></div>
+  </div>
+  <div class="card">
+    <h3>${t('payEntry')}</h3>
+    <div class="grid2">
+      <div><label>${t('selParty')}</label><select id="lpParty"><option value="">—</option>
+        ${parties.map(p => `<option value="${p.key}">${p.ty === 'c' ? '👤' : '🏭'} ${esc(p.name)} (${money(p.bal)})</option>`).join('')}
+      </select></div>
+      <div><label>${t('payAmt')}</label><input id="lpAmt" type="number" min="0" step="any"></div>
+      <div><label>${t('date')}</label><input id="lpDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div><label>${t('payMode')}</label><select id="lpMode"><option>${t('mCash')}</option><option>UPI</option><option>${t('mBank')}</option><option>${t('mCheque')}</option></select></div>
+      <div style="grid-column:1/-1"><label>${t('desc')}</label><input id="lpNote"></div>
+    </div>
+    <button class="green" onclick="addPayment()">${t('savePay')}</button>
+  </div>
+  <div class="card">
+    <h3>${t('pendingList')}</h3>
+    ${pend.length ? `<table>${pend.map(p => `<tr><td>${p.ty === 'c' ? '👤' : '🏭'} ${esc(p.name)}</td><td class="${p.ty === 'c' ? 'due' : 'low'}">${money(p.bal)}</td></tr>`).join('')}</table>` : `<p>${t('noPending')}</p>`}
+  </div>
+  <div class="card">
+    <h3>${t('payHistory')}</h3>
+    ${db.payments.length ? `<div style="overflow-x:auto"><table>${[...db.payments].reverse().slice(0,50).map(p => `<tr>
+      <td>${p.date}</td><td>${esc(partyName(p.ty, p.pid))}</td><td>${p.ty === 'c' ? t('recvLbl') : t('paidLbl')}</td>
+      <td>${money(p.amt)}</td><td>${esc(p.mode)}</td>
+      <td>${p.auto ? '' : `<button class="light sm" onclick="editPayment('${p.id}')">${t('editBtn')}</button>`} <button class="red sm" onclick="delPayment('${p.id}')">${t('del')}</button></td></tr>`).join('')}</table></div>` : `<p>${t('noPay')}</p>`}
+  </div>`;
+}
+function addPayment(){
+  const key = document.getElementById('lpParty').value;
+  const amt = Number(document.getElementById('lpAmt').value);
+  if(!key){ alert(t('pickParty')); return; }
+  if(!(amt > 0)){ alert(t('badAmt')); return; }
+  const [ty, pid] = key.split(':');
+  db.payments.push({ id:'Y' + Date.now(), ty, pid, amt,
+    date: document.getElementById('lpDate').value,
+    mode: document.getElementById('lpMode').value,
+    note: document.getElementById('lpNote').value.trim() });
+  save(); renderLedger();
+}
+function editPayment(id){
+  const p = db.payments.find(x => x.id === id);
+  if(!p || p.auto) return;
+  const v = Number(prompt(t('newAmt'), p.amt));
+  if(!(v > 0)) return;
+  p.amt = v; save(); renderLedger();
+}
+function delPayment(id){
+  if(!confirm(t('confDel'))) return;
+  const pm = db.payments.find(p => p.id === id);
+  if(pm && pm.auto && pm.ty === 'c'){ const bill = db.invoices.find(i => i.no === pm.inv); if(bill) bill.paid = false; }
+  db.payments = db.payments.filter(p => p.id !== id);
+  save(); renderLedger();
 }
 
 /* ---------- Customers and history ---------- */
@@ -1063,7 +1356,7 @@ function shareText(inv){
 function sendWA(inv){
   let num = digits(inv.cp);
   if(num.length === 10) num = '91' + num;
-  window.open((num ? 'https://wa.me/' + num : 'https://wa.me/') + '?text=' + encodeURIComponent(shareText(inv)), '_blank');
+  window.open((num ? 'https://wa.me/' + num : 'https://wa.me/') + '?text=' + encodeURIComponent(shareText(inv)), '_blank', 'noopener,noreferrer');
 }
 function shareInv(inv){
   if(navigator.share) navigator.share({ title: inv.no, text: shareText(inv) }).catch(()=>{});
@@ -1145,7 +1438,7 @@ function renderSettings(){
   </div>
   <div class="card">
     <h3>${t('qrTitle')}</h3>
-    ${qr ? `<img class="qr" src="${qr}" alt="QR"><br><a href="${qr}" target="_blank"><button class="light">${t('qrDownload')}</button></a>`
+    ${qr ? `<img class="qr" src="${qr}" alt="QR"><br><a href="${qr}" target="_blank" rel="noopener noreferrer"><button class="light">${t('qrDownload')}</button></a>`
          : `<p style="font-size:13px;color:#666">${t('upi')}</p>`}
   </div>
   <div class="card">
@@ -1193,13 +1486,19 @@ async function saveSettings(){
   else if(newPin){
     if(!/^\d{4,6}$/.test(newPin)){ alert(t('pinBad')); return; }
     s.pinSalt = randHex();
-    s.pinHash = await sha(s.pinSalt + newPin);
+    s.pinHash = await pbkdf2hex(newPin, s.pinSalt);
+    s.pinVer = 2;
   }
   else if(!s.pinHash){ alert(t('pinNeed')); s.pinOn = false; }
   save(); alert(t('saveDone')); renderSettings();
 }
-function exportData(){
-  const blob = new Blob([JSON.stringify(db)], {type:'application/json'});
+async function exportData(){
+  const pass = prompt(t('askBackupPass'));
+  if(pass === null) return;
+  if(!pass){ alert(t('passNeed')); return; }
+  if(pass.length < 8){ alert('बैकअप पासवर्ड कम से कम 8 अक्षर का रखें / Use at least 8 characters'); return; }
+  const text = await encryptBackup(JSON.stringify(db), pass);
+  const blob = new Blob([text], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'billeasy-backup-' + new Date().toISOString().slice(0,10) + '.json';
@@ -1208,9 +1507,14 @@ function exportData(){
 function importData(input){
   const f = input.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = e => {
+  r.onload = async e => {
     try{
-      const obj = JSON.parse(e.target.result);
+      let obj = JSON.parse(e.target.result);
+      if(obj.enc){
+        const pass = prompt(t('askRestorePass'));
+        if(!pass) return;
+        obj = JSON.parse(await decryptBackup(obj, pass));
+      }
       if(!obj.settings || !Array.isArray(obj.invoices)) throw new Error();
       db = normalize(obj); save(); applyLang(); alert(t('restored')); showTab('list');
     }catch(err){ alert(t('badFile')); }
@@ -1223,6 +1527,7 @@ applyLang();
 showTab('new');
 restoreBackupHandle();
 showLockIfNeeded();
+resetIdle();
 </script>
 <div id="licLock" style="display:none;position:fixed;inset:0;background:#1f5fbf;z-index:30;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px;padding:20px;text-align:center">
   <h2 style="margin:0">BillEasy</h2>
@@ -1265,11 +1570,14 @@ function checkLicense(){
 async function activateLic(){
   const code = document.getElementById('licIn').value.trim().toUpperCase();
   const err = document.getElementById('licErr');
+  const wait = guardWait('lic');
+  if(wait){ err.textContent = 'बहुत बार गलत कोड। ' + wait + ' सेकंड बाद फिर कोशिश करें'; return; }
   const m = code.match(/^BE-(\d{8})-([0-9A-F]{4})$/);
   if(!m){ err.textContent = 'कोड सही फ़ॉर्मेट में नहीं है'; return; }
   const ymd = m[1].slice(0,4) + '-' + m[1].slice(4,6) + '-' + m[1].slice(6,8);
   const h = await sha(LIC_SECRET + ymd);
-  if(h.slice(0,4).toUpperCase() !== m[2]){ err.textContent = 'कोड गलत है'; return; }
+  if(h.slice(0,4).toUpperCase() !== m[2]){ guardFail('lic'); err.textContent = 'कोड गलत है'; return; }
+  guardOk('lic');
   if(ymd < todayYMD()){ err.textContent = 'यह कोड समाप्त हो चुका है'; return; }
   db.settings.licUntil = ymd; save();
   err.textContent = '';

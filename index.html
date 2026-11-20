@@ -1454,6 +1454,11 @@ function renderSettings(){
     <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${db.settings.backupMode === 'auto' ? 'checked' : ''} onchange="setBackupMode('auto')" style="width:auto"> ${t('backupAuto')}</label>
     <label>${t('restore')}</label>
     <input type="file" accept=".json" onchange="importData(this)">
+  </div>
+  <div class="card" style="font-size:14px">
+    <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">गोपनीयता नीति / Privacy Policy</a> ·
+    <a href="terms.html" target="_blank" rel="noopener noreferrer">उपयोग की शर्तें / Terms of Use</a><br>
+    <span style="color:#666">सहायता / Support: billeasysupport@gmail.com</span>
   </div>`;
 }
 async function saveSettings(){

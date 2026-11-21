@@ -1,5 +1,5 @@
-const CACHE = 'billeasy-v3';
-const FILES = ['./', './index.html', './qrcode.js', './manifest.json', './icon-192.png', './icon-512.png'];
+const CACHE = 'billeasy-v4';
+const FILES = ['./', './index.html', './qrcode.js', './xlsx.full.min.js', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
   self.skipWaiting();

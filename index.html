@@ -77,6 +77,100 @@ td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-a
 .tpl-modern .tot b{color:var(--bcolor,#1f5fbf)}
 .tpl-minimal table td,.tpl-minimal table th{border:none;border-bottom:1px solid #ddd;padding:6px}
 .tpl-minimal table th{color:var(--bcolor,#1f5fbf)}
+
+/* ---------- Motion: short, smooth, never blocks work ---------- */
+:root{--ease:cubic-bezier(.22,.9,.3,1)}
+button{transition:transform .15s var(--ease),box-shadow .2s,background-color .25s,color .25s;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.95)}
+button:not(.light):not(.sm):hover{box-shadow:0 4px 12px rgba(31,95,191,.25)}
+.rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rip .55s ease-out;pointer-events:none}
+button.light .rip,button.on .rip{background:rgba(31,95,191,.25)}
+@keyframes rip{to{transform:scale(2.6);opacity:0}}
+.tabs button{transition:transform .15s var(--ease),background-color .3s,color .3s,box-shadow .3s}
+.tabs button.on{box-shadow:0 4px 14px rgba(31,95,191,.35)}
+.view.enter{animation:viewIn .32s var(--ease)}
+.view.enter .card{animation:cardIn .42s var(--ease) both}
+.view.enter .card:nth-child(2){animation-delay:.05s}
+.view.enter .card:nth-child(3){animation-delay:.1s}
+.view.enter .card:nth-child(4){animation-delay:.15s}
+.view.enter .card:nth-child(n+5){animation-delay:.2s}
+@keyframes viewIn{from{opacity:0}to{opacity:1}}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{transition:box-shadow .3s}
+.sugg:not(:empty){animation:dropIn .2s var(--ease);box-shadow:0 8px 20px rgba(20,50,100,.12)}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.sugg div{transition:background-color .15s}
+.sugg .hint{font-size:12px;color:#6b7a90;cursor:default;background:#f7f9fd}
+tr.line.added td{animation:rowIn .9s var(--ease)}
+@keyframes rowIn{0%{background:#d9f2e3}100%{background:transparent}}
+tr.line.added{animation:rowSlide .35s var(--ease)}
+@keyframes rowSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.tot.pulse{animation:pulse .35s var(--ease)}
+@keyframes pulse{50%{transform:scale(1.04);color:#2e8b57}}
+.tot{transform-origin:right center}
+.low{animation:lowBlink 2.4s ease-in-out infinite}
+@keyframes lowBlink{50%{opacity:.55}}
+#modal{animation:fadeIn .2s ease}
+#modal .box{animation:boxIn .3s var(--ease)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes boxIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+input,select,textarea{transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#3a8ee6;box-shadow:0 0 0 3px rgba(58,142,230,.18)}
+header .brand svg{animation:logoIn .6s var(--ease)}
+@keyframes logoIn{from{transform:rotate(-12deg) scale(.7);opacity:0}to{transform:none;opacity:1}}
+#lock{animation:fadeIn .25s ease}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:24px;font-size:14px;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:toastIn .3s var(--ease)}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+.vids{display:grid;gap:10px}
+.vids a{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #e3ebf7;border-radius:12px;text-decoration:none;color:#1d2433;transition:transform .15s var(--ease),box-shadow .2s,border-color .2s}
+.vids a:hover,.vids a:active{transform:translateY(-2px);box-shadow:0 6px 16px rgba(31,95,191,.15);border-color:#9bb8e6}
+.vids .play{flex:none;width:40px;height:40px;border-radius:50%;background:#e62117;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px}
+.vids small{display:block;color:#6b7a90;font-size:12px}
+
+/* ---------- Colourful look ---------- */
+body{background:linear-gradient(180deg,#eef3ff 0%,#f6f0ff 45%,#effaf4 100%) fixed}
+header{background:linear-gradient(120deg,#1e40af 0%,#2563eb 40%,#7c3aed 100%);box-shadow:0 6px 20px rgba(37,99,235,.3)}
+.brand small{opacity:.95;font-weight:600;letter-spacing:.3px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+@media(min-width:700px){.tabs{grid-template-columns:repeat(8,1fr)}}
+.tabs button{margin:0;padding:9px 4px 8px;border-radius:14px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:#fff;color:var(--c);border:2px solid color-mix(in srgb,var(--c) 30%,transparent);font-weight:800;font-size:13px;line-height:1.15;
+  box-shadow:0 3px 10px color-mix(in srgb,var(--c) 16%,transparent)}
+.tabs button .ti{font-size:21px;line-height:1;filter:saturate(1.2)}
+.tabs button .tl{display:block;min-height:15px}
+.tabs button.light{background:#fff;color:var(--c)}
+.tabs button.on{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border-color:transparent;
+  box-shadow:0 8px 18px color-mix(in srgb,var(--c) 45%,transparent);transform:translateY(-2px)}
+.tabs button.on:active{transform:scale(.95)}
+#newView{--vc:#16a34a}#listView{--vc:#2563eb}#itemsView{--vc:#9333ea}#purchView{--vc:#ea580c}
+#ledgerView{--vc:#dc2626}#custView{--vc:#0d9488}#settingsView{--vc:#475569}#videosView{--vc:#e11d48}
+.view .card{border-top:4px solid var(--vc,#2563eb);border-radius:14px;box-shadow:0 6px 18px rgba(30,60,120,.08)}
+.view h3{color:var(--vc,#1f5fbf);font-weight:800}
+.view label{font-weight:600;color:#374151}
+.view table th{background:color-mix(in srgb,var(--vc,#2563eb) 10%,#fff);color:color-mix(in srgb,var(--vc,#2563eb) 75%,#111);font-weight:700}
+.view .card > .tot{color:#0f3a82;background:linear-gradient(135deg,#eef6ff,#f2fbf5);border-radius:12px;padding:10px 14px;display:inline-block;float:right;clear:both}
+.view .card::after{content:'';display:table;clear:both}
+.summary div{background:linear-gradient(135deg,color-mix(in srgb,var(--vc,#2563eb) 12%,#fff),#fff);border:1px solid color-mix(in srgb,var(--vc,#2563eb) 18%,#fff);font-weight:600}
+.summary div:nth-child(2){background:linear-gradient(135deg,#fff1f2,#fff)}
+.summary div:nth-child(3){background:linear-gradient(135deg,#f5f3ff,#fff)}
+button{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+button.green{background:linear-gradient(135deg,#16a34a,#0f7a37)}
+button.red{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+button.gray{background:linear-gradient(135deg,#64748b,#475569)}
+button.wa{background:linear-gradient(135deg,#25d366,#128c4a)}
+button.light{background:#eef2ff;color:#1e3a8a}
+.sugg div:hover{background:color-mix(in srgb,var(--vc,#2563eb) 8%,#fff)}
+.ph{background:linear-gradient(135deg,#fef3c7,#fde68a)}
+
+/* ---------- Zip opening screen ---------- */
+#zip{position:fixed;inset:0;z-index:40;touch-action:none;cursor:grab;background:transparent}
+#zip canvas{position:absolute;inset:0;width:100%;height:100%}
+#zip .zhint{position:absolute;left:0;right:0;text-align:center;color:#fff;font-size:15px;font-weight:600;pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.35);transition:opacity .3s}
+#zip.grab{cursor:grabbing}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
@@ -96,13 +190,14 @@ td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-a
 
 <div class="wrap">
   <div class="tabs">
-    <button id="t-new" onclick="showTab('new')"></button>
-    <button id="t-list" class="light" onclick="showTab('list')"></button>
-    <button id="t-items" class="light" onclick="showTab('items')"></button>
-    <button id="t-purch" class="light" onclick="showTab('purch')"></button>
-    <button id="t-ledger" class="light" onclick="showTab('ledger')"></button>
-    <button id="t-cust" class="light" onclick="showTab('cust')"></button>
-    <button id="t-settings" class="light" onclick="showTab('settings')"></button>
+    <button id="t-new" style="--c:#16a34a;--c2:#0f7a37" onclick="showTab('new')"></button>
+    <button id="t-list" class="light" style="--c:#2563eb;--c2:#1d4ed8" onclick="showTab('list')"></button>
+    <button id="t-items" class="light" style="--c:#9333ea;--c2:#7e22ce" onclick="showTab('items')"></button>
+    <button id="t-purch" class="light" style="--c:#ea580c;--c2:#c2410c" onclick="showTab('purch')"></button>
+    <button id="t-ledger" class="light" style="--c:#dc2626;--c2:#b91c1c" onclick="showTab('ledger')"></button>
+    <button id="t-cust" class="light" style="--c:#0d9488;--c2:#0f766e" onclick="showTab('cust')"></button>
+    <button id="t-settings" class="light" style="--c:#475569;--c2:#334155" onclick="showTab('settings')"></button>
+    <button id="t-videos" class="light" style="--c:#e11d48;--c2:#be123c;display:none" onclick="showTab('videos')"></button>
   </div>
   <div id="newView" class="view"></div>
   <div id="listView" class="view"></div>
@@ -111,6 +206,7 @@ td,th{border-bottom:1px solid #eef1f6;padding:7px 5px;text-align:left;vertical-a
   <div id="ledgerView" class="view"></div>
   <div id="custView" class="view"></div>
   <div id="settingsView" class="view"></div>
+  <div id="videosView" class="view"></div>
 </div>
 
 <div id="lock" style="display:none;position:fixed;inset:0;background:#1f5fbf;z-index:20;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px">
@@ -261,7 +357,7 @@ const LANGS = {
 
 /* ---------- Data ---------- */
 const blankSettings = { name:'', addr:'', city:'', phone:'', gstin:'', upi:'', gst:0, next:1, lang:'hi', cfields:[], billPrefix:'INV-', billNoMode:'auto', entryMode:'manual', pinOn:false, pinHash:'', pinSalt:'' };
-const SHOW_KEYS = ['logo','bizName','addr','city','phone','gstin','bank','bankName','accNo','ifsc','upi','qr','photo','hsn','qtyCol','rateCol','gstCol','gstAmtCol','amtCol','lineTotalCol','custPhone','custGstin','custAddr','custExtra','paidStamp','signature','terms','footer','thanks'];
+const SHOW_KEYS = ['logo','bizName','addr','city','phone','gstin','bank','bankName','accNo','ifsc','upi','qr','photo','hsn','qtyCol','rateCol','gstCol','amtCol','gstAmtCol','lineTotalCol','custPhone','custGstin','custAddr','custExtra','paidStamp','signature','terms','footer','thanks'];
 const DEFAULT_SHOW = Object.fromEntries(SHOW_KEYS.map(k => [k, true]));
 DEFAULT_SHOW.signature = false;
 DEFAULT_SHOW.terms = false;
@@ -299,6 +395,7 @@ function normalize(d){
     color:/^#[0-9a-fA-F]{6}$/.test(D.color) ? D.color : '#1f5fbf',
     font:pick(D.font, ['system','serif','rounded'], 'system'),
     align:pick(D.align, ['left','center','right'], 'left'), title:safeStr(D.title, 100) };
+  s.zipOn = s.zipOn !== false;
   s.pinOn = !!s.pinOn; s.pinHash = /^[0-9a-f]*$/.test(s.pinHash || '') ? (s.pinHash || '') : '';
   s.pinSalt = /^[0-9a-f]*$/.test(s.pinSalt || '') ? (s.pinSalt || '') : '';
   s.trialStart = safeDate(s.trialStart) || undefined; s.licUntil = safeDate(s.licUntil) || undefined;
@@ -323,7 +420,7 @@ function normalize(d){
     return { no:safeTxt(inv.no, 40), cid:inv.cid ? safeId(inv.cid) : null, cn:safeStr(inv.cn, 200), cp:safeStr(inv.cp, 30),
       cgstin:safeStr(inv.cgstin, 20), cemail:safeStr(inv.cemail, 100), caddr:safeStr(inv.caddr, 300), cextra:extra(inv.cextra),
       cd:safeDate(inv.cd), lines:lines.filter(l => l && typeof l === 'object').map(line),
-      paid:!!inv.paid, pmode:safeStr(inv.pmode, 30), total:safeNum(inv.total) };
+      paid:!!inv.paid, pmode:safeStr(inv.pmode, 30), total:safeNum(inv.total), ts:safeNum(inv.ts) || undefined };
   });
   return d;
 }
@@ -336,6 +433,25 @@ let editMode = false;
 let editingNo = null;
 
 function t(k){ return (LANGS[db.settings.lang] || LANGS.hi)[k] || LANGS.en[k] || k; }
+function L(hi, en){ return db.settings.lang === 'hi' ? hi : en; }
+
+/* ---------- Video tutorials (Tejo Labs YouTube). Kept hidden until the videos are public: set SHOW_VIDEOS = true ---------- */
+const SHOW_VIDEOS = false || (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /videos/.test(location.search)); /* preview on own computer only: ?videos */
+const VIDEOS = [
+  { id:'NeiApAxSb3Y', t:0,   hi:'पूरा ट्यूटोरियल: शुरू से आख़िर तक', en:'Full tutorial: start to finish' },
+  { id:'NeiApAxSb3Y', t:79,  hi:'दुकान की जानकारी (सेटिंग्स)', en:'Shop details (Settings)' },
+  { id:'NeiApAxSb3Y', t:202, hi:'सामान जोड़ें', en:'Add items' },
+  { id:'NeiApAxSb3Y', t:265, hi:'Excel से एक साथ सामान', en:'Import items from Excel' },
+  { id:'NeiApAxSb3Y', t:292, hi:'सामान की सूची और स्टॉक', en:'Item list and stock' },
+  { id:'NeiApAxSb3Y', t:334, hi:'नया बिल बनाएँ (UPI QR के साथ)', en:'Make a new bill (with UPI QR)' },
+  { id:'NeiApAxSb3Y', t:437, hi:'सभी बिल', en:'All bills' },
+  { id:'NeiApAxSb3Y', t:475, hi:'माल की खरीद', en:'Purchases' },
+  { id:'NeiApAxSb3Y', t:504, hi:'उधार का हिसाब', en:'Credit ledger' },
+  { id:'NeiApAxSb3Y', t:534, hi:'ग्राहक', en:'Customers' },
+  { id:'NeiApAxSb3Y', t:553, hi:'बैकअप', en:'Backup' },
+  { id:'NeiApAxSb3Y', t:580, hi:'PIN लॉक', en:'PIN lock' },
+  { id:'JPxgRIj-i30', t:0, short:true, hi:'1 मिनट में बिल (Shorts)', en:'A bill in 1 minute (Shorts)' },
+];
 function save(){ db = normalize(db); localStorage.setItem('billeasy4', JSON.stringify(db)); autoBackup(); }
 
 /* ---- Security: slow down guessing of PIN and activation code ----
@@ -403,7 +519,37 @@ function setBackupMode(m){
 }
 function digits(s){ return String(s||'').replace(/\D/g,''); }
 function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function money(n){ return '₹' + Number(n||0).toFixed(2); }
+/* Indian digit grouping: 100000 -> 1,00,000.00 */
+function money(n){ return '₹' + (Number(n)||0).toLocaleString('en-IN', { minimumFractionDigits:2, maximumFractionDigits:2 }); }
+/* Dates are stored as YYYY-MM-DD and shown as DD/MM/YY */
+function fmtDate(ymd){ const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(ymd || '')); return m ? `${m[3]}/${m[2]}/${m[1].slice(2)}` : String(ymd || ''); }
+/* Bill time in the phone's own time format (12 or 24 hour, as set on the device) */
+function fmtTime(ts){ return ts ? new Date(ts).toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' }) : ''; }
+function fmtQty(n){ return (Number(n)||0).toLocaleString('en-IN', { maximumFractionDigits:3 }); }
+/* Amount boxes show commas while typing; the stored value is always a plain number */
+function parseNum(v){ const n = Number(String(v ?? '').replace(/[^0-9.\-]/g, '')); return isFinite(n) ? n : 0; }
+function fmtIn(v){
+  if(v === '' || v === null || v === undefined) return '';
+  const s = String(v).replace(/,/g, '');
+  const dot = s.indexOf('.');
+  const ip = (dot < 0 ? s : s.slice(0, dot)).replace(/\D/g, '');
+  let out = ip ? Number(ip).toLocaleString('en-IN', { maximumFractionDigits:0 }) : (dot >= 0 ? '0' : '');
+  if(dot >= 0) out += '.' + s.slice(dot + 1).replace(/\D/g, '').slice(0, 3);
+  return out;
+}
+function numIn(el){
+  const fromEnd = el.value.length - (el.selectionStart ?? el.value.length);
+  const f = fmtIn(el.value);
+  if(f !== el.value){ el.value = f; const p = Math.max(0, f.length - fromEnd); try{ el.setSelectionRange(p, p); }catch(e){} }
+  return parseNum(f);
+}
+function amtBox(val, onin, style){
+  return `<input type="text" inputmode="decimal" autocomplete="off" value="${fmtIn(val)}" style="${style||''}" oninput="${onin}">`;
+}
+function toast(msg){
+  const d = document.createElement('div'); d.className = 'toast'; d.textContent = msg;
+  document.body.appendChild(d); setTimeout(() => { d.style.transition = 'opacity .3s'; d.style.opacity = '0'; }, 1600); setTimeout(() => d.remove(), 2000);
+}
 function uLabel(u){ return t('u_' + u) || u; }
 function unitSelect(sel, onchange){
   return `<select onchange="${onchange}">${UNITS.map(u => `<option value="${u}" ${u===sel?'selected':''}>${uLabel(u)}</option>`).join('')}</select>`;
@@ -457,21 +603,31 @@ function readPhoto(file, cb){
 function applyLang(){
   document.documentElement.lang = db.settings.lang;
   document.getElementById('tagline').textContent = t('tag');
-  document.getElementById('t-new').textContent = t('new');
-  document.getElementById('t-list').textContent = t('list');
-  document.getElementById('t-items').textContent = t('items');
-  document.getElementById('t-purch').textContent = t('purch');
-  document.getElementById('t-ledger').textContent = t('ledger');
-  document.getElementById('t-cust').textContent = t('cust');
-  document.getElementById('t-settings').textContent = t('set');
+  const tabLbl = (id, icon, label) => { document.getElementById(id).innerHTML = `<span class="ti">${icon}</span><span class="tl">${esc(label)}</span>`; };
+  tabLbl('t-new', '🧾', t('new'));
+  tabLbl('t-list', '📋', t('list'));
+  tabLbl('t-items', '📦', t('items'));
+  tabLbl('t-purch', '🛒', t('purch'));
+  tabLbl('t-ledger', '📒', t('ledger'));
+  tabLbl('t-cust', '👥', t('cust'));
+  tabLbl('t-settings', '⚙️', t('set'));
+  tabLbl('t-videos', '🎬', L('वीडियो', 'Videos'));
+  document.getElementById('t-videos').style.display = SHOW_VIDEOS ? '' : 'none';
   document.getElementById('langSel').innerHTML = Object.keys(LANGS).map(k =>
     `<option value="${k}" ${k===db.settings.lang?'selected':''}>${LANGS[k].name}</option>`).join('');
 }
 function setLang(l){ db.settings.lang = l; save(); applyLang(); showTab(tab); }
-function showTab(x){
+function showTab(x, fromHistory){
+  const changed = tab !== x;
+  if(tab === 'new') saveDraft();
   tab = x;
-  ['new','list','items','purch','ledger','cust','settings'].forEach(k => {
-    document.getElementById(k+'View').style.display = k===x ? 'block' : 'none';
+  /* phone back button returns to the previous screen instead of closing the app (and losing a half-made bill) */
+  if(changed && !fromHistory){ try{ history.pushState({ tab:x }, ''); }catch(e){} }
+  if(x === 'videos' && !SHOW_VIDEOS) x = tab = 'new';
+  ['new','list','items','purch','ledger','cust','settings','videos'].forEach(k => {
+    const v = document.getElementById(k+'View');
+    v.style.display = k===x ? 'block' : 'none';
+    if(k === x && changed){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); setTimeout(() => v.classList.remove('enter'), 700); }
     document.getElementById('t-'+k).className = k===x ? 'on' : 'light';
   });
   if(x==='new') renderNew();
@@ -481,6 +637,7 @@ function showTab(x){
   if(x==='ledger') renderLedger();
   if(x==='cust') renderCustomers();
   if(x==='settings'){ renderSettings(); renderDesignPreview(); }
+  if(x==='videos') renderVideos();
 }
 
 /* ---------- Customer lookup ---------- */
@@ -543,18 +700,18 @@ function renderNew(){
     <label>${t('scanCode')}</label>
     <div style="display:flex;gap:6px"><input id="scanIn" placeholder="${t('scanHint')}" onkeydown="if(event.key==='Enter'){scanCode(this.value);}"><button class="light" onclick="openCamScan()">${t('camScan')}</button></div>
     <label>${t('findItem')}</label>
-    <input id="itemSearch" placeholder="${t('search')}" oninput="updateItemSugg()">
+    <input id="itemSearch" placeholder="${t('search')}" autocomplete="off" oninput="updateItemSugg()" onfocus="updateItemSugg()" onclick="updateItemSugg()">
     <div id="itemSugg" class="sugg"></div>
     <div style="overflow-x:auto;margin-top:10px">
     <table>
       <tr><th>${t('desc')}</th><th>${t('hsn')}</th><th>${t('unit')}</th><th>${t('qty')}</th><th>${t('rate')}</th><th>${t('gst')}</th><th>${t('preGst')}</th><th>${t('gstAmt')}</th><th>${t('lineTotal')}</th><th></th></tr>
       ${cur.lines.map((l,i) => `
-      <tr class="line">
+      <tr class="line${i === lastAdded ? ' added' : ''}">
         <td><input value="${esc(l.n)}" oninput="cur.lines[${i}].n=this.value"></td>
         <td><input value="${esc(l.hsn)}" style="width:90px" oninput="cur.lines[${i}].hsn=this.value"></td>
         <td>${unitSelect(l.unit, `cur.lines[${i}].unit=this.value`)}</td>
-        <td><input type="number" min="0" step="any" value="${l.q}" style="width:80px" oninput="cur.lines[${i}].q=this.value;calc()"></td>
-        <td><input type="number" min="0" step="any" value="${l.r}" style="width:90px" oninput="cur.lines[${i}].r=this.value;calc()"></td>
+        <td>${amtBox(l.q, `cur.lines[${i}].q=numIn(this);calc()`, 'width:80px')}</td>
+        <td>${amtBox(l.r, `cur.lines[${i}].r=numIn(this);calc()`, 'width:100px')}</td>
         <td><input type="number" min="0" step="any" value="${l.gst}" style="width:70px" oninput="cur.lines[${i}].gst=this.value;calc()"></td>
         <td id="amt${i}">${money((Number(l.q)||0)*(Number(l.r)||0))}</td>
         <td id="gamt${i}">${money(((Number(l.q)||0)*(Number(l.r)||0))*(Number(l.gst)||0)/100)}</td>
@@ -578,10 +735,12 @@ function renderNew(){
     <button onclick="previewCur()">${t('prev')}</button>
     <button class="gray" onclick="resetCur()">${t('reset')}</button>
   </div>`;
-  calc(); updateCustSugg();
+  lastAdded = -1;
+  calc(true); updateCustSugg();
   if(db.settings.entryMode === 'scan'){ const si = document.getElementById('scanIn'); if(si) si.focus(); }
 }
-function calc(){
+let lastAdded = -1, lastTotal = null;
+function calc(quiet){
   cur.lines.forEach((l, i) => {
     const a = (Number(l.q)||0) * (Number(l.r)||0);
     const g = a * (Number(l.gst)||0) / 100;
@@ -591,12 +750,17 @@ function calc(){
   const el = document.getElementById('tot'); if(!el) return;
   const x = totals(cur);
   el.innerHTML = `${t('sub')}: ${money(x.sub)}<br>GST: ${money(x.gstAmt)}<br>${t('total')}: ${money(x.total)}`;
+  if(!quiet && lastTotal !== null && lastTotal !== x.total){ el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+  lastTotal = x.total;
+  saveDraftSoon();
 }
+/* Tap the search box: the whole item list opens. Typing narrows it down. */
 function updateItemSugg(){
   const box = document.getElementById('itemSugg'); if(!box) return;
   const q = document.getElementById('itemSearch').value.trim().toLowerCase();
-  if(!q){ box.innerHTML = ''; return; }
-  const list = db.items.filter(i => i.name.toLowerCase().includes(q) || (i.hsn||'').toLowerCase().includes(q)).slice(0,6);
+  if(!db.items.length){ box.innerHTML = q ? '' : `<div class="hint">${t('noItems')}</div>`; return; }
+  const list = q ? db.items.filter(i => i.name.toLowerCase().includes(q) || (i.hsn||'').toLowerCase().includes(q) || (i.bc||'') === q)
+                 : [...db.items].sort((a, b) => a.name.localeCompare(b.name));
   box.innerHTML = list.map(i => `<div onclick="addFromItem('${i.id}')">
     ${i.photo ? `<img class="thumb" src="${i.photo}">` : `<span class="ph">📦</span>`}
     <span><b>${esc(i.name)}</b> · ${money(i.sale)} / ${uLabel(i.unit)} · GST ${i.gst}%</span></div>`).join('');
@@ -604,14 +768,63 @@ function updateItemSugg(){
 function addFromItem(id){
   const it = itemById(id); if(!it) return;
   cur.lines.push({ iid:it.id, n:it.name, hsn:it.hsn||'', unit:it.unit||'pcs', q:1, r:it.sale||0, gst:it.gst||0 });
+  lastAdded = cur.lines.length - 1;
   renderNew();
 }
 function addFreeLine(){
   cur.lines.push({ iid:null, n:'', hsn:'', unit:'pcs', q:1, r:0, gst:db.settings.gst||0 });
+  lastAdded = cur.lines.length - 1;
   renderNew();
 }
 function delLine(i){ cur.lines.splice(i,1); renderNew(); }
-function resetCur(){ if(confirm(t('confReset'))){ cur = blankInv(); renderNew(); } }
+function resetCur(){ if(confirm(t('confReset'))){ cur = blankInv(); renderNew(); saveDraft(); } }
+/* close the item list when tapping somewhere else */
+document.addEventListener('pointerdown', e => {
+  const box = document.getElementById('itemSugg');
+  if(box && box.innerHTML && !e.target.closest('#itemSugg') && e.target.id !== 'itemSearch') box.innerHTML = '';
+}, true);
+
+/* ---------- Unfinished bill is kept: switching screens, back button or closing the app does not lose it ---------- */
+const DRAFT_KEY = 'billeasy_draft';
+let draftTimer = null;
+function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 400); }
+function saveDraft(){
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify({ cur, editingNo })); }catch(e){}
+}
+function loadDraft(){
+  try{
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if(!d || !d.cur || typeof d.cur !== 'object') return;
+    const c = d.cur, b = blankInv();
+    cur = { cid:c.cid ? safeId(c.cid) : null, cn:safeStr(c.cn, 200), cp:safeStr(c.cp, 30), cgstin:safeStr(c.cgstin, 20),
+      cemail:safeStr(c.cemail, 100), caddr:safeStr(c.caddr, 300), cextra:{}, cd:safeDate(c.cd) || b.cd,
+      no:c.no !== undefined ? safeTxt(c.no, 40) : undefined, ts:safeNum(c.ts) || undefined, paid:!!c.paid, pmode:safeStr(c.pmode, 30),
+      lines:(Array.isArray(c.lines) ? c.lines : []).filter(l => l && typeof l === 'object').slice(0, 300).map(l => ({
+        iid:l.iid ? safeId(l.iid) : null, n:safeStr(l.n, 200), hsn:safeStr(l.hsn, 20), unit:pick(l.unit, UNITS, 'pcs'),
+        q:safeNum(l.q), r:safeNum(l.r), gst:safeNum(l.gst) })) };
+    if(c.cextra && typeof c.cextra === 'object') Object.keys(c.cextra).slice(0, 20).forEach(k => { const kk = safeTxt(k, 40); if(kk) cur.cextra[kk] = safeStr(c.cextra[k], 300); });
+    editingNo = d.editingNo && db.invoices.some(i => i.no === d.editingNo) ? d.editingNo : null;
+  }catch(e){}
+}
+document.addEventListener('input', e => { if(e.target.closest && e.target.closest('#newView')) saveDraftSoon(); }, true);
+document.addEventListener('change', e => { if(e.target.closest && e.target.closest('#newView')) saveDraftSoon(); }, true);
+window.addEventListener('pagehide', () => { if(tab === 'new') saveDraft(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden && tab === 'new') saveDraft(); });
+window.addEventListener('popstate', e => {
+  if(modalClosing){ modalClosing = false; return; }
+  if(document.getElementById('modal').style.display === 'block'){ closePreview(true); return; }
+  const x = (e.state && e.state.tab) || 'new';
+  showTab(x, true);
+});
+
+/* ---------- Tap ripple on every button ---------- */
+document.addEventListener('pointerdown', e => {
+  const b = e.target.closest && e.target.closest('button'); if(!b) return;
+  const r = b.getBoundingClientRect(), s = Math.max(r.width, r.height);
+  const d = document.createElement('span'); d.className = 'rip';
+  d.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left - s/2}px;top:${e.clientY - r.top - s/2}px`;
+  b.appendChild(d); setTimeout(() => d.remove(), 600);
+}, { passive:true });
 
 function upsertCustomer(){
   let c = cur.cid ? db.customers.find(x => x.id === cur.cid) : null;
@@ -734,7 +947,7 @@ function buildInv(cid){
     q:Number(l.q)||0, r:Number(l.r)||0, gst:Number(l.gst)||0 }));
   const inv = { no: billNumber(), cid,
     cn:cur.cn.trim(), cp:cur.cp.trim(), cgstin:cur.cgstin.trim(), cemail:cur.cemail.trim(),
-    caddr:cur.caddr.trim(), cextra:Object.assign({}, cur.cextra), cd:cur.cd, lines, paid:false };
+    caddr:cur.caddr.trim(), cextra:Object.assign({}, cur.cextra), cd:cur.cd, lines, paid:false, ts:cur.ts || Date.now() };
   inv.total = totals(inv).total;
   return inv;
 }
@@ -804,7 +1017,7 @@ function renderBillRows(){
     i.cn.toLowerCase().includes(q) || (d && digits(i.cp).includes(d)));
   el.innerHTML = !db.invoices.length ? `<p>${t('empty')}</p>` : `<table>${list.map(i => `
     <tr>
-      <td>${i.no}</td><td>${esc(i.cn)}</td><td>${i.cd}</td><td>${money(i.total)}</td>
+      <td>${i.no}</td><td>${esc(i.cn)}</td><td>${fmtDate(i.cd)}${i.ts ? `<br><small style="color:#6b7a90">${fmtTime(i.ts)}</small>` : ''}</td><td>${money(i.total)}</td>
       <td class="${i.paid?'paid':'due'}">${i.paid?t('paid'):t('unpaid')}</td>
       <td>
         <button class="light sm" onclick="openPreviewNo('${i.no}')">${t('prev')}</button>
@@ -833,11 +1046,11 @@ function renderItems(){
       <div><label>${t('itemHsn')}</label><input value="${esc(d.hsn)}" oninput="itemDraft.hsn=this.value"></div>
       <div><label>${t('itemGst')}</label><input type="number" min="0" step="any" value="${d.gst}" oninput="itemDraft.gst=this.value"></div>
       <div><label>${t('itemUnit')}</label>${unitSelect(d.unit, 'itemDraft.unit=this.value')}</div>
-      <div><label>${t('sale')}</label><input type="number" min="0" step="any" value="${d.sale}" oninput="itemDraft.sale=this.value"></div>
-      <div><label>${t('buy')}</label><input type="number" min="0" step="any" value="${d.buy}" oninput="itemDraft.buy=this.value"></div>
-      <div><label>${editMode ? t('stock') : t('openStock')}</label><input type="number" min="0" step="any" value="${d.stock}" oninput="itemDraft.stock=this.value"></div>
+      <div><label>${t('sale')}</label>${amtBox(d.sale, 'itemDraft.sale=numIn(this)')}</div>
+      <div><label>${t('buy')}</label>${amtBox(d.buy, 'itemDraft.buy=numIn(this)')}</div>
+      <div><label>${editMode ? t('stock') : t('openStock')}</label>${amtBox(d.stock, 'itemDraft.stock=numIn(this)')}</div>
       <div><label>${t('bc')}</label><input value="${esc(d.bc||'')}" oninput="itemDraft.bc=this.value"></div>
-      <div><label>${t('minQty')}</label><input type="number" min="0" step="any" value="${d.minQty||0}" oninput="itemDraft.minQty=this.value"></div>
+      <div><label>${t('minQty')}</label>${amtBox(d.minQty||0, 'itemDraft.minQty=numIn(this)')}</div>
       <div><label>${t('stockDate')}</label><input type="date" value="${d.stockDate||''}" oninput="itemDraft.stockDate=this.value"></div>
       <div><label>${t('photo')}</label><input type="file" accept="image/*" onchange="pickItemPhoto(this)"></div>
     </div>
@@ -873,7 +1086,7 @@ function renderItemRows(){
       <td>${i.photo ? `<img class="thumb" src="${i.photo}">` : `<span class="ph">📦</span>`}</td>
       <td><b>${esc(i.name)}</b></td><td>${esc(i.hsn)}</td><td>${i.gst}%</td><td>${uLabel(i.unit)}</td>
       <td>${money(i.sale)}</td><td>${money(i.buy)}</td>
-      <td class="${(Number(i.stock)||0) <= 0 || (i.minQty && (Number(i.stock)||0) <= Number(i.minQty)) ? 'low' : ''}">${Number(i.stock)||0} ${uLabel(i.unit)}${i.minQty && (Number(i.stock)||0) <= Number(i.minQty) ? `<br><button class="sm" onclick="buyItem('${i.id}')">${t('buyNow')}</button>` : ''}</td>
+      <td class="${(Number(i.stock)||0) <= 0 || (i.minQty && (Number(i.stock)||0) <= Number(i.minQty)) ? 'low' : ''}">${fmtQty(i.stock)} ${uLabel(i.unit)}${i.minQty && (Number(i.stock)||0) <= Number(i.minQty) ? `<br><button class="sm" onclick="buyItem('${i.id}')">${t('buyNow')}</button>` : ''}</td>
       <td><button class="light sm" onclick="editItem('${i.id}')">✎</button>
           <button class="red sm" onclick="delItem('${i.id}')">${t('del')}</button></td>
     </tr>`).join('')}</table>`;
@@ -916,7 +1129,7 @@ function exportBillsXlsx(){
   db.invoices.forEach(inv => {
     inv.lines.forEach(l => {
       const pre = l.q * l.r, g = pre * l.gst / 100;
-      rows.push({ bill_no:inv.no, date:inv.cd, customer:inv.cn, phone:inv.cp, customer_gstin:inv.cgstin||'',
+      rows.push({ bill_no:inv.no, date:fmtDate(inv.cd), time:fmtTime(inv.ts), customer:inv.cn, phone:inv.cp, customer_gstin:inv.cgstin||'',
         item:l.n, hsn:l.hsn||'', unit:l.unit, qty:l.q, rate:l.r, gst_percent:l.gst,
         before_gst:pre, gst_amount:g, total_with_gst:pre + g, paid:inv.paid ? 'yes' : 'no' });
     });
@@ -1036,8 +1249,8 @@ function renderPurch(){
       <div><label>${t('supplier')}</label><input value="${esc(purchDraft.supplier)}" oninput="purchDraft.supplier=this.value"></div>
       <div><label>${t('date')}</label><input type="date" value="${purchDraft.date}" oninput="purchDraft.date=this.value"></div>
       <div><label>${t('desc')}</label><select onchange="purchDraft.iid=this.value;purchDraft.r=(itemById(this.value)||{}).buy||0;renderPurch()"><option value="">—</option>${opts}</select></div>
-      <div><label>${t('qty')}</label><input type="number" min="0" step="any" value="${purchDraft.q}" oninput="purchDraft.q=this.value;purchCalc()"></div>
-      <div><label>${t('buy')}</label><input type="number" min="0" step="any" value="${purchDraft.r}" oninput="purchDraft.r=this.value;purchCalc()"></div>
+      <div><label>${t('qty')}</label>${amtBox(purchDraft.q, 'purchDraft.q=numIn(this);purchCalc()')}</div>
+      <div><label>${t('buy')}</label>${amtBox(purchDraft.r, 'purchDraft.r=numIn(this);purchCalc()')}</div>
       <div><label>${t('buyTotal')}</label><input id="ptot" value="${money(total)}" disabled></div>
     </div>
     <div style="margin:8px 0">
@@ -1053,8 +1266,8 @@ function renderPurch(){
   <div class="card">
     ${db.purchases.length ? `<div style="overflow-x:auto"><table>
       <tr><th>${t('date')}</th><th>${t('supplier')}</th><th>${t('desc')}</th><th>${t('qty')}</th><th>${t('buy')}</th><th>${t('buyTotal')}</th></tr>
-      ${[...db.purchases].reverse().map(p => `<tr><td>${p.date}</td><td>${esc(p.supplier)}</td><td>${esc(p.n)}</td>
-        <td>${p.q} ${uLabel(p.unit)}</td><td>${money(p.r)}</td><td>${money(p.q*p.r)}</td></tr>`).join('')}
+      ${[...db.purchases].reverse().map(p => `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.supplier)}</td><td>${esc(p.n)}</td>
+        <td>${fmtQty(p.q)} ${uLabel(p.unit)}</td><td>${money(p.r)}</td><td>${money(p.q*p.r)}</td></tr>`).join('')}
     </table></div>` : `<p>${t('noPurch')}</p>`}
   </div>`;
 }
@@ -1085,7 +1298,7 @@ function editInv(no){
   const inv = db.invoices.find(i => i.no === no); if(!inv) return;
   editingNo = no;
   cur = { cid:inv.cid, cn:inv.cn, cp:inv.cp, cgstin:inv.cgstin || '', cemail:inv.cemail || '', caddr:inv.caddr || '',
-    cextra:Object.assign({}, inv.cextra || {}), cd:inv.cd, gst:db.settings.gst || 0, no:inv.no,
+    cextra:Object.assign({}, inv.cextra || {}), cd:inv.cd, ts:inv.ts, gst:db.settings.gst || 0, no:inv.no,
     paid:!!inv.paid, pmode:inv.pmode || '', lines:inv.lines.map(l => Object.assign({}, l)) };
   showTab('new');
 }
@@ -1154,7 +1367,7 @@ function renderLedger(){
       <div><label>${t('selParty')}</label><select id="lpParty"><option value="">—</option>
         ${parties.map(p => `<option value="${p.key}">${p.ty === 'c' ? '👤' : '🏭'} ${esc(p.name)} (${money(p.bal)})</option>`).join('')}
       </select></div>
-      <div><label>${t('payAmt')}</label><input id="lpAmt" type="number" min="0" step="any"></div>
+      <div><label>${t('payAmt')}</label><input id="lpAmt" type="text" inputmode="decimal" autocomplete="off" oninput="numIn(this)"></div>
       <div><label>${t('date')}</label><input id="lpDate" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
       <div><label>${t('payMode')}</label><select id="lpMode"><option>${t('mCash')}</option><option>UPI</option><option>${t('mBank')}</option><option>${t('mCheque')}</option></select></div>
       <div style="grid-column:1/-1"><label>${t('desc')}</label><input id="lpNote"></div>
@@ -1168,14 +1381,14 @@ function renderLedger(){
   <div class="card">
     <h3>${t('payHistory')}</h3>
     ${db.payments.length ? `<div style="overflow-x:auto"><table>${[...db.payments].reverse().slice(0,50).map(p => `<tr>
-      <td>${p.date}</td><td>${esc(partyName(p.ty, p.pid))}</td><td>${p.ty === 'c' ? t('recvLbl') : t('paidLbl')}</td>
+      <td>${fmtDate(p.date)}</td><td>${esc(partyName(p.ty, p.pid))}</td><td>${p.ty === 'c' ? t('recvLbl') : t('paidLbl')}</td>
       <td>${money(p.amt)}</td><td>${esc(p.mode)}</td>
       <td>${p.auto ? '' : `<button class="light sm" onclick="editPayment('${p.id}')">${t('editBtn')}</button>`} <button class="red sm" onclick="delPayment('${p.id}')">${t('del')}</button></td></tr>`).join('')}</table></div>` : `<p>${t('noPay')}</p>`}
   </div>`;
 }
 function addPayment(){
   const key = document.getElementById('lpParty').value;
-  const amt = Number(document.getElementById('lpAmt').value);
+  const amt = parseNum(document.getElementById('lpAmt').value);
   if(!key){ alert(t('pickParty')); return; }
   if(!(amt > 0)){ alert(t('badAmt')); return; }
   const [ty, pid] = key.split(':');
@@ -1188,7 +1401,9 @@ function addPayment(){
 function editPayment(id){
   const p = db.payments.find(x => x.id === id);
   if(!p || p.auto) return;
-  const v = Number(prompt(t('newAmt'), p.amt));
+  const ans = prompt(t('newAmt'), fmtIn(p.amt));
+  if(ans === null) return;
+  const v = parseNum(ans);
   if(!(v > 0)) return;
   p.amt = v; save(); renderLedger();
 }
@@ -1259,7 +1474,7 @@ function renderCustDetail(){
   <div class="card">
     <h3>${t('history')}</h3>
     ${bills.length ? `<div style="overflow-x:auto"><table>${bills.map(i => `<tr>
-      <td>${i.no}</td><td>${i.cd}</td><td>${money(i.total)}</td>
+      <td>${i.no}</td><td>${fmtDate(i.cd)}${i.ts ? `<br><small style="color:#6b7a90">${fmtTime(i.ts)}</small>` : ''}</td><td>${money(i.total)}</td>
       <td class="${i.paid?'paid':'due'}">${i.paid?t('paid'):t('unpaid')}</td>
       <td><button class="light sm" onclick="openPreviewNo('${i.no}')">${t('prev')}</button>
           <button class="light sm" onclick="togglePaid('${i.no}');renderCustDetail()">${i.paid?t('markDue'):t('markPaid')}</button></td>
@@ -1299,7 +1514,7 @@ function invoiceHTML(inv){
     return `<tr>
       ${S.photo ? `<td>${it && it.photo ? `<img src="${it.photo}" style="width:34px;height:34px;object-fit:cover;border-radius:4px">` : ''}</td>` : ''}
       <td>${esc(l.n)}</td>${S.hsn ? `<td>${esc(l.hsn)}</td>` : ''}${S.qtyCol ? `<td>${l.q} ${uLabel(l.unit)}</td>` : ''}${S.rateCol ? `<td>${money(l.r)}</td>` : ''}
-      ${S.gstCol ? `<td>${l.gst}%</td>` : ''}${S.gstAmtCol ? `<td>${money(amt * l.gst / 100)}</td>` : ''}${S.amtCol ? `<td>${money(amt)}</td>` : ''}${S.lineTotalCol ? `<td>${money(amt * (1 + l.gst / 100))}</td>` : ''}</tr>`;
+      ${S.gstCol ? `<td>${l.gst}%</td>` : ''}${S.amtCol ? `<td>${money(amt)}</td>` : ''}${S.gstAmtCol ? `<td>${money(amt * l.gst / 100)}</td>` : ''}${S.lineTotalCol ? `<td>${money(amt * (1 + l.gst / 100))}</td>` : ''}</tr>`;
   }).join('');
   return `
     <div class="bill tpl-${D.template}" style="${db.settings.paper === 'thermal' ? 'max-width:80mm;margin:auto' : ''}">
@@ -1312,13 +1527,13 @@ function invoiceHTML(inv){
           <div>${S.phone ? esc(s.phone) : ''}</div>
           ${S.gstin && s.gstin ? `<div>GSTIN: ${esc(s.gstin)}</div>` : ''}
         </div>
-        <div style="text-align:right"><b>${t('billNo')}:</b> ${inv.no}<br><b>${t('date')}:</b> ${inv.cd}</div>
+        <div style="text-align:right"><b>${t('billNo')}:</b> ${inv.no}<br><b>${t('date')}:</b> ${fmtDate(inv.cd)}${inv.ts ? `<br><b>${L('समय', 'Time')}:</b> ${fmtTime(inv.ts)}` : ''}</div>
       </div>
       <hr>
       <div><b>${t('billTo')}:</b> ${esc(inv.cn)}<br>${S.custPhone ? esc(inv.cp) : ''}
         ${S.custGstin && inv.cgstin ? `<br>GSTIN: ${esc(inv.cgstin)}` : ''}${S.custAddr && inv.caddr ? `<br>${esc(inv.caddr)}` : ''}${S.custExtra ? extra : ''}</div>
       <div style="overflow-x:auto"><table style="margin-top:14px">
-        <tr>${S.photo ? '<th></th>' : ''}<th>${t('desc')}</th>${S.hsn ? `<th>${t('hsn')}</th>` : ''}${S.qtyCol ? `<th>${t('qty')}</th>` : ''}${S.rateCol ? `<th>${t('rate')}</th>` : ''}${S.gstCol ? `<th>${t('gst')}</th>` : ''}${S.gstAmtCol ? `<th>${t('gstAmt')}</th>` : ''}${S.amtCol ? `<th>${t('preGst')}</th>` : ''}${S.lineTotalCol ? `<th>${t('lineTotal')}</th>` : ''}</tr>
+        <tr>${S.photo ? '<th></th>' : ''}<th>${t('desc')}</th>${S.hsn ? `<th>${t('hsn')}</th>` : ''}${S.qtyCol ? `<th>${t('qty')}</th>` : ''}${S.rateCol ? `<th>${t('rate')}</th>` : ''}${S.gstCol ? `<th>${t('gst')}</th>` : ''}${S.amtCol ? `<th>${t('preGst')}</th>` : ''}${S.gstAmtCol ? `<th>${t('gstAmt')}</th>` : ''}${S.lineTotalCol ? `<th>${t('lineTotal')}</th>` : ''}</tr>
         ${rows}
       </table></div>
       <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-top:10px">
@@ -1352,14 +1567,21 @@ function openPreview(inv){
       <button class="gray" onclick="closePreview()">${t('close')}</button>
     </div>`;
   document.getElementById('modal').style.display = 'block';
+  try{ history.pushState({ tab, modal:1 }, ''); }catch(e){}
 }
 function openPreviewNo(no){ const inv = db.invoices.find(i=>i.no===no); if(inv) openPreview(inv); }
-function closePreview(){ document.getElementById('modal').style.display = 'none'; }
+function closePreview(fromHistory){
+  const m = document.getElementById('modal');
+  if(m.style.display !== 'block') return;
+  m.style.display = 'none';
+  if(!fromHistory && history.state && history.state.modal){ modalClosing = true; history.back(); }
+}
+let modalClosing = false;
 function printInv(inv){ document.getElementById('print').innerHTML = invoiceHTML(inv); window.print(); }
 function shareText(inv){
   const x = totals(inv), s = db.settings;
   const lines = inv.lines.map(l => `• ${l.n} x${l.q} ${uLabel(l.unit)} = ${money(l.q*l.r)}`).join('\n');
-  return `*${s.name || 'BillEasy'}*\n${t('billNo')}: ${inv.no}\n${t('billTo')}: ${inv.cn}\n\n${lines}\n\nGST: ${money(x.gstAmt)}\n${t('total')}: *${money(x.total)}*` +
+  return `*${s.name || 'BillEasy'}*\n${t('billNo')}: ${inv.no}\n${t('date')}: ${fmtDate(inv.cd)}${inv.ts ? ' · ' + fmtTime(inv.ts) : ''}\n${t('billTo')}: ${inv.cn}\n\n${lines}\n\nGST: ${money(x.gstAmt)}\n${t('total')}: *${money(x.total)}*` +
     (s.upi ? `\nUPI: ${s.upi}` : '') + `\n\n${t('thanks')}`;
 }
 function sendWA(inv){
@@ -1443,6 +1665,8 @@ function renderSettings(){
     <label style="display:flex;gap:8px;align-items:center"><input id="pin_on" type="checkbox" ${db.settings.pinOn ? 'checked' : ''} style="width:auto"> ${t('pinOn')}</label>
     <div class="grid2"><div><label>${t('pinNew')}</label><input id="pin_new" type="password" inputmode="numeric" placeholder="${t('pinHint')}"></div></div>
     <p style="font-size:13px;color:#666">${t('pinNote')}</p>
+    <h3 style="margin-top:16px">${L('ऐप खुलने की स्क्रीन', 'Opening screen')}</h3>
+    <label style="display:flex;gap:8px;align-items:center"><input id="zip_on" type="checkbox" ${db.settings.zipOn ? 'checked' : ''} style="width:auto"> ${L('ऐप खुलते समय ज़िप वाली स्क्रीन दिखाएँ (नीचे खींचकर खोलें)', 'Show the zip screen when the app opens (pull down to open)')}</label>
     <button class="green" onclick="saveSettings()">${t('saveSet')}</button>
   </div>
   <div class="card">
@@ -1470,6 +1694,16 @@ function renderSettings(){
     <span style="color:#666">सहायता / Support: billeasysupport@gmail.com</span>
   </div>`;
 }
+/* ---------- Video tutorials tab ---------- */
+function renderVideos(){
+  document.getElementById('videosView').innerHTML = `
+  <div class="card">
+    <h3>🎬 ${L('वीडियो ट्यूटोरियल', 'Video tutorials')}</h3>
+    <p style="font-size:13px;color:#666;margin-top:0">${L('जिस काम का तरीका देखना है, उस पर दबाएँ। वीडियो YouTube पर उसी हिस्से से चलेगा।', 'Tap a topic. The video opens on YouTube at that part.')}</p>
+    <div class="vids">${VIDEOS.map(v => `<a href="https://www.youtube.com/watch?v=${v.id}${v.t ? '&t=' + v.t + 's' : ''}" target="_blank" rel="noopener noreferrer">
+      <span class="play">▶</span><span><b>${L(v.hi, v.en)}</b><small>${v.short ? 'Shorts' : L('पूरा वीडियो', 'Full video')}${v.t ? ' · ' + Math.floor(v.t / 60) + ':' + String(v.t % 60).padStart(2, '0') : ''}</small></span></a>`).join('')}</div>
+  </div>`;
+}
 async function saveSettings(){
   const s = db.settings;
   s.name = document.getElementById('sn').value.trim();
@@ -1494,6 +1728,7 @@ async function saveSettings(){
   s.paper = document.getElementById('paper').value;
   s.terms = document.getElementById('termsTxt').value.trim();
   s.footer = document.getElementById('footerTxt').value.trim();
+  s.zipOn = document.getElementById('zip_on').checked;
   s.pinOn = document.getElementById('pin_on').checked;
   const newPin = document.getElementById('pin_new').value.trim();
   if(!s.pinOn){ s.pinHash = ''; s.pinSalt = ''; }
@@ -1536,12 +1771,347 @@ function importData(input){
   r.readAsText(f);
 }
 
+/* ---------- Zip opening screen: pull the zip down to open the app (can be turned off in Settings) ---------- */
+function startZip(){
+  if(!db.settings.zipOn || document.getElementById('zip')) return;
+  const z = document.createElement('div');
+  z.id = 'zip'; z.tabIndex = 0; z.setAttribute('role', 'button');
+  z.setAttribute('aria-label', L('ऐप खोलने के लिए ज़िप नीचे खींचें', 'Pull the zip down to open the app'));
+  const cv = document.createElement('canvas');
+  const hint = document.createElement('div'); hint.className = 'zhint';
+  hint.textContent = L('⬇  ज़िप नीचे खींचकर खोलें', '⬇  Pull the zip down to open');
+  z.appendChild(cv); z.appendChild(hint); document.body.appendChild(z);
+  document.body.style.overflow = 'hidden';
+  const ctx = cv.getContext('2d');
+  let base = null, tickTimer = 0;
+  let W, H, cx, dpr, fab, Y0, Y, targetY = 0, dragging = false, startPY = 0, startY = 0, opening = false, spread = 1, raf = 0, t0 = performance.now();
+  const TOOTH = 16;
+  let lastTooth = null, actx = null;
+  /* Zip sound: a soft "pop" for every tooth the slider passes. Made on the phone itself, no sound file. */
+  function initAudio(){
+    try{
+      if(!actx){ const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return; actx = new AC(); }
+      if(actx.state === 'suspended') actx.resume();
+    }catch(e){}
+  }
+  function tooth(){
+    if(!actx || actx.state !== 'running') return;
+    try{
+      const tt = actx.currentTime, o = actx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(620, tt); o.frequency.exponentialRampToValueAtTime(300, tt + .03);
+      const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400;
+      const g = actx.createGain(); g.gain.setValueAtTime(.07, tt); g.gain.exponentialRampToValueAtTime(.0008, tt + .03);
+      o.connect(lp); lp.connect(g); g.connect(actx.destination); o.start(tt); o.stop(tt + .05);
+    }catch(e){}
+  }
+  function zipSound(){
+    if(Y > H) { lastTooth = null; return; }
+    const tt = Math.floor(Y / TOOTH);
+    if(lastTooth !== null && tt !== lastTooth){
+      const n = Math.min(3, Math.abs(tt - lastTooth));
+      for(let i = 0; i < n; i++) setTimeout(tooth, i * 14);
+    }
+    lastTooth = tt;
+  }
+
+  function rr(c, x, y, w, h, r){ c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function build(){
+    dpr = Math.min(2, window.devicePixelRatio || 1); W = window.innerWidth; H = window.innerHeight; cx = Math.round(W / 2);
+    Y0 = Math.max(54, Math.round(H * 0.08)); if(!dragging && !opening) Y = Y0;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    base = document.createElement('canvas'); base.width = W * dpr; base.height = H * dpr;
+    fab = document.createElement('canvas'); fab.width = W * dpr; fab.height = H * dpr;
+    const f = base.getContext('2d'); f.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const wg = 46, ws = Math.max(90, Math.min(cx - wg - 12, 165));
+    widget = { s:ws, ch:Math.round(ws * 1.2), top:Math.max(14, Y0 - 30), lx:cx - wg - ws, rx:cx + wg };
+    const g = f.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#2f7ae0'); g.addColorStop(.5, '#1f5fbf'); g.addColorStop(1, '#0f3a82');
+    f.fillStyle = g; f.fillRect(0, 0, W, H);
+    const glow = f.createRadialGradient(W * .3, H * .25, 10, W * .3, H * .25, Math.max(W, H) * .7);
+    glow.addColorStop(0, 'rgba(255,255,255,.16)'); glow.addColorStop(1, 'rgba(255,255,255,0)'); f.fillStyle = glow; f.fillRect(0, 0, W, H);
+    f.globalAlpha = .05; f.strokeStyle = '#fff'; f.lineWidth = 1;
+    for(let x = -H; x < W; x += 7){ f.beginPath(); f.moveTo(x, 0); f.lineTo(x + H, H); f.stroke(); }
+    f.globalAlpha = 1;
+    /* zipper tape + stitches */
+    coverBg(f);
+    const tape = f.createLinearGradient(cx - 26, 0, cx + 26, 0);
+    tape.addColorStop(0, 'rgba(5,20,50,.15)'); tape.addColorStop(.5, 'rgba(5,20,50,.42)'); tape.addColorStop(1, 'rgba(5,20,50,.15)');
+    f.fillStyle = tape; f.fillRect(cx - 26, 0, 52, H);
+    f.setLineDash([9, 6]); f.strokeStyle = 'rgba(255,255,255,.45)'; f.lineWidth = 1.8;
+    [cx - 33, cx + 33].forEach(x => { f.beginPath(); f.moveTo(x, 0); f.lineTo(x, H); f.stroke(); }); f.setLineDash([]);
+    /* big interlocking golden teeth: left teeth belong to the left half, right teeth to the right half */
+    const tg = f.createLinearGradient(cx - 17, 0, cx + 17, 0);
+    tg.addColorStop(0, '#7a5216'); tg.addColorStop(.3, '#fbe9ad'); tg.addColorStop(.55, '#e8b84a'); tg.addColorStop(1, '#7a5216');
+    for(let y = 2; y < H; y += TOOTH){
+      f.save(); f.shadowColor = 'rgba(0,0,0,.35)'; f.shadowBlur = 3; f.shadowOffsetY = 2; f.fillStyle = tg;
+      rr(f, cx - 17, y, 17, 10, 3.5); f.fill(); rr(f, cx, y + TOOTH / 2, 17, 10, 3.5); f.fill(); f.restore();
+      f.fillStyle = 'rgba(255,255,255,.45)'; f.fillRect(cx - 14, y + 2, 9, 1.5); f.fillRect(cx + 3, y + TOOTH / 2 + 2, 9, 1.5);
+    }
+    /* brand on top of the zip, so it splits in two when opened */
+    const ly = widget.top + widget.ch + 62;
+    f.save(); f.shadowColor = 'rgba(0,0,0,.25)'; f.shadowBlur = 18; f.shadowOffsetY = 6;
+    f.fillStyle = '#fff'; rr(f, cx - 40, ly - 40, 80, 80, 20); f.fill(); f.restore();
+    f.fillStyle = '#1f5fbf'; f.beginPath(); f.moveTo(cx - 18, ly - 24); f.lineTo(cx + 18, ly - 24); f.lineTo(cx + 18, ly + 22);
+    for(let i = 0; i < 6; i++) f.lineTo(cx + 18 - (i + 1) * 6, ly + (i % 2 ? 22 : 17));
+    f.closePath(); f.fill();
+    f.strokeStyle = '#fff'; f.lineWidth = 2.6; f.lineCap = 'round';
+    [-12, -4, 4].forEach((d, i) => { f.beginPath(); f.moveTo(cx - 10, ly + d); f.lineTo(cx + (i === 2 ? 2 : 10), ly + d); f.stroke(); });
+    f.fillStyle = '#2e8b57'; f.beginPath(); f.arc(cx + 22, ly + 24, 12, 0, Math.PI * 2); f.fill();
+    f.fillStyle = '#fff'; f.font = 'bold 14px Arial'; f.textAlign = 'center'; f.textBaseline = 'middle'; f.fillText('₹', cx + 22, ly + 25);
+    f.fillStyle = '#fff'; f.font = `800 ${Math.min(46, W * .11)}px system-ui, "Segoe UI", sans-serif`; f.textBaseline = 'alphabetic';
+    f.shadowColor = 'rgba(0,0,0,.25)'; f.shadowBlur = 10; f.fillText('BillEasy', cx, ly + 98);
+    f.shadowBlur = 0; f.globalAlpha = .9; f.font = `500 ${Math.min(17, W * .042)}px "Nirmala UI", system-ui, sans-serif`;
+    f.fillText(L('बिल · स्टॉक · उधार खाता', 'Bills · Stock · Credit ledger'), cx, ly + 128); f.globalAlpha = 1;
+    coverFg(f, ly + 150);
+    renderFab();
+  }
+
+  /* ---------- Cover: colour waves + shop name card + calendar (with Hindu tithi) + live clock ---------- */
+  const HF = '"Nirmala UI", system-ui, sans-serif';
+  function glass(f, x, y, w, h){
+    f.save(); f.shadowColor = 'rgba(0,0,0,.18)'; f.shadowBlur = 14; f.shadowOffsetY = 5;
+    f.fillStyle = 'rgba(255,255,255,.14)'; rr(f, x, y, w, h, 16); f.fill(); f.restore();
+    f.strokeStyle = 'rgba(255,255,255,.35)'; f.lineWidth = 1.2; rr(f, x, y, w, h, 16); f.stroke();
+  }
+  function wrapText(f, text, x, y, maxW, lh){
+    const words = String(text).split(' '); let line = '', yy = y;
+    words.forEach(w => { const t = line ? line + ' ' + w : w; if(f.measureText(t).width > maxW && line){ f.fillText(line, x, yy); line = w; yy += lh; } else line = t; });
+    if(line) f.fillText(line, x, yy); return yy;
+  }
+  function coverBg(f){
+    const cols = ['#f472b6', '#facc15', '#34d399', '#a78bfa', '#38bdf8', '#fb923c'];
+    f.save();
+    for(let i = 0; i < 14; i++){
+      const x = (i * 97) % W, y = (i * 151) % H, r = 40 + (i * 23) % 90;
+      const g = f.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, cols[i % cols.length] + '88'); g.addColorStop(1, cols[i % cols.length] + '00');
+      f.fillStyle = g; f.beginPath(); f.arc(x, y, r, 0, Math.PI * 2); f.fill();
+    }
+    for(let b = 0; b < 4; b++){
+      f.globalAlpha = .16; f.fillStyle = cols[b + 1]; f.beginPath();
+      const base = H * (.62 + b * .09); f.moveTo(0, base);
+      for(let x = 0; x <= W; x += 10) f.lineTo(x, base + Math.sin(x / 50 + b) * 18);
+      f.lineTo(W, base + 40); f.lineTo(0, base + 40); f.closePath(); f.fill();
+    }
+    f.restore();
+  }
+  function coverFg(f, top){
+    const name = db.settings.name || L('आपकी दुकान', 'Your shop');
+    const y = top + 18, w = Math.min(W - 32, 560), x = cx - w / 2, h = 150;
+    f.save();
+    glass(f, x, y, w, h);
+    f.textAlign = 'center'; f.fillStyle = '#fde68a'; f.font = `700 ${Math.min(15, W * .04)}px ${HF}`; f.fillText(L('🙏 आपका स्वागत है', '🙏 Welcome to'), cx, y + 34);
+    f.fillStyle = '#fff'; f.font = `800 ${Math.min(32, W * .08)}px ${HF}`; wrapText(f, name, cx, y + 76, w - 40, 36);
+    f.globalAlpha = .85; f.font = `500 ${Math.min(14, W * .037)}px ${HF}`;
+    f.fillText([db.settings.addr, db.settings.city].filter(Boolean).join(', ').slice(0, 60), cx, y + 130);
+    f.restore();
+  }
+
+  /* Hindu calendar: tithi, paksha, month (purnimanta, as used in North India) and Vikram Samvat.
+     Worked out on the phone from sun and moon positions at 6 AM local time, no internet needed. */
+  function sunMoon(ms){
+    const R = Math.PI / 180, n = x => ((x % 360) + 360) % 360, d = ms / 86400000 + 2440587.5 - 2451545.0;
+    const g = (357.528 + .9856003 * d) * R;
+    const sun = n(280.460 + .9856474 * d + 1.915 * Math.sin(g) + .020 * Math.sin(2 * g));
+    const Mm = (134.963 + 13.064993 * d) * R, F = (93.272 + 13.229350 * d) * R, D = (297.850 + 12.190749 * d) * R, M = (357.529 + .985600 * d) * R;
+    const moon = n(218.316 + 13.176396 * d + 6.289 * Math.sin(Mm) - 1.274 * Math.sin(2 * D - Mm) + .658 * Math.sin(2 * D) + .214 * Math.sin(2 * Mm)
+      - .186 * Math.sin(M) - .114 * Math.sin(2 * F) + .059 * Math.sin(2 * D - 2 * Mm) + .057 * Math.sin(2 * D - M - Mm)
+      + .053 * Math.sin(2 * D + Mm) + .046 * Math.sin(2 * D - M) + .041 * Math.sin(Mm - M) - .035 * Math.sin(D) - .031 * Math.sin(M + Mm));
+    return { sun, moon, el:n(moon - sun) };
+  }
+  function panchang(date){
+    const TITHI = ['प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी'];
+    const MONTHS = ['चैत्र','वैशाख','ज्येष्ठ','आषाढ़','श्रावण','भाद्रपद','आश्विन','कार्तिक','मार्गशीर्ष','पौष','माघ','फाल्गुन'];
+    const sr = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 6, 0, 0).getTime();
+    const el = sunMoon(sr).el, ti = Math.floor(el / 12);
+    let nm = sr - el / 12.19 * 86400000;
+    for(let i = 0; i < 3; i++){ let e = sunMoon(nm).el; if(e > 180) e -= 360; nm -= e / 12.19 * 86400000; }
+    const ay = 23.85 + .01397 * (new Date(nm).getFullYear() - 2000);
+    const sign = Math.floor((((sunMoon(nm).sun - ay) % 360) + 360) % 360 / 30);
+    const amanta = (sign + 1) % 12, shukla = ti < 15;
+    return {
+      month: MONTHS[shukla ? amanta : (amanta + 1) % 12],
+      paksha: shukla ? 'शुक्ल पक्ष' : 'कृष्ण पक्ष',
+      tithi: ti === 14 ? 'पूर्णिमा' : ti === 29 ? 'अमावस्या' : TITHI[ti % 15],
+      vs: date.getFullYear() + ((amanta <= 9 && date.getMonth() >= 2) ? 57 : 56),
+    };
+  }
+  let pc = null, pcDay = '';
+  function drawCalendar(f, x, y, w, h, now){
+    const dayKey = now.toDateString();
+    if(pcDay !== dayKey){ pc = panchang(now); pcDay = dayKey; }
+    const HM = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'];
+    const HD = ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
+    const hi = db.settings.lang === 'hi';
+    f.save();
+    f.shadowColor = 'rgba(0,0,0,.35)'; f.shadowBlur = 16; f.shadowOffsetY = 7;
+    f.fillStyle = '#fffaf0'; rr(f, x, y, w, h, 14); f.fill(); f.restore();
+    f.save(); rr(f, x, y, w, h, 14); f.clip();
+    const band = h * .2, tg = f.createLinearGradient(x, y, x + w, y + band);
+    tg.addColorStop(0, '#ef4444'); tg.addColorStop(1, '#b91c1c'); f.fillStyle = tg; f.fillRect(x, y, w, band);
+    f.fillStyle = '#fde68a'; f.fillRect(x, y + band, w, 2);
+    f.fillStyle = 'rgba(251,146,60,.12)'; f.fillRect(x, y + h * .66, w, h * .34);
+    f.restore();
+    [x + w * .28, x + w * .72].forEach(rx => {
+      f.fillStyle = 'rgba(0,0,0,.25)'; f.beginPath(); f.arc(rx, y + 3, 5, 0, Math.PI * 2); f.fill();
+      const rg = f.createLinearGradient(rx - 3, 0, rx + 3, 0); rg.addColorStop(0, '#8a94a3'); rg.addColorStop(.5, '#f8fafc'); rg.addColorStop(1, '#6b7482');
+      f.fillStyle = rg; rr(f, rx - 3, y - 7, 6, 15, 3); f.fill();
+    });
+    f.textAlign = 'center'; f.textBaseline = 'middle';
+    f.fillStyle = '#fff'; f.font = `800 ${Math.max(10, Math.min(15, w * .11))}px ${HF}`;
+    f.fillText(`${hi ? HM[now.getMonth()] : now.toLocaleDateString('en-IN', { month:'long' })} ${now.getFullYear()}`, x + w / 2, y + band / 2 + 1);
+    f.fillStyle = '#1f2937'; f.font = `900 ${Math.min(52, h * .3)}px system-ui, "Segoe UI", sans-serif`;
+    f.fillText(String(now.getDate()), x + w / 2, y + band + h * .19);
+    f.fillStyle = '#dc2626'; f.font = `800 ${Math.max(10, Math.min(14, w * .1))}px ${HF}`;
+    f.fillText(hi ? HD[now.getDay()] : now.toLocaleDateString('en-IN', { weekday:'long' }), x + w / 2, y + band + h * .38);
+    f.fillStyle = '#c2410c'; f.font = `800 ${Math.max(9, Math.min(13, w * .095))}px ${HF}`;
+    f.fillText(`🪔 ${pc.month} ${pc.paksha}`, x + w / 2, y + h * .75);
+    f.fillStyle = '#7c2d12'; f.font = `700 ${Math.max(9, Math.min(13, w * .095))}px ${HF}`;
+    f.fillText(`${pc.tithi} · वि.सं. ${pc.vs}`, x + w / 2, y + h * .89);
+    f.textBaseline = 'alphabetic';
+  }
+  /* Clock: classic dial + digital time. Ivory dial, gold rim and green accents (light, auspicious colours as per Vastu belief) */
+  function drawClock(f, ccx, ccy, r, now){
+    f.save();
+    f.shadowColor = 'rgba(0,0,0,.4)'; f.shadowBlur = 18; f.shadowOffsetY = 7;
+    const rim = f.createLinearGradient(ccx - r, ccy - r, ccx + r, ccy + r);
+    rim.addColorStop(0, '#fef3c7'); rim.addColorStop(.35, '#d4a63a'); rim.addColorStop(.65, '#fde68a'); rim.addColorStop(1, '#a16207');
+    f.fillStyle = rim; f.beginPath(); f.arc(ccx, ccy, r, 0, Math.PI * 2); f.fill(); f.restore();
+    const dial = f.createRadialGradient(ccx - r * .3, ccy - r * .3, r * .1, ccx, ccy, r * .9);
+    dial.addColorStop(0, '#fffefa'); dial.addColorStop(1, '#f5ecd5');
+    f.fillStyle = dial; f.beginPath(); f.arc(ccx, ccy, r * .87, 0, Math.PI * 2); f.fill();
+    f.strokeStyle = '#15803d'; f.lineWidth = Math.max(1.5, r * .025); f.beginPath(); f.arc(ccx, ccy, r * .8, 0, Math.PI * 2); f.stroke();
+    for(let i = 0; i < 60; i++){
+      const a = i * Math.PI / 30, big = i % 5 === 0, r1 = r * (big ? .66 : .72), r2 = r * .77;
+      f.strokeStyle = big ? '#1e3a8a' : 'rgba(30,58,138,.45)'; f.lineWidth = big ? Math.max(2, r * .035) : 1;
+      f.beginPath(); f.moveTo(ccx + Math.sin(a) * r1, ccy - Math.cos(a) * r1); f.lineTo(ccx + Math.sin(a) * r2, ccy - Math.cos(a) * r2); f.stroke();
+    }
+    f.fillStyle = '#1e3a8a'; f.font = `800 ${r * .17}px system-ui, "Segoe UI", sans-serif`; f.textAlign = 'center'; f.textBaseline = 'middle';
+    [[12, 0], [3, 1], [6, 2], [9, 3]].forEach(([n, q]) => { const a = q * Math.PI / 2; f.fillText(String(n), ccx + Math.sin(a) * r * .53, ccy - Math.cos(a) * r * .53); });
+    /* digital window */
+    const dw = r * .92, dh = r * .26, dx = ccx - dw / 2, dy = ccy + r * .22;
+    f.fillStyle = '#064e3b'; rr(f, dx, dy, dw, dh, dh * .3); f.fill();
+    f.strokeStyle = '#d4a63a'; f.lineWidth = 1; rr(f, dx, dy, dw, dh, dh * .3); f.stroke();
+    f.fillStyle = '#6ee7b7'; f.font = `700 ${dh * .62}px ui-monospace, Consolas, monospace`;
+    f.fillText(now.toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit', second:'2-digit' }).replace(/\s?(am|pm|AM|PM)$/, m => m.toUpperCase()), ccx, dy + dh / 2 + 1);
+    /* hands */
+    const hr = now.getHours() % 12 + now.getMinutes() / 60, mn = now.getMinutes() + now.getSeconds() / 60, sc = now.getSeconds();
+    const hand = (ang, len, wid, col) => {
+      f.save(); f.translate(ccx, ccy); f.rotate(ang); f.shadowColor = 'rgba(0,0,0,.3)'; f.shadowBlur = 3; f.shadowOffsetY = 1.5;
+      f.strokeStyle = col; f.lineWidth = wid; f.lineCap = 'round'; f.beginPath(); f.moveTo(0, len * .18); f.lineTo(0, -len); f.stroke(); f.restore();
+    };
+    hand(hr * Math.PI / 6, r * .42, Math.max(3, r * .07), '#1e3a8a');
+    hand(mn * Math.PI / 30, r * .62, Math.max(2.2, r * .048), '#1e3a8a');
+    hand(sc * Math.PI / 30, r * .7, Math.max(1, r * .018), '#dc2626');
+    f.fillStyle = '#d4a63a'; f.beginPath(); f.arc(ccx, ccy, r * .07, 0, Math.PI * 2); f.fill();
+    f.fillStyle = '#dc2626'; f.beginPath(); f.arc(ccx, ccy, r * .03, 0, Math.PI * 2); f.fill();
+    f.textBaseline = 'alphabetic';
+    f.restore();
+  }
+  /* calendar and clock sit on both sides of the top of the zip; redrawn every second so they stay live */
+  let widget = null;
+  function renderFab(){
+    if(!base) return;
+    const f = fab.getContext('2d');
+    f.setTransform(1, 0, 0, 1, 0, 0); f.clearRect(0, 0, fab.width, fab.height); f.drawImage(base, 0, 0);
+    f.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const now = new Date();
+    drawCalendar(f, widget.lx, widget.top, widget.s, widget.ch, now);
+    drawClock(f, widget.rx + widget.s / 2, widget.top + widget.ch / 2, widget.s / 2, now);
+  }
+  function gapAt(y){
+    if(y >= Y) return 0;
+    const pr = Math.max(0, (Y - Y0) / Math.max(1, H - Y0));
+    const maxGap = (W / 2 + 40) * Math.min(1, pr * 1.3) * spread;
+    return maxGap * Math.pow((Y - y) / Math.max(1, Y), 1.15);
+  }
+  function draw(now){
+    /* heavy feel: the slider follows the finger with a little weight instead of jumping */
+    if(dragging) Y += (targetY - Y) * .3;
+    zipSound();
+    const bob = (!dragging && !opening) ? Math.abs(Math.sin((now - t0) / 420)) * 6 : 0;
+    const yy = Y;
+    ctx.clearRect(0, 0, W, H);
+    const step = 3;
+    for(let y = 0; y < H; y += step){
+      const gp = gapAt(y + step / 2);
+      ctx.drawImage(fab, 0, y * dpr, cx * dpr, step * dpr, -gp, y, cx, step);
+      ctx.drawImage(fab, cx * dpr, y * dpr, (W - cx) * dpr, step * dpr, cx + gp, y, W - cx, step);
+      if(gp > 1){
+        ctx.fillStyle = 'rgba(0,0,0,.30)'; ctx.fillRect(cx - gp, y, 12, step); ctx.fillRect(cx + gp - 12, y, 12, step);
+        ctx.fillStyle = 'rgba(0,10,30,.35)'; ctx.fillRect(cx - gp - 5, y, 5, step); ctx.fillRect(cx + gp, y, 5, step);
+      }
+    }
+    if(yy < H + 60){
+      const sy = yy + bob;
+      const sg = ctx.createLinearGradient(cx - 26, 0, cx + 26, 0);
+      sg.addColorStop(0, '#6b7482'); sg.addColorStop(.35, '#f8fafc'); sg.addColorStop(.6, '#cfd6df'); sg.addColorStop(1, '#5d6673');
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 18; ctx.shadowOffsetY = 8;
+      ctx.fillStyle = sg; rr(ctx, cx - 25, sy - 44, 50, 62, 12); ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 1.2; rr(ctx, cx - 25, sy - 44, 50, 62, 12); ctx.stroke();
+      ctx.fillStyle = 'rgba(40,50,65,.35)'; rr(ctx, cx - 15, sy - 32, 30, 5, 2.5); ctx.fill();
+      ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.4)'; ctx.shadowBlur = 12; ctx.shadowOffsetY = 6;
+      ctx.fillStyle = sg; rr(ctx, cx - 17, sy + 8, 34, 72, 15); ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 1.2; rr(ctx, cx - 17, sy + 8, 34, 72, 15); ctx.stroke();
+      ctx.fillStyle = 'rgba(15,40,90,.6)'; rr(ctx, cx - 7, sy + 46, 14, 24, 7); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.35)'; rr(ctx, cx - 11, sy + 14, 6, 26, 3); ctx.fill();
+      hint.style.top = (H - 58) + 'px';
+    }
+    hint.style.opacity = dragging || opening ? '0' : '1';
+    if(!opening && document.body.contains(z)) raf = requestAnimationFrame(draw);
+  }
+  function animate(from, to, ms, set, done){
+    const st = performance.now();
+    const tick = now => {
+      const k = Math.min(1, (now - st) / ms), e = 1 - Math.pow(1 - k, 3);
+      set(from + (to - from) * e); draw(now);
+      if(k < 1) requestAnimationFrame(tick); else if(done) done();
+    };
+    requestAnimationFrame(tick);
+  }
+  function openAll(){
+    if(opening) return; opening = true; cancelAnimationFrame(raf);
+    try{ if(navigator.vibrate && (!navigator.userActivation || navigator.userActivation.hasBeenActive)) navigator.vibrate(15); }catch(e){}
+    animate(Y, H + 60, 380, v => { Y = v; }, () => animate(1, 2.4, 320, v => { spread = v; cv.style.opacity = String(Math.max(0, 2.4 - v) / 1.4); }, finish));
+  }
+  function finish(){
+    clearInterval(tickTimer);
+    try{ if(actx) setTimeout(() => actx.close(), 300); }catch(e){}
+    z.remove(); document.body.style.overflow = '';
+    window.removeEventListener('resize', onResize);
+    const p = document.getElementById('pinIn'); if(p && document.getElementById('lock').style.display === 'flex') p.focus();
+  }
+  function onResize(){ build(); }
+  z.addEventListener('pointerdown', e => {
+    if(opening) return; initAudio(); dragging = true; z.classList.add('grab');
+    startPY = e.clientY; startY = Y; targetY = Y; lastTooth = Math.floor(Y / TOOTH);
+    try{ z.setPointerCapture(e.pointerId); }catch(er){}
+  });
+  z.addEventListener('pointermove', e => {
+    if(!dragging) return;
+    targetY = Math.max(Y0, Math.min(H - 20, startY + (e.clientY - startPY)));
+  });
+  /* the zip opens only when pulled almost to the bottom and let go; above that it can be moved up and down freely */
+  const release = () => {
+    if(!dragging) return; dragging = false; z.classList.remove('grab');
+    Y = targetY;
+    if(Y > H * .72) openAll();
+  };
+  z.addEventListener('pointerup', release); z.addEventListener('pointercancel', release);
+  z.addEventListener('keydown', e => { if(['Enter', ' ', 'ArrowDown'].includes(e.key)){ e.preventDefault(); openAll(); } });
+  window.addEventListener('resize', onResize);
+  build(); raf = requestAnimationFrame(draw);
+  tickTimer = setInterval(renderFab, 1000);
+  setTimeout(() => { try{ z.focus({ preventScroll:true }); }catch(e){} }, 50);
+}
+
 save();
 applyLang();
-showTab('new');
+loadDraft();
+try{ history.replaceState({ tab:'new' }, ''); }catch(e){}
+showTab('new', true);
 restoreBackupHandle();
 showLockIfNeeded();
 resetIdle();
+startZip();
 </script>
 <div id="licLock" style="display:none;position:fixed;inset:0;background:#1f5fbf;z-index:30;align-items:center;justify-content:center;flex-direction:column;color:#fff;gap:10px;padding:20px;text-align:center">
   <h2 style="margin:0">BillEasy</h2>
@@ -1564,7 +2134,7 @@ function checkLicense(){
   const today = todayYMD();
   if(FREE_MODE){
     const tg = document.getElementById('tagline');
-    tg.textContent = tg.textContent.split(' · ')[0] + ' · मुफ़्त / Free';
+    tg.textContent = tg.textContent.split(' · ')[0];
     return;
   }
   if(!db.settings.trialStart){ db.settings.trialStart = today; save(); }

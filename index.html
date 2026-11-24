@@ -144,6 +144,81 @@ header{background:linear-gradient(120deg,#1e40af 0%,#2563eb 40%,#7c3aed 100%);bo
 .tabs button.on:active{transform:scale(.95)}
 #newView{--vc:#16a34a}#listView{--vc:#2563eb}#itemsView{--vc:#9333ea}#purchView{--vc:#ea580c}
 #ledgerView{--vc:#dc2626}#custView{--vc:#0d9488}#settingsView{--vc:#475569}#videosView{--vc:#e11d48}
+#rcptView{--vc:#0891b2}#cashView{--vc:#65a30d}#cnView{--vc:#db2777}#dnView{--vc:#b45309}
+#vbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 10px;min-height:0}
+#vbar:empty{display:none}
+#vbar .vt{font-weight:800;font-size:17px;color:var(--vc,#1e3a8a)}
+#vbar .lb{margin:0;padding:7px 13px;font-size:13.5px;font-weight:800;border-radius:20px;white-space:nowrap;
+  background:linear-gradient(135deg,var(--vc,#2563eb),color-mix(in srgb,var(--vc,#2563eb) 70%,#000))}
+#vbar .lb .n{display:inline-block;min-width:20px;margin-left:5px;padding:1px 6px;border-radius:10px;background:rgba(255,255,255,.28)}
+.inout{display:flex;gap:6px}.inout button{flex:1;margin:0}
+.cashOnly .cmore{display:none}
+button.pdfBtn{background:linear-gradient(135deg,#e11d48,#be123c)}
+.rchips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px}
+.rchips button{margin:0;border-radius:20px}
+.rchips button.on{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff}
+.pdfReady{display:flex;gap:12px;align-items:center;margin-top:14px;padding:12px;border-radius:14px;background:#f0fdf4;border:1px solid #bbf7d0;flex-wrap:wrap}
+.pdfReady img{width:96px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.18);background:#fff}
+.pdfReady>div{flex:1 1 170px}.pdfReady b{display:block;color:#15803d}.pdfReady small{display:block;color:#4b5563;margin:2px 0 6px}
+.pdfReady button{margin:4px 6px 0 0}
+/* ---------- Settings: neat sections that open and close ---------- */
+.setHead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(135deg,#eef2ff,#fdf4ff)!important;border-top:0!important}
+.setHead .shLogo{width:56px;height:56px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;box-shadow:0 4px 12px rgba(80,60,160,.18);flex:none}
+.setHead .shLogo img{width:100%;height:100%;object-fit:contain}
+.setHead .shTxt{flex:1 1 150px;min-width:0}.setHead .shTxt b{display:block;font-size:17px;color:#312e81}
+.setHead .shTxt small{display:block;color:#6b7280;font-size:12.5px;margin-top:2px}
+.setHead button{margin:0;background:linear-gradient(135deg,#7c3aed,#4f46e5)}
+.sset{background:#fff;border-radius:16px;margin-bottom:10px;box-shadow:0 4px 14px rgba(30,60,120,.08);border:1px solid #eef0f6;overflow:hidden}
+.sset summary{list-style:none;display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sset summary::-webkit-details-marker{display:none}
+.sset .si{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;
+  background:color-mix(in srgb,var(--sc) 14%,#fff);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sc) 25%,#fff)}
+.sset .st{flex:1;min-width:0}.sset .st b{display:block;font-size:15.5px;color:color-mix(in srgb,var(--sc) 80%,#111)}
+.sset .st small{display:block;font-size:12px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sset .sc{font-size:20px;color:#94a3b8;transition:transform .3s var(--ease)}
+.sset[open] .sc{transform:rotate(180deg);color:var(--sc)}
+.sset[open] summary{background:linear-gradient(90deg,color-mix(in srgb,var(--sc) 8%,#fff),#fff);border-bottom:1px solid #f1f3f8}
+.sset .sb{padding:4px 14px 16px}
+.sset[open] .sb{animation:dropIn .3s var(--ease)}
+.sset .grid2>div,.sset .grid3>div{min-width:0}
+.sset select{width:100%;max-width:100%}
+.sset textarea{width:100%;padding:9px;border:1px solid #cfd7e6;border-radius:8px;font:inherit}
+.secT{margin:16px 0 4px;font-weight:800;font-size:14px;color:#334155}
+.hint2{font-size:12.5px;color:#6b7280;margin:6px 0}
+.swg{margin-top:8px;border:1px solid #eef0f6;border-radius:12px;padding:8px 10px;background:#fbfcff}
+.swgT{font-weight:700;font-size:13px;color:#475569;margin-bottom:4px}
+.swgB{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+@media(max-width:520px){.swgB{grid-template-columns:1fr}}
+.sw{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:14px;color:#1f2937;cursor:pointer;font-weight:500}
+.sw input{appearance:none;-webkit-appearance:none;width:40px;height:23px;border-radius:12px;background:#cbd5e1;position:relative;flex:none;margin:0;padding:0;border:0;cursor:pointer;transition:background .25s}
+.sw input::after{content:'';position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s var(--ease)}
+.sw input:checked{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.sw input:checked::after{transform:translateX(17px)}
+.dprev{border:1px dashed #9bb3d9;padding:10px;border-radius:10px;overflow:auto;background:#fff}
+.saveBar{position:sticky;bottom:0;z-index:5;padding:10px 0 12px;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(240,244,255,.95) 40%)}
+.saveBar button{width:100%;margin:0;padding:13px;font-size:16px;font-weight:800;border-radius:14px;box-shadow:0 8px 20px rgba(22,163,74,.35)}
+.imgpick{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.imgpick>div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.imgpick .logo{width:64px;height:64px;border-radius:16px;margin:0;padding:0;background:linear-gradient(135deg,#fef3c7,#fde68a)!important;color:#92400e;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;overflow:hidden;box-shadow:0 4px 12px rgba(146,64,14,.22),inset 0 0 0 2px #fff}
+.imgpick .logo.sig{width:120px;background:linear-gradient(135deg,#e0f2fe,#bae6fd)!important;color:#075985}
+.imgpick .logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.imgpick small{font-size:12px;color:#475569;font-weight:700}.imgpick .sm{margin:0}
+.t3{font-size:11px;font-weight:700;color:#7c3aed;background:#f3e8ff;padding:1px 7px;border-radius:10px;margin-left:4px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.chips span{font-size:12px;padding:3px 9px;border-radius:12px;background:#eef2ff;color:#3730a3;font-weight:600}
+.cashOnly .chips{display:none}
+.win h3{margin-top:0}.win .newg{display:none;margin-top:8px;padding:10px;border-radius:12px;background:#faf5ff;border:1px dashed #c4b5fd}
+.win .newg.show{display:block;animation:dropIn .25s var(--ease)}
+.cashTip{display:none;margin-top:6px;padding:7px 10px;border-radius:10px;background:#ecfdf5;color:#047857;font-size:13px;font-weight:700}
+.cashOnly .cashTip{display:block;animation:dropIn .25s var(--ease)}
+/* dates show as DD/MM/YY everywhere; tapping opens the phone's calendar */
+.dwrap{position:relative;display:block}
+.dwrap input[type=date]{color:transparent}
+.dwrap input[type=date]:focus{color:transparent}
+.dwrap .dtxt{position:absolute;left:10px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:15px;color:#1d2433;font-weight:600}
+.billOpen{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px;padding:10px;border-radius:12px;background:linear-gradient(135deg,#eef6ff,#f5f3ff)}
+.billOpen input{flex:1 1 140px}.billOpen button{margin:0;flex:none}
 .view .card{border-top:4px solid var(--vc,#2563eb);border-radius:14px;box-shadow:0 6px 18px rgba(30,60,120,.08)}
 .view h3{color:var(--vc,#1f5fbf);font-weight:800}
 .view label{font-weight:600;color:#374151}
@@ -168,6 +243,54 @@ button.light{background:#eef2ff;color:#1e3a8a}
 #zip .zhint{position:absolute;left:0;right:0;text-align:center;color:#fff;font-size:15px;font-weight:600;pointer-events:none;text-shadow:0 2px 6px rgba(0,0,0,.35);transition:opacity .3s}
 #zip.grab{cursor:grabbing}
 
+/* ---------- Side menu (☰): stays open until ☰ is tapped again ---------- */
+:root{--sideW:118px;--hh:64px}
+@media(min-width:700px){:root{--sideW:150px}}
+header{position:sticky;top:0;z-index:30;flex-wrap:nowrap}
+.burger{margin:0 4px 0 0;width:42px;height:42px;padding:0;border-radius:12px;background:rgba(255,255,255,.18)!important;font-size:22px;line-height:1;flex:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.burger.on{background:#fff!important;color:#1e40af}
+.brand{min-width:0}
+#side{position:fixed;left:0;top:var(--hh);bottom:0;width:var(--sideW);z-index:25;display:flex;flex-direction:column;gap:7px;padding:10px 7px 12px;
+  background:linear-gradient(180deg,#ffffff,#f3f0ff);box-shadow:4px 0 18px rgba(30,60,140,.12);overflow-y:auto;overflow-x:hidden;
+  transform:translateX(-105%);transition:transform .32s var(--ease);perspective:700px}
+body.menu #side{transform:none}
+.wrap{transition:margin-left .32s var(--ease)}
+body.menu .wrap{margin-left:var(--sideW)}
+@media(min-width:1150px){body.menu .wrap{margin-left:auto}}
+.co{display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px 2px 9px;margin-bottom:2px;border-bottom:2px dashed #ddd6fe}
+.co .logo{width:54px;height:54px;border-radius:16px;margin:0;padding:0;background:linear-gradient(135deg,#fef3c7,#fde68a)!important;color:#92400e;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;line-height:1.1;text-align:center;overflow:hidden;
+  box-shadow:0 4px 12px rgba(146,64,14,.25),inset 0 0 0 2px #fff}
+.co .logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.co .cn{font-size:11.5px;font-weight:800;color:#312e81;text-align:center;line-height:1.2;max-width:100%;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.co .cedit{margin:0;padding:4px 8px;font-size:11px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#4f46e5)!important}
+#side .mi{margin:0;width:100%;padding:11px 6px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;
+  background:#fff;color:var(--c);border:2px solid color-mix(in srgb,var(--c) 30%,transparent);font-weight:800;font-size:13.5px;line-height:1.2;
+  box-shadow:0 3px 8px color-mix(in srgb,var(--c) 14%,transparent)}
+#side .mi .ti,#sideTip .ti{display:none}
+#side .mi .tl{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#side .mi.on{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border-color:transparent}
+#side .gap{flex:1 0 6px}
+#sideTip{position:fixed;z-index:35;pointer-events:none;padding:8px 14px;border-radius:14px;color:#fff;font-weight:800;font-size:14px;white-space:nowrap;
+  display:flex;align-items:center;gap:7px;box-shadow:0 12px 26px rgba(20,30,80,.35);opacity:0;transform:translateX(-12px) scale(.9);
+  transition:opacity .22s,transform .3s var(--ease)}
+#sideTip.show{opacity:1;transform:none}
+#modal{z-index:50}
+#lock{z-index:55!important}
+#licLock{z-index:56!important}
+
+/* ---------- 3D tap: what you tap lifts up, the last one settles back ---------- */
+button,.card,tr,.sugg div,.vids a{transition:transform .28s var(--ease),box-shadow .28s var(--ease),background-color .25s,color .25s}
+.up{position:relative;z-index:3}
+button.up,#side .mi.up{transform:perspective(500px) translateZ(18px) translateY(-3px);box-shadow:0 12px 22px rgba(30,50,120,.32)!important}
+#side .mi.up{z-index:4}
+.card.up{transform:translateY(-3px);box-shadow:0 16px 34px rgba(30,60,140,.18)!important}
+tr.up,.sugg div.up{transform:translateY(-2px) scale(1.01);box-shadow:0 8px 18px rgba(30,60,140,.16);background:#fff}
+.vids a.up{transform:translateY(-3px);box-shadow:0 10px 22px rgba(31,95,191,.2)}
+button.up:active,#side .mi.up:active{transform:perspective(500px) translateZ(6px) scale(.97)}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
@@ -175,7 +298,8 @@ button.light{background:#eef2ff;color:#1e3a8a}
 </head>
 <body>
 <header>
-  <div class="brand">
+  <button id="burger" class="burger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="brand" style="flex:1">
     <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
       <rect width="44" height="44" rx="12" fill="#fff"/>
       <path d="M12 8h20v28l-3-2-3 2-3-2-3 2-3-2-3 2z" fill="#1f5fbf"/>
@@ -188,23 +312,41 @@ button.light{background:#eef2ff;color:#1e3a8a}
   <select id="langSel" onchange="setLang(this.value)"></select>
 </header>
 
-<div class="wrap">
-  <div class="tabs">
-    <button id="t-new" style="--c:#16a34a;--c2:#0f7a37" onclick="showTab('new')"></button>
-    <button id="t-list" class="light" style="--c:#2563eb;--c2:#1d4ed8" onclick="showTab('list')"></button>
-    <button id="t-items" class="light" style="--c:#9333ea;--c2:#7e22ce" onclick="showTab('items')"></button>
-    <button id="t-purch" class="light" style="--c:#ea580c;--c2:#c2410c" onclick="showTab('purch')"></button>
-    <button id="t-ledger" class="light" style="--c:#dc2626;--c2:#b91c1c" onclick="showTab('ledger')"></button>
-    <button id="t-cust" class="light" style="--c:#0d9488;--c2:#0f766e" onclick="showTab('cust')"></button>
-    <button id="t-settings" class="light" style="--c:#475569;--c2:#334155" onclick="showTab('settings')"></button>
-    <button id="t-videos" class="light" style="--c:#e11d48;--c2:#be123c;display:none" onclick="showTab('videos')"></button>
+<nav id="side">
+  <div class="co">
+    <button class="logo" id="coLogo" onclick="document.getElementById('coLogoIn').click()"></button>
+    <input id="coLogoIn" type="file" accept="image/*" style="display:none" onchange="pickLogo(this)">
+    <div class="cn" id="coName"></div>
+    <button class="cedit" id="coEdit" onclick="openCompany()"></button>
   </div>
+  <button id="t-new" class="mi" style="--c:#16a34a;--c2:#0f7a37" onclick="showTab('new')"></button>
+  <button id="t-list" class="mi" style="display:none" onclick="showTab('list')"></button>
+  <button id="t-purch" class="mi" style="--c:#ea580c;--c2:#c2410c" onclick="showTab('purch')"></button>
+  <button id="t-ledger" class="mi" style="--c:#dc2626;--c2:#b91c1c" onclick="showTab('ledger')"></button>
+  <button id="t-rcpt" class="mi" style="--c:#0891b2;--c2:#0e7490" onclick="showTab('rcpt')"></button>
+  <button id="t-cash" class="mi" style="--c:#65a30d;--c2:#4d7c0f" onclick="showTab('cash')"></button>
+  <button id="t-cn" class="mi" style="--c:#db2777;--c2:#be185d" onclick="showTab('cn')"></button>
+  <button id="t-dn" class="mi" style="--c:#b45309;--c2:#92400e" onclick="showTab('dn')"></button>
+  <button id="t-items" class="mi" style="--c:#9333ea;--c2:#7e22ce" onclick="showTab('items')"></button>
+  <button id="t-cust" class="mi" style="--c:#0d9488;--c2:#0f766e" onclick="showTab('cust')"></button>
+  <div class="gap"></div>
+  <button id="t-videos" class="mi" style="--c:#e11d48;--c2:#be123c;display:none" onclick="showTab('videos')"></button>
+  <button id="t-settings" class="mi" style="--c:#475569;--c2:#334155" onclick="showTab('settings')"></button>
+</nav>
+<div id="sideTip"></div>
+
+<div class="wrap">
+  <div id="vbar"></div>
   <div id="newView" class="view"></div>
   <div id="listView" class="view"></div>
   <div id="itemsView" class="view"></div>
   <div id="purchView" class="view"></div>
   <div id="ledgerView" class="view"></div>
   <div id="custView" class="view"></div>
+  <div id="rcptView" class="view"></div>
+  <div id="cashView" class="view"></div>
+  <div id="cnView" class="view"></div>
+  <div id="dnView" class="view"></div>
   <div id="settingsView" class="view"></div>
   <div id="videosView" class="view"></div>
 </div>
@@ -223,7 +365,7 @@ button.light{background:#eef2ff;color:#1e3a8a}
 /* ---------- Translations (newer keys fall back to English) ---------- */
 const UNITS = ['pcs','kg','g','liter','ml','meter','dozen','box','gram'];
 const LANGS = {
-  hi:{ name:'हिन्दी', tag:'आसान बिलिंग', new:'नया बिल', list:'सभी बिल', items:'सामान की सूची', purch:'खरीद', cust:'ग्राहक', set:'सेटिंग्स',
+  hi:{ name:'हिन्दी', tag:'आसान बिलिंग', new:'बिक्री', list:'सभी बिल', items:'सामान की सूची', purch:'खरीद', cust:'ग्राहक', set:'सेटिंग्स',
     cust1:'ग्राहक की जानकारी', cname:'ग्राहक का नाम', phone:'फ़ोन नंबर', date:'तारीख', gstin:'GSTIN', email:'ईमेल', address:'पता',
     lines:'सामान / सेवाएँ', desc:'विवरण', qty:'मात्रा', rate:'दर', amount:'राशि', gst:'GST %', hsn:'HSN कोड', unit:'इकाई',
     add:'+ सामान जोड़ें', freeLine:'+ बिना सूची के सामान', total:'कुल देय', sub:'उप-योग', save:'बिल सेव करें', prev:'पूर्वावलोकन',
@@ -288,7 +430,7 @@ const LANGS = {
     billLabel:'बिल', purchLabel:'खरीद',
     pinBad:'PIN 4 से 6 अंकों का होना चाहिए', pinNeed:'PIN चालू करने के लिए नया PIN लिखें', pinWrong:'गलत PIN',
     exportItems:'सामान की सूची Excel में डाउनलोड करें', exportBills:'सभी बिल Excel में डाउनलोड करें' },
-  en:{ name:'English', tag:'Billing made easy', new:'New Bill', list:'All Bills', items:'Item List', purch:'Purchase', cust:'Customers', set:'Settings',
+  en:{ name:'English', tag:'Billing made easy', new:'Sale', list:'All Bills', items:'Item List', purch:'Purchase', cust:'Customers', set:'Settings',
     cust1:'Customer Details', cname:'Customer name', phone:'Phone number', date:'Date', gstin:'GSTIN', email:'Email', address:'Address',
     lines:'Items / Services', desc:'Description', qty:'Qty', rate:'Rate', amount:'Amount', gst:'GST %', hsn:'HSN code', unit:'Unit',
     add:'+ Add item', freeLine:'+ Item not in list', total:'Total due', sub:'Subtotal', save:'Save bill', prev:'Preview',
@@ -356,12 +498,20 @@ const LANGS = {
 };
 
 /* ---------- Data ---------- */
-const blankSettings = { name:'', addr:'', city:'', phone:'', gstin:'', upi:'', gst:0, next:1, lang:'hi', cfields:[], billPrefix:'INV-', billNoMode:'auto', entryMode:'manual', pinOn:false, pinHash:'', pinSalt:'' };
+const blankSettings = { name:'', addr:'', city:'', phone:'', gstin:'', upi:'', gst:0, next:1, lang:'en', cfields:[], billPrefix:'INV-', billNoMode:'auto', entryMode:'manual', pinOn:false, pinHash:'', pinSalt:'' };
 const SHOW_KEYS = ['logo','bizName','addr','city','phone','gstin','bank','bankName','accNo','ifsc','upi','qr','photo','hsn','qtyCol','rateCol','gstCol','amtCol','gstAmtCol','lineTotalCol','custPhone','custGstin','custAddr','custExtra','paidStamp','signature','terms','footer','thanks'];
 const DEFAULT_SHOW = Object.fromEntries(SHOW_KEYS.map(k => [k, true]));
 DEFAULT_SHOW.signature = false;
 DEFAULT_SHOW.terms = false;
-let db = normalize(JSON.parse(localStorage.getItem('billeasy4') || 'null'));
+/* ---- Companies: each company keeps its own data. The first company keeps the old key so nothing moves. ---- */
+const CO_KEY = 'be_company', COS_KEY = 'be_companies';
+function loadCos(){ try{ const l = JSON.parse(localStorage.getItem(COS_KEY) || '[]'); return Array.isArray(l) ? l.filter(c => c && safeId(c.id)).map(c => ({ id:safeId(c.id), name:safeStr(c.name, 120) })) : []; }catch(e){ return []; } }
+let COS = loadCos(); if(!COS.some(c => c.id === 'main')) COS.unshift({ id:'main', name:'' });
+let CO = (() => { try{ return safeId(localStorage.getItem(CO_KEY)) || 'main'; }catch(e){ return 'main'; } })();
+if(!COS.some(c => c.id === CO)) CO = 'main';
+const dbKey = id => id === 'main' ? 'billeasy4' : 'billeasy4_' + id;
+const DB_KEY = dbKey(CO);
+let db = normalize(JSON.parse(localStorage.getItem(DB_KEY) || 'null'));
 /* ---- Security: clean every value that comes from storage or a backup file ----
    A backup file can come from anyone, so ids, bill numbers, dates, numbers,
    pictures and design values are forced into safe shapes before use. */
@@ -378,12 +528,12 @@ function normalize(d){
   const s = d.settings = Object.assign({}, blankSettings, (d.settings && typeof d.settings === 'object') ? d.settings : {});
   ['name','addr','city','phone','gstin','upi','terms','footer'].forEach(k => { s[k] = safeStr(s[k], k === 'terms' ? 2000 : 300); });
   s.gst = safeNum(s.gst); s.next = Math.max(1, Math.floor(safeNum(s.next)) || 1);
-  s.lang = pick(s.lang, Object.keys(LANGS), 'hi');
+  s.lang = pick(s.lang, Object.keys(LANGS), 'en');
   s.billPrefix = safeTxt(s.billPrefix, 20);
   s.billNoMode = pick(s.billNoMode, ['auto','manual'], 'auto');
   s.entryMode = pick(s.entryMode, ['manual','scan'], 'manual');
   s.paper = pick(s.paper, ['a4','thermal'], 'a4');
-  s.logo = safeImg(s.logo);
+  s.logo = safeImg(s.logo); s.sign = safeImg(s.sign);
   s.cfields = (Array.isArray(s.cfields) ? s.cfields : []).map(f => safeTxt(f, 40)).filter(Boolean).slice(0, 20);
   const b = (s.bank && typeof s.bank === 'object') ? s.bank : {};
   s.bank = { holder:safeStr(b.holder,100), name:safeStr(b.name,100), acc:safeStr(b.acc,40), ifsc:safeStr(b.ifsc,20) };
@@ -403,18 +553,32 @@ function normalize(d){
   const line = l => ({ iid:l.iid ? safeId(l.iid) : null, n:safeStr(l.n, 200), hsn:safeStr(l.hsn, 20),
     unit:pick(l.unit, UNITS, 'pcs'), q:safeNum(l.q), r:safeNum(l.r), gst:safeNum(l.gst) });
   d.customers = arr(d.customers).map(c => ({ id:safeId(c.id) || ('C' + randHex()), name:safeStr(c.name, 200), phone:safeStr(c.phone, 30),
-    gstin:safeStr(c.gstin, 20), email:safeStr(c.email, 100), address:safeStr(c.address, 300), extra:extra(c.extra) }));
+    gstin:safeStr(c.gstin, 20), email:safeStr(c.email, 100), address:safeStr(c.address, 300), extra:extra(c.extra),
+    group:safeStr(c.group, 80) || (c.id === 'CASH' ? 'Cash-in-hand' : 'Sundry Debtors') }));
+  /* a ready "Cash" account in every company, so nobody has to make one */
+  if(!d.customers.some(c => c.id === 'CASH')) d.customers.unshift({ id:'CASH', name:'Cash', phone:'', gstin:'', email:'', address:'', extra:{}, group:'Cash-in-hand' });
+  d.groups = arr(d.groups).map(g => ({ id:safeId(g.id) || ('G' + randHex()), name:safeStr(g.name, 80), parent:safeStr(g.parent, 80) })).filter(g => g.name);
   d.items = arr(d.items).map(i => ({ id:safeId(i.id) || ('I' + randHex()), name:safeStr(i.name, 200), photo:safeImg(i.photo), hsn:safeStr(i.hsn, 20),
     gst:safeNum(i.gst), unit:pick(i.unit, UNITS, 'pcs'), sale:safeNum(i.sale), buy:safeNum(i.buy), stock:safeNum(i.stock),
     bc:safeStr(i.bc, 60), minQty:safeNum(i.minQty), stockDate:safeDate(i.stockDate) }));
   d.suppliers = arr(d.suppliers).map(x => ({ id:safeId(x.id) || ('S' + randHex()), name:safeStr(x.name, 200),
     phone:safeStr(x.phone, 30), gstin:safeStr(x.gstin, 20), address:safeStr(x.address, 300) }));
+  if(!d.suppliers.some(x => x.id === 'CASH' || /^cash$/i.test(x.name))) d.suppliers.unshift({ id:'CASH', name:'Cash', phone:'', gstin:'', address:'' });
   d.purchases = arr(d.purchases).map(p => Object.assign({}, p, { id:p.id ? safeId(p.id) : p.id, sid:p.sid ? safeId(p.sid) : p.sid,
     iid:p.iid ? safeId(p.iid) : p.iid, date:safeDate(p.date), q:safeNum(p.q), r:safeNum(p.r),
     supplier:safeStr(p.supplier, 200), n:safeStr(p.n, 200), unit:pick(p.unit, UNITS, 'pcs') }));
   d.payments = arr(d.payments).map(p => ({ id:safeId(p.id) || ('Y' + randHex()), ty:pick(p.ty, ['c','s'], 'c'), pid:safeId(p.pid),
     amt:safeNum(p.amt), date:safeDate(p.date), mode:safeStr(p.mode, 30), note:safeStr(p.note, 300),
-    auto:!!p.auto, inv:p.inv !== undefined ? safeTxt(p.inv, 40) : undefined }));
+    auto:!!p.auto, inv:p.inv !== undefined ? safeTxt(p.inv, 40) : undefined, rno:p.rno ? safeTxt(p.rno, 30) : undefined,
+    note2:p.note2 ? safeId(p.note2) : undefined }));
+  /* credit notes (sale return) and debit notes (purchase return) */
+  d.notes = arr(d.notes).map(n => ({ id:safeId(n.id) || ('N' + randHex()), ty:pick(n.ty, ['cn','dn'], 'cn'), no:safeTxt(n.no, 30),
+    date:safeDate(n.date), pid:safeId(n.pid), pname:safeStr(n.pname, 200), iid:n.iid ? safeId(n.iid) : null, n:safeStr(n.n, 200),
+    unit:pick(n.unit, UNITS, 'pcs'), q:safeNum(n.q), r:safeNum(n.r), reason:safeStr(n.reason, 300), ts:safeNum(n.ts) || undefined }));
+  /* cash book entries typed by hand (expenses, cash added, opening cash) */
+  d.cashbook = arr(d.cashbook).map(c => ({ id:safeId(c.id) || ('K' + randHex()), date:safeDate(c.date), dir:pick(c.dir, ['in','out'], 'out'),
+    amt:Math.abs(safeNum(c.amt)), note:safeStr(c.note, 300) }));
+  ['nextRcpt','nextCn','nextDn'].forEach(k => { s[k] = Math.max(1, Math.floor(safeNum(s[k])) || 1); });
   d.invoices = arr(d.invoices).map(inv => {
     const lines = Array.isArray(inv.lines) ? inv.lines : (Array.isArray(inv.items) ? inv.items.map(l => ({ n:l.n, q:l.q, r:l.r, gst:s.gst })) : []);
     return { no:safeTxt(inv.no, 40), cid:inv.cid ? safeId(inv.cid) : null, cn:safeStr(inv.cn, 200), cp:safeStr(inv.cp, 30),
@@ -428,7 +592,7 @@ let cur = blankInv();
 let tab = 'new';
 let selCid = null;
 let itemDraft = blankItem();
-let purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
+let purchDraft = { supplier:'Cash', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
 let editMode = false;
 let editingNo = null;
 
@@ -452,7 +616,11 @@ const VIDEOS = [
   { id:'NeiApAxSb3Y', t:580, hi:'PIN लॉक', en:'PIN lock' },
   { id:'JPxgRIj-i30', t:0, short:true, hi:'1 मिनट में बिल (Shorts)', en:'A bill in 1 minute (Shorts)' },
 ];
-function save(){ db = normalize(db); localStorage.setItem('billeasy4', JSON.stringify(db)); autoBackup(); }
+function save(){
+  db = normalize(db); localStorage.setItem(DB_KEY, JSON.stringify(db)); autoBackup();
+  const c = COS.find(x => x.id === CO); if(c && c.name !== db.settings.name){ c.name = db.settings.name; try{ localStorage.setItem(COS_KEY, JSON.stringify(COS)); }catch(e){} }
+  renderSide(); renderBar();
+}
 
 /* ---- Security: slow down guessing of PIN and activation code ----
    After 5 wrong tries the app waits 30 sec, then 1 min, 2 min ... (max 1 hour).
@@ -503,7 +671,7 @@ async function writeBackup(){
   if(!backupDir || db.settings.backupMode !== 'auto') return;
   try{
     if((await backupDir.queryPermission({ mode:'readwrite' })) !== 'granted') return;
-    const fh = await backupDir.getFileHandle('billeasy-backup.json', { create:true });
+    const fh = await backupDir.getFileHandle(CO === 'main' ? 'billeasy-backup.json' : 'billeasy-backup-' + CO + '.json', { create:true });
     const w = await fh.createWritable();
     await w.write(JSON.stringify(db, null, 2));
     await w.close();
@@ -555,7 +723,7 @@ function unitSelect(sel, onchange){
   return `<select onchange="${onchange}">${UNITS.map(u => `<option value="${u}" ${u===sel?'selected':''}>${uLabel(u)}</option>`).join('')}</select>`;
 }
 function blankInv(){
-  return { cid:null, cn:'', cp:'', cgstin:'', cemail:'', caddr:'', cextra:{}, cd:new Date().toISOString().slice(0,10), lines:[], paid:false, pmode:'' };
+  return { cid:'CASH', cn:'Cash', cp:'', cgstin:'', cemail:'', caddr:'', cextra:{}, cgroup:'Cash-in-hand', cd:new Date().toISOString().slice(0,10), lines:[], paid:false, pmode:'' };
 }
 function blankItem(){
   return { id:null, name:'', photo:'', hsn:'', gst:db.settings.gst||0, unit:'pcs', sale:0, buy:0, stock:0, bc:'', minQty:0, stockDate:'' };
@@ -583,16 +751,17 @@ function qrUrl(amount){
     return q.createDataURL(6, 4);
   }catch(e){ return ''; }
 }
-function readPhoto(file, cb){
+function readPhoto(file, cb, max){
   const r = new FileReader();
   r.onload = () => {
     const img = new Image();
     img.onload = () => {
-      const m = 160 / Math.max(img.width, img.height, 1);
+      const m = (max || 160) / Math.max(img.width, img.height, 1);
       const c = document.createElement('canvas');
       c.width = Math.round(img.width * Math.min(m,1)); c.height = Math.round(img.height * Math.min(m,1));
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      cb(c.toDataURL('image/jpeg', 0.7));
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); /* see-through pictures stay white, not black */
+      g.drawImage(img, 0, 0, c.width, c.height);
+      cb(c.toDataURL('image/jpeg', max ? 0.85 : 0.7));
     };
     img.src = r.result;
   };
@@ -609,12 +778,148 @@ function applyLang(){
   tabLbl('t-items', '📦', t('items'));
   tabLbl('t-purch', '🛒', t('purch'));
   tabLbl('t-ledger', '📒', t('ledger'));
+  tabLbl('t-rcpt', '🧾', L('पेमेंट रसीद', 'Payment Receipt'));
+  tabLbl('t-cash', '💵', L('कैश बुक', 'Cash Book'));
+  tabLbl('t-cn', '↩️', L('क्रेडिट नोट', 'Credit Note'));
+  tabLbl('t-dn', '↪️', L('डेबिट नोट', 'Debit Note'));
   tabLbl('t-cust', '👥', t('cust'));
   tabLbl('t-settings', '⚙️', t('set'));
   tabLbl('t-videos', '🎬', L('वीडियो', 'Videos'));
   document.getElementById('t-videos').style.display = SHOW_VIDEOS ? '' : 'none';
   document.getElementById('langSel').innerHTML = Object.keys(LANGS).map(k =>
     `<option value="${k}" ${k===db.settings.lang?'selected':''}>${LANGS[k].name}</option>`).join('');
+  renderSide();
+}
+
+/* ---------- Side menu ---------- */
+function renderSide(){
+  const lg = document.getElementById('coLogo'); if(!lg) return;
+  const s = db.settings;
+  lg.innerHTML = s.logo ? `<img src="${s.logo}" alt="">` : L('+ लोगो', '+ Logo');
+  lg.title = L('अपना लोगो लगाएँ', 'Add your logo');
+  document.getElementById('coName').textContent = s.name || L('मेरी कंपनी', 'My company');
+  document.getElementById('coEdit').textContent = '✏️ ' + L('बदलें', 'Edit');
+}
+function setMenu(open){
+  document.body.classList.toggle('menu', open);
+  document.getElementById('burger').classList.toggle('on', open);
+  document.getElementById('burger').textContent = open ? '✕' : '☰';
+  try{ localStorage.setItem('be_menu', open ? '1' : '0'); }catch(e){}
+}
+function toggleMenu(){ setMenu(!document.body.classList.contains('menu')); }
+function fitHeader(){ const h = document.querySelector('header'); if(h) document.documentElement.style.setProperty('--hh', h.offsetHeight + 'px'); }
+window.addEventListener('resize', fitHeader);
+/* a cut-off name pops out in full beside the menu when its item is tapped */
+let tipTimer = 0;
+function showSideTip(b){
+  const tip = document.getElementById('sideTip'), lbl = b && b.querySelector('.tl');
+  if(!tip || !lbl || !document.body.classList.contains('menu')) return;
+  clearTimeout(tipTimer);
+  if(lbl.scrollWidth <= lbl.clientWidth + 1){ tip.classList.remove('show'); return; }
+  const r = b.getBoundingClientRect(), cs = getComputedStyle(b);
+  tip.innerHTML = b.querySelector('.ti').outerHTML + `<span>${esc(lbl.textContent)}</span>`;
+  tip.style.background = `linear-gradient(135deg,${cs.getPropertyValue('--c')},${cs.getPropertyValue('--c2')})`;
+  tip.style.left = r.left + 'px'; tip.style.top = (r.top + r.height/2 - 19) + 'px';
+  tip.classList.add('show');
+  tipTimer = setTimeout(() => tip.classList.remove('show'), 2200);
+}
+document.getElementById('side').addEventListener('scroll', () => document.getElementById('sideTip').classList.remove('show'), { passive:true });
+
+/* ---------- 3D tap: the tapped thing lifts, the previous one settles ---------- */
+let upEl = null;
+document.addEventListener('pointerdown', e => {
+  if(!e.target.closest) return;
+  const el = e.target.closest('button, .card, tr.line, tr.cust-row, .sugg div, .vids a');
+  if(el === upEl) return;
+  if(upEl) upEl.classList.remove('up');
+  upEl = el; if(el) el.classList.add('up');
+}, { passive:true });
+
+/* ---------- Dates: every date box shows DD/MM/YY (phones and browsers otherwise show their own format) ---------- */
+function enhanceDate(inp){
+  if(inp.dataset.dd) return; inp.dataset.dd = '1';
+  const w = document.createElement('span'); w.className = 'dwrap';
+  inp.parentNode.insertBefore(w, inp); w.appendChild(inp);
+  const s = document.createElement('span'); s.className = 'dtxt'; w.appendChild(s);
+  const show = () => { s.textContent = inp.value ? fmtDate(inp.value) : 'DD/MM/YY'; s.style.color = inp.value ? '' : '#9aa3b2'; };
+  show();
+  inp.addEventListener('input', show); inp.addEventListener('change', show);
+  inp.addEventListener('click', () => { try{ inp.showPicker(); }catch(e){} });
+}
+function enhanceDates(root){ (root || document).querySelectorAll('input[type=date]').forEach(enhanceDate); }
+new MutationObserver(() => enhanceDates()).observe(document.body, { childList:true, subtree:true });
+
+/* ---------- Company: logo, details, add / switch ---------- */
+function openCompany(){
+  const s = db.settings;
+  /* keep anything already typed when the window redraws (e.g. after choosing a logo or signature) */
+  const keep = (id, def) => { const e = document.getElementById(id); return e ? e.value : def; };
+  const f = { n:keep('co_n', s.name), p:keep('co_p', s.phone), g:keep('co_g', s.gstin), c:keep('co_c', s.city), a:keep('co_a', s.addr), u:keep('co_u', s.upi),
+    bh:keep('co_bh', s.bank.holder), bn:keep('co_bn', s.bank.name), ba:keep('co_ba', s.bank.acc), bi:keep('co_bi', s.bank.ifsc) };
+  document.getElementById('modalBody').innerHTML = `
+    <h3 style="margin-top:0">🏢 ${L('कंपनी / दुकान', 'Company / shop')}</h3>
+    <div class="imgpick">
+      <div><button class="logo" onclick="document.getElementById('coLogoIn').click()">${s.logo ? `<img src="${s.logo}" alt="">` : L('+ लोगो', '+ Logo')}</button>
+        <small>${L('लोगो', 'Logo')}</small>${s.logo ? `<button class="sm gray" onclick="db.settings.logo='';save();openCompany()">${L('हटाएँ', 'Remove')}</button>` : ''}</div>
+      <div><button class="logo sig" onclick="document.getElementById('coSignIn').click()">${s.sign ? `<img src="${s.sign}" alt="">` : L('+ सिग्नेचर', '+ Signature')}</button>
+        <small>${L('सिग्नेचर', 'Signature')}</small>${s.sign ? `<button class="sm gray" onclick="db.settings.sign='';save();openCompany()">${L('हटाएँ', 'Remove')}</button>` : ''}
+        <input id="coSignIn" type="file" accept="image/*" style="display:none" onchange="pickSign(this)"></div>
+    </div>
+    <p class="hint2">${L('लोगो और सिग्नेचर बिल और रसीद पर छपेंगे। सफ़ेद काग़ज़ पर किए सिग्नेचर की फ़ोटो सबसे साफ़ आती है।', 'Logo and signature print on bills and receipts. A photo of a signature on white paper works best.')}</p>
+    <div class="secT">🪪 ${L('व्यवसाय की जानकारी', 'Business details')}</div>
+    <div class="grid2">
+      <div style="grid-column:1/-1"><label>${t('biz')}</label><input id="co_n" value="${esc(f.n)}"></div>
+      <div><label>${t('phone')}</label><input id="co_p" value="${esc(f.p)}" inputmode="tel"></div>
+      <div><label>${t('gstin')}</label><input id="co_g" value="${esc(f.g)}"></div>
+      <div><label>${t('city')}</label><input id="co_c" value="${esc(f.c)}"></div>
+      <div><label>${t('upi')}</label><input id="co_u" value="${esc(f.u)}" placeholder="name@upi"></div>
+      <div style="grid-column:1/-1"><label>${t('address')}</label><input id="co_a" value="${esc(f.a)}"></div>
+    </div>
+    <div class="secT">🏦 ${t('bankSec')}</div>
+    <div class="grid2">
+      <div><label>${t('holder')}</label><input id="co_bh" value="${esc(f.bh)}"></div>
+      <div><label>${t('bankName')}</label><input id="co_bn" value="${esc(f.bn)}"></div>
+      <div><label>${t('accNo')}</label><input id="co_ba" value="${esc(f.ba)}" inputmode="numeric"></div>
+      <div><label>${t('ifsc')}</label><input id="co_bi" value="${esc(f.bi)}" style="text-transform:uppercase"></div>
+    </div>
+    <button class="green" onclick="saveCompany()">💾 ${L('सेव करें', 'Save')}</button>
+    <h3 style="margin-top:18px">🔁 ${L('दूसरी कंपनी', 'Other companies')}</h3>
+    <p style="font-size:13px;color:#666;margin-top:0">${L('हर कंपनी के बिल, सामान और ग्राहक अलग-अलग रहते हैं।', 'Each company keeps its own bills, items and customers.')}</p>
+    <div style="display:grid;gap:6px">${COS.map(c => `<button class="${c.id === CO ? 'green' : 'light'}" style="margin:0;text-align:left" ${c.id === CO ? 'disabled' : `onclick="switchCompany('${c.id}')"`}>
+      ${c.id === CO ? '✅ ' : '🏢 '}${esc(c.id === CO ? (s.name || L('मेरी कंपनी', 'My company')) : (c.name || L('बिना नाम की कंपनी', 'Unnamed company')))}${c.id === CO ? ' · ' + L('अभी खुली है', 'open now') : ''}</button>`).join('')}</div>
+    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+      <input id="co_new" style="flex:1 1 160px" placeholder="${L('नई कंपनी का नाम', 'New company name')}">
+      <button style="margin:0;white-space:nowrap;flex:none" onclick="addCompany()">➕ ${L('नई कंपनी', 'New company')}</button>
+    </div>
+    <div style="margin-top:14px"><button class="gray" onclick="closePreview()">${t('close')}</button></div>`;
+  const m = document.getElementById('modal');
+  if(m.style.display !== 'block'){ m.style.display = 'block'; try{ history.pushState({ tab, modal:1 }, ''); }catch(e){} }
+}
+function saveCompany(){
+  const s = db.settings, v = id => document.getElementById(id).value.trim();
+  const g = v('co_g').toUpperCase();
+  if(g && !validGSTIN(g) && !confirm(t('gstinBad'))) return;
+  s.name = v('co_n'); s.phone = v('co_p'); s.gstin = g; s.city = v('co_c'); s.addr = v('co_a'); s.upi = v('co_u');
+  s.bank = { holder:v('co_bh'), name:v('co_bn'), acc:v('co_ba'), ifsc:v('co_bi').toUpperCase() };
+  save(); toast(L('कंपनी की जानकारी सेव हो गई', 'Company details saved'));
+  if(tab === 'settings') renderSettings();
+  openCompany();
+}
+function addCompany(){
+  const name = document.getElementById('co_new').value.trim();
+  if(!name){ toast(L('नई कंपनी का नाम लिखें', 'Type the new company name')); document.getElementById('co_new').focus(); return; }
+  const id = 'c' + Date.now().toString(36);
+  const fresh = normalize({ settings:{ name, lang:db.settings.lang, zipOn:db.settings.zipOn } });
+  try{ localStorage.setItem(dbKey(id), JSON.stringify(fresh)); }catch(e){ alert(L('फ़ोन में जगह कम है', 'Not enough storage')); return; }
+  COS.push({ id, name });
+  try{ localStorage.setItem(COS_KEY, JSON.stringify(COS)); }catch(e){}
+  switchCompany(id);
+}
+function switchCompany(id){
+  if(!COS.some(c => c.id === id)) return;
+  if(tab === 'new') saveDraft();
+  try{ localStorage.setItem(CO_KEY, id); sessionStorage.setItem('be_nozip', '1'); }catch(e){}
+  location.reload();
 }
 function setLang(l){ db.settings.lang = l; save(); applyLang(); showTab(tab); }
 function showTab(x, fromHistory){
@@ -624,12 +929,18 @@ function showTab(x, fromHistory){
   /* phone back button returns to the previous screen instead of closing the app (and losing a half-made bill) */
   if(changed && !fromHistory){ try{ history.pushState({ tab:x }, ''); }catch(e){} }
   if(x === 'videos' && !SHOW_VIDEOS) x = tab = 'new';
-  ['new','list','items','purch','ledger','cust','settings','videos'].forEach(k => {
+  ['new','list','items','purch','ledger','rcpt','cash','cn','dn','cust','settings','videos'].forEach(k => {
     const v = document.getElementById(k+'View');
     v.style.display = k===x ? 'block' : 'none';
     if(k === x && changed){ v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter'); setTimeout(() => v.classList.remove('enter'), 700); }
-    document.getElementById('t-'+k).className = k===x ? 'on' : 'light';
+    document.getElementById('t-'+k).classList.toggle('on', k===x || (x==='list' && k==='new'));
   });
+  if(changed && !fromHistory) showSideTip(document.getElementById('t-'+(x==='list' ? 'new' : x)));
+  renderBar();
+  if(x==='rcpt') renderRcpt();
+  if(x==='cash') renderCash();
+  if(x==='cn') renderNote('cn');
+  if(x==='dn') renderNote('dn');
   if(x==='new') renderNew();
   if(x==='list') renderList();
   if(x==='items') renderItems();
@@ -649,14 +960,14 @@ function custMatches(q){
 }
 function updateCustSugg(){
   const box = document.getElementById('custSugg'); if(!box) return;
-  const list = custMatches(cur.cn || cur.cp);
+  const list = cur.cid ? [] : custMatches(cur.cn || cur.cp);
   box.innerHTML = list.map(c => `<div onclick="pickCustomer('${c.id}')"><b>${esc(c.name)}</b> ${esc(c.phone)}</div>`).join('');
 }
 function pickCustomer(id){
   const c = db.customers.find(x => x.id === id); if(!c) return;
   cur.cid = c.id; cur.cn = c.name; cur.cp = c.phone || '';
   cur.cgstin = c.gstin || ''; cur.cemail = c.email || ''; cur.caddr = c.address || '';
-  cur.cextra = Object.assign({}, c.extra || {});
+  cur.cextra = Object.assign({}, c.extra || {}); cur.cgroup = c.group || 'Sundry Debtors';
   renderNew();
 }
 function phoneChanged(v){
@@ -667,7 +978,7 @@ function phoneChanged(v){
 function customerFields(src){
   const extra = db.settings.cfields.map(f => `
     <div><label>${esc(f)}</label><input value="${esc((src.cextra||{})[f]||'')}" oninput="cur.cextra['${esc(f)}']=this.value"></div>`).join('');
-  return `<div class="grid2">
+  return `<div class="grid2 cmore">
     <div><label>${t('gstin')}</label><input value="${esc(src.cgstin)}" oninput="cur.cgstin=this.value"></div>
     <div><label>${t('email')}</label><input value="${esc(src.cemail)}" oninput="cur.cemail=this.value"></div>
     <div style="grid-column:1/-1"><label>${t('address')}</label><input value="${esc(src.caddr)}" oninput="cur.caddr=this.value"></div>
@@ -677,20 +988,14 @@ function customerFields(src){
 /* ---------- New bill with catalogue lines ---------- */
 function renderNew(){
   document.getElementById('newView').innerHTML = `
-  <div class="card">
+  <div class="card${isCashName(cur.cn) ? ' cashOnly' : ''}">
     <h3>${t('cust1')}</h3>${editingNo ? `<p style="background:#fff3cd;padding:6px;border-radius:6px">${t('editingBill')} <b>${editingNo}</b> <button class="gray sm" onclick="cancelEdit()">${t('cancel')}</button></p>` : ''}
-    <div class="grid2">
-      <div>
-        <label>${t('cname')}</label>
-        <input value="${esc(cur.cn)}" oninput="cur.cn=this.value;cur.cid=null;updateCustSugg()" placeholder="${t('suggest')}">
-        <div id="custSugg" class="sugg"></div>
-      </div>
-      <div>
-        <label>${t('phone')}</label>
-        <input value="${esc(cur.cp)}" onchange="phoneChanged(this.value)" oninput="cur.cp=this.value;updateCustSugg()">
-      </div>
-    </div>
-    ${customerFields(cur)}
+    <label>${t('cname')} <span class="t3">${L('3 बार टैप: पूरी जानकारी', 'Tap 3 times: full details')}</span></label>
+    <input id="custName" value="${esc(cur.cn)}" autocomplete="off" onpointerup="tap3(event, openCustWin)" onfocus="if(isCashName(this.value))this.select()"
+      oninput="cur.cn=this.value;cur.cid=null;this.closest('.card').classList.toggle('cashOnly',isCashName(this.value));updateCustSugg()" placeholder="${t('suggest')}">
+    <div id="custSugg" class="sugg"></div>
+    <div class="cashTip">💵 ${L('नकद बिक्री: फ़ोन, GSTIN, ईमेल और पता नहीं चाहिए', 'Cash sale: phone, GSTIN, email and address not needed')}</div>
+    ${custChips()}
     <label>${t('date')}</label>
     <input type="date" value="${cur.cd}" oninput="cur.cd=this.value">
     ${db.settings.billNoMode === 'manual' ? `<label>${t('billNo')}</label><input value="${esc(cur.no||'')}" oninput="cur.no=this.value" placeholder="${t('needBillNo')}">` : ''}
@@ -699,8 +1004,8 @@ function renderNew(){
     <h3>${t('lines')}</h3>
     <label>${t('scanCode')}</label>
     <div style="display:flex;gap:6px"><input id="scanIn" placeholder="${t('scanHint')}" onkeydown="if(event.key==='Enter'){scanCode(this.value);}"><button class="light" onclick="openCamScan()">${t('camScan')}</button></div>
-    <label>${t('findItem')}</label>
-    <input id="itemSearch" placeholder="${t('search')}" autocomplete="off" oninput="updateItemSugg()" onfocus="updateItemSugg()" onclick="updateItemSugg()">
+    <label>${t('findItem')} <span class="t3">${L('3 बार टैप: नया सामान बनाएँ', 'Tap 3 times: new item')}</span></label>
+    <input id="itemSearch" placeholder="${t('search')}" autocomplete="off" oninput="updateItemSugg()" onfocus="updateItemSugg()" onclick="updateItemSugg()" onpointerup="tap3(event, openItemWin)">
     <div id="itemSugg" class="sugg"></div>
     <div style="overflow-x:auto;margin-top:10px">
     <table>
@@ -785,7 +1090,7 @@ document.addEventListener('pointerdown', e => {
 }, true);
 
 /* ---------- Unfinished bill is kept: switching screens, back button or closing the app does not lose it ---------- */
-const DRAFT_KEY = 'billeasy_draft';
+const DRAFT_KEY = CO === 'main' ? 'billeasy_draft' : 'billeasy_draft_' + CO;
 let draftTimer = null;
 function saveDraftSoon(){ clearTimeout(draftTimer); draftTimer = setTimeout(saveDraft, 400); }
 function saveDraft(){
@@ -801,7 +1106,8 @@ function loadDraft(){
       no:c.no !== undefined ? safeTxt(c.no, 40) : undefined, ts:safeNum(c.ts) || undefined, paid:!!c.paid, pmode:safeStr(c.pmode, 30),
       lines:(Array.isArray(c.lines) ? c.lines : []).filter(l => l && typeof l === 'object').slice(0, 300).map(l => ({
         iid:l.iid ? safeId(l.iid) : null, n:safeStr(l.n, 200), hsn:safeStr(l.hsn, 20), unit:pick(l.unit, UNITS, 'pcs'),
-        q:safeNum(l.q), r:safeNum(l.r), gst:safeNum(l.gst) })) };
+        q:safeNum(l.q), r:safeNum(l.r), gst:safeNum(l.gst) })), cgroup:safeStr(c.cgroup, 80) };
+    if(!cur.cn.trim() && !cur.lines.length){ cur.cn = 'Cash'; cur.cid = 'CASH'; }
     if(c.cextra && typeof c.cextra === 'object') Object.keys(c.cextra).slice(0, 20).forEach(k => { const kk = safeTxt(k, 40); if(kk) cur.cextra[kk] = safeStr(c.cextra[k], 300); });
     editingNo = d.editingNo && db.invoices.some(i => i.no === d.editingNo) ? d.editingNo : null;
   }catch(e){}
@@ -827,11 +1133,14 @@ document.addEventListener('pointerdown', e => {
 }, { passive:true });
 
 function upsertCustomer(){
-  let c = cur.cid ? db.customers.find(x => x.id === cur.cid) : null;
+  if(isCashName(cur.cn)) return 'CASH';
+  let c = cur.cid && cur.cid !== 'CASH' ? db.customers.find(x => x.id === cur.cid) : null;
   if(!c) c = findByPhone(cur.cp);
+  if(!c){ const n = cur.cn.trim().toLowerCase(); c = !cur.cp.trim() && db.customers.find(x => x.id !== 'CASH' && x.name.trim().toLowerCase() === n && !x.phone) || null; }
   if(!c){ c = { id:'C'+Date.now() }; db.customers.push(c); }
   c.name = cur.cn.trim(); c.phone = cur.cp.trim(); c.gstin = cur.cgstin.trim();
   c.email = cur.cemail.trim(); c.address = cur.caddr.trim(); c.extra = Object.assign({}, cur.cextra);
+  c.group = cur.cgroup || c.group || 'Sundry Debtors';
   return c.id;
 }
 function applyDesign(){
@@ -865,9 +1174,22 @@ function renderDesignPreview(){
   const el = document.getElementById('designPreview');
   if(el) el.innerHTML = invoiceHTML(sampleInvoice());
 }
+function pickSign(input){
+  const f = input.files[0]; if(!f) return;
+  readPhoto(f, d => {
+    db.settings.sign = d; db.settings.show.signature = true; save(); input.value = '';
+    if(document.getElementById('co_n')) openCompany();
+    if(tab === 'settings') renderSettings();
+    toast(L('सिग्नेचर लग गया', 'Signature added'));
+  }, 360);
+}
 function pickLogo(input){
   const f = input.files[0]; if(!f) return;
-  readPhoto(f, d => { db.settings.logo = d; save(); renderSettings(); });
+  readPhoto(f, d => {
+    db.settings.logo = d; save(); renderSettings(); input.value = '';
+    if(document.getElementById('modal').style.display === 'block' && document.getElementById('co_n')) openCompany();
+    toast(L('लोगो लग गया', 'Logo added'));
+  });
 }
 function billNumber(){
   if(db.settings.billNoMode === 'manual') return (cur.no || '').trim();
@@ -962,8 +1284,132 @@ function validCur(){
   if(!cur.lines.some(l => l.n.trim())){ alert(t('needLine')); return false; }
   return true;
 }
+/* typing "Cash" as the customer name makes a quick cash sale: the other customer boxes are hidden and not saved */
+function isCashName(n){ return /^\s*(cash|cash sale|कैश|नकद|नगद)\s*$/i.test(String(n || '')); }
+
+/* ---------- Triple tap: three quick taps on the same box open its small window ---------- */
+const T3 = { n:0, t:0, el:null };
+function tap3(e, fn){
+  const now = Date.now(), el = e.currentTarget;
+  if(T3.el !== el || now - T3.t > 500) T3.n = 0;
+  T3.el = el; T3.t = now;
+  if(++T3.n >= 3){ T3.n = 0; el.blur(); fn(); }
+}
+function openWin(html){
+  document.getElementById('modalBody').innerHTML = `<div class="win">${html}</div>`;
+  const m = document.getElementById('modal');
+  if(m.style.display !== 'block'){ m.style.display = 'block'; try{ history.pushState({ tab, modal:1 }, ''); }catch(e){} }
+}
+
+/* ---------- Account groups (like Busy / Tally). Built-in ones plus any the user makes ---------- */
+const DEF_GROUPS = ['Sundry Debtors','Sundry Creditors','Cash-in-hand','Bank Accounts','Bank O/D Account','Suspense Account',
+  'Capital Account','Current Assets','Current Liabilities','Loans & Advances (Asset)','Loans (Liability)','Secured Loans','Unsecured Loans',
+  'Duties & Taxes','Provisions','Expenses Payable','Fixed Assets','Investments','Stock-in-hand','Deposits (Asset)','Securities & Deposits',
+  'Reserves & Surplus','Direct Expenses','Indirect Expenses','Direct Incomes','Indirect Incomes','Purchase Accounts','Sale Accounts','Branch / Divisions'];
+function allGroups(){ return [...DEF_GROUPS, ...db.groups.map(g => g.name).filter(n => !DEF_GROUPS.includes(n))]; }
+function groupOpts(sel){
+  return allGroups().map(g => `<option value="${esc(g)}" ${g === sel ? 'selected' : ''}>${esc(g)}${db.groups.some(x => x.name === g) ? ' ★' : ''}</option>`).join('');
+}
+function groupBox(id, sel){
+  return `<label>${L('ग्रुप', 'Group')} <span class="t3">${L('3 बार टैप: नया ग्रुप', 'Tap 3 times: new group')}</span></label>
+    <select id="${id}" onpointerup="tap3(event, () => showNewGroup('${id}'))">${groupOpts(sel)}</select>
+    <button class="light sm" onclick="showNewGroup('${id}')">➕ ${L('नया ग्रुप', 'New group')}</button>
+    <div class="newg" id="${id}_new">
+      <b>➕ ${L('नया ग्रुप बनाएँ', 'Create a new group')}</b>
+      <div class="grid2">
+        <div><label>${L('ग्रुप का नाम', 'Group name')}</label><input id="${id}_nn" placeholder="${L('जैसे: होलसेल ग्राहक', 'e.g. Wholesale customers')}"></div>
+        <div><label>${L('किसके अंदर (मुख्य ग्रुप)', 'Under (main group)')}</label><select id="${id}_np">${groupOpts('Sundry Debtors')}</select></div>
+      </div>
+      <button class="green sm" onclick="saveNewGroup('${id}')">💾 ${L('ग्रुप सेव करें', 'Save group')}</button>
+      <button class="gray sm" onclick="document.getElementById('${id}_new').classList.remove('show')">${t('cancel')}</button>
+    </div>`;
+}
+function showNewGroup(id){ const b = document.getElementById(id + '_new'); if(!b) return; b.classList.add('show'); setTimeout(() => document.getElementById(id + '_nn').focus(), 50); }
+function saveNewGroup(id){
+  const name = document.getElementById(id + '_nn').value.trim(), parent = document.getElementById(id + '_np').value;
+  if(!name){ toast(L('ग्रुप का नाम लिखें', 'Type the group name')); return; }
+  if(allGroups().some(g => g.toLowerCase() === name.toLowerCase())){ toast(L('यह ग्रुप पहले से है', 'This group already exists')); }
+  else { db.groups.push({ id:'G' + Date.now(), name, parent }); save(); toast(L('नया ग्रुप बन गया', 'New group created')); }
+  const sel = document.getElementById(id); sel.innerHTML = groupOpts(name); sel.value = allGroups().find(g => g.toLowerCase() === name.toLowerCase());
+  document.getElementById(id + '_new').classList.remove('show'); document.getElementById(id + '_nn').value = '';
+}
+
+/* ---------- Customer details window (3 taps on the customer name) ---------- */
+function custChips(){
+  if(isCashName(cur.cn)) return '';
+  const bits = [cur.cp && '📞 ' + cur.cp, cur.cgstin && 'GSTIN ' + cur.cgstin, cur.caddr && '📍 ' + cur.caddr, cur.cgroup && '🗂 ' + cur.cgroup].filter(Boolean);
+  return bits.length ? `<div class="chips">${bits.map(b => `<span>${esc(b)}</span>`).join('')}</div>` : '';
+}
+function openCustWin(){
+  const extra = db.settings.cfields.map((f, i) => `<div><label>${esc(f)}</label><input id="cw_x${i}" value="${esc((cur.cextra || {})[f] || '')}"></div>`).join('');
+  openWin(`<h3>👤 ${L('ग्राहक की पूरी जानकारी', 'Customer details')}</h3>
+    <div class="grid2">
+      <div style="grid-column:1/-1"><label>${t('cname')}</label><input id="cw_n" value="${esc(isCashName(cur.cn) ? '' : cur.cn)}" placeholder="${L('ग्राहक / खाते का नाम', 'Customer / account name')}"></div>
+      <div><label>${t('phone')}</label><input id="cw_p" value="${esc(cur.cp)}" inputmode="tel"></div>
+      <div><label>${t('gstin')}</label><input id="cw_g" value="${esc(cur.cgstin)}"></div>
+      <div><label>${t('email')}</label><input id="cw_e" value="${esc(cur.cemail)}" inputmode="email"></div>
+      <div><label>${t('address')}</label><input id="cw_a" value="${esc(cur.caddr)}"></div>
+      ${extra}
+    </div>
+    ${groupBox('cw_grp', isCashName(cur.cn) ? 'Sundry Debtors' : (cur.cgroup || 'Sundry Debtors'))}
+    <div style="margin-top:14px">
+      <button class="green" onclick="saveCustWin()">💾 ${L('सेव करें', 'Save')}</button>
+      <button class="gray" onclick="closePreview()">${t('close')}</button>
+    </div>
+    <p style="font-size:12.5px;color:#6b7a90">${L('सेव करने पर यह खाता ग्राहकों की सूची में भी जुड़ जाएगा और इस बिल में भर जाएगा।', 'On save, this account is added to the customer list and filled into this bill.')}</p>`);
+  setTimeout(() => document.getElementById('cw_n').focus(), 60);
+}
+function saveCustWin(){
+  const v = id => document.getElementById(id).value.trim();
+  const name = v('cw_n');
+  if(!name){ toast(t('needName')); document.getElementById('cw_n').focus(); return; }
+  const g = v('cw_g').toUpperCase();
+  if(g && !validGSTIN(g) && !confirm(t('gstinBad'))) return;
+  cur.cn = name; cur.cp = v('cw_p'); cur.cgstin = g; cur.cemail = v('cw_e'); cur.caddr = v('cw_a');
+  cur.cgroup = document.getElementById('cw_grp').value;
+  cur.cextra = {}; db.settings.cfields.forEach((f, i) => { const x = document.getElementById('cw_x' + i); if(x && x.value.trim()) cur.cextra[f] = x.value.trim(); });
+  if(isCashName(name)){ cur.cid = 'CASH'; }
+  else { const keep = cur.cid === 'CASH' ? null : cur.cid; cur.cid = keep; cur.cid = upsertCustomer(); save(); }
+  toast(L('ग्राहक की जानकारी सेव हो गई', 'Customer details saved'));
+  closePreview(); renderNew(); saveDraft();
+}
+
+/* ---------- New item window (3 taps on "Find item"): make an item right from the bill ---------- */
+function openItemWin(){
+  const q = (document.getElementById('itemSearch') || {}).value || '';
+  const clr = () => { const b = document.getElementById('itemSugg'); if(b) b.innerHTML = ''; };
+  clr(); setTimeout(clr, 120);
+  openWin(`<h3>📦 ${L('नया सामान बनाएँ', 'Create new item')}</h3>
+    <div class="grid2">
+      <div style="grid-column:1/-1"><label>${L('सामान का नाम', 'Item name')}</label><input id="iw_n" value="${esc(q.trim())}"></div>
+      <div><label>${t('sale')}</label>${amtBox(0, 'numIn(this)').replace('<input', '<input id="iw_s"')}</div>
+      <div><label>${t('buy')}</label>${amtBox(0, 'numIn(this)').replace('<input', '<input id="iw_b"')}</div>
+      <div><label>${t('unit')}</label>${unitSelect('pcs', '').replace('<select', '<select id="iw_u"')}</div>
+      <div><label>${t('gst')}</label><input id="iw_g" type="number" min="0" step="any" value="${db.settings.gst || 0}"></div>
+      <div><label>${t('hsn')}</label><input id="iw_h"></div>
+      <div><label>${t('openStock')}</label>${amtBox(0, 'numIn(this)').replace('<input', '<input id="iw_st"')}</div>
+    </div>
+    <div style="margin-top:14px">
+      <button class="green" onclick="saveItemWin()">💾 ${L('सेव करें और बिल में जोड़ें', 'Save and add to bill')}</button>
+      <button class="gray" onclick="closePreview()">${t('close')}</button>
+    </div>
+    <p style="font-size:12.5px;color:#6b7a90">${L('यह सामान आपकी सामान की सूची में भी सेव हो जाएगा।', 'This item is also saved in your item list.')}</p>`);
+  setTimeout(() => document.getElementById('iw_n').focus(), 60);
+}
+function saveItemWin(){
+  const v = id => document.getElementById(id).value;
+  const name = v('iw_n').trim();
+  if(!name){ toast(t('needItemName')); document.getElementById('iw_n').focus(); return; }
+  if(db.items.some(i => i.name.trim().toLowerCase() === name.toLowerCase()) && !confirm(L('इस नाम का सामान पहले से है। फिर भी नया बनाएँ?', 'An item with this name exists. Create another?'))) return;
+  const it = Object.assign(blankItem(), { id:'I' + Date.now(), name, sale:parseNum(v('iw_s')), buy:parseNum(v('iw_b')), unit:v('iw_u') || 'pcs',
+    gst:Number(v('iw_g')) || 0, hsn:v('iw_h').trim(), stock:parseNum(v('iw_st')), stockDate:today() });
+  db.items.push(it); save();
+  toast(L('सामान बन गया और बिल में जुड़ गया', 'Item created and added to the bill'));
+  closePreview(); addFromItem(it.id);
+}
 function saveInv(){
   if(!validCur()) return;
+  if(isCashName(cur.cn)){ cur.cp = ''; cur.cgstin = ''; cur.cemail = ''; cur.caddr = ''; cur.cextra = {}; }
   const cid = upsertCustomer();
   const inv = buildInv(cid);
   inv.lines.forEach(l => {
@@ -1003,7 +1449,16 @@ function renderList(){
     <div>${t('count')}<b>${db.invoices.length}</b></div>
   </div>
   <div class="card">
+    <h3>✏️ ${L('बिल बदलें (Modification)', 'Modify a bill')}</h3>
+    <div class="billOpen">
+      <input id="billNoOpen" placeholder="${L('बिल नंबर लिखें, जैसे', 'Type bill number, e.g.')} ${esc((db.invoices[db.invoices.length - 1] || {}).no || 'INV-0001')}"
+        autocomplete="off" onkeydown="if(event.key==='Enter')openBillByNo()">
+      <button class="green" onclick="openBillByNo()">📂 ${L('बिल खोलें', 'Open bill')}</button>
+    </div>
+  </div>
+  <div class="card">
     <input id="billSearch" placeholder="${t('search')}" oninput="renderBillRows()">
+    <button class="pdfBtn sm" onclick="openListPdf('sale')" style="margin-top:8px">📄 ${L('PDF बनाएँ / शेयर', 'Make PDF / share')}</button>
     <button class="light sm" onclick="exportBillsXlsx()" style="margin-top:8px">${t('exportBills')}</button>
     <div id="billRows" style="margin-top:10px"></div>
   </div>`;
@@ -1028,6 +1483,22 @@ function renderBillRows(){
     </tr>`).join('')}</table>`;
 }
 
+/* open a bill for changes by typing its number (INV-0007, inv-7 and 7 all find INV-0007) */
+function openBillByNo(){
+  const box = document.getElementById('billNoOpen'), q = (box.value || '').trim();
+  if(!q){ toast(L('बिल नंबर लिखें', 'Type a bill number')); box.focus(); return; }
+  const norm = s => String(s).toLowerCase().replace(/\s+/g, '');
+  const num = s => { const m = String(s).match(/(\d+)\s*$/); return m ? Number(m[1]) : null; };
+  let inv = db.invoices.find(i => norm(i.no) === norm(q));
+  if(!inv && num(q) !== null){
+    const hits = db.invoices.filter(i => num(i.no) === num(q) && (!/[a-z]/i.test(q) || norm(i.no).replace(/[\d\W]/g, '') === norm(q).replace(/[\d\W]/g, '')));
+    if(hits.length === 1) inv = hits[0];
+    else if(hits.length > 1){ toast(L('इस नंबर के कई बिल हैं, पूरा नंबर लिखें', 'Several bills match, type the full number')); return; }
+  }
+  if(!inv){ toast(L('इस नंबर का कोई बिल नहीं मिला', 'No bill found with this number')); box.focus(); return; }
+  editInv(inv.no);
+  toast(L('बिल ' + inv.no + ' बदलने के लिए खुल गया', 'Bill ' + inv.no + ' opened for changes'));
+}
 function delInv(no){
   if(!confirm(t('confDel'))) return;
   const inv = db.invoices.find(i=>i.no===no);
@@ -1141,7 +1612,7 @@ function exportBillsXlsx(){
 
 function buyItem(id){
   const it = itemById(id); if(!it) return;
-  purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:id,
+  purchDraft = { supplier:'Cash', date:new Date().toISOString().slice(0,10), iid:id,
     q: Math.max(1, (Number(it.minQty)||0) * 2 - (Number(it.stock)||0)), r: it.buy || 0 };
   showTab('purch');
 }
@@ -1241,7 +1712,16 @@ function importFile(input){
 function renderPurch(){
   const opts = db.items.map(i => `<option value="${i.id}" ${i.id===purchDraft.iid?'selected':''}>${esc(i.name)}</option>`).join('');
   const total = (Number(purchDraft.q)||0) * (Number(purchDraft.r)||0);
-  document.getElementById('purchView').innerHTML = `
+  document.getElementById('purchView').innerHTML = LIST.purch ? `
+  <div class="card">
+    <h3>📋 ${L('ख़रीद की सूची', 'Purchase list')}</h3>
+    <button class="pdfBtn sm" onclick="openListPdf('purch')" style="margin:0 0 10px">📄 ${L('PDF बनाएँ / शेयर', 'Make PDF / share')}</button>
+    ${db.purchases.length ? `<div style="overflow-x:auto"><table>
+      <tr><th>${t('date')}</th><th>${t('supplier')}</th><th>${t('desc')}</th><th>${t('qty')}</th><th>${t('buy')}</th><th>${t('buyTotal')}</th></tr>
+      ${[...db.purchases].reverse().map(p => `<tr class="line"><td>${fmtDate(p.date)}</td><td>${esc(p.supplier)}</td><td>${esc(p.n)}</td>
+        <td>${fmtQty(p.q)} ${uLabel(p.unit)}</td><td>${money(p.r)}</td><td>${money(p.q*p.r)}</td></tr>`).join('')}
+    </table></div>` : `<p>${t('noPurch')}</p>`}
+  </div>` : `
   <div class="card">
     <h3>${t('purch')}</h3>
     ${db.items.length ? `
@@ -1262,13 +1742,6 @@ function renderPurch(){
       ${purchDraft.paid ? `<select onchange="purchDraft.pmode=this.value">${[t('mCash'),'UPI',t('mBank'),t('mCheque')].map(m => `<option ${purchDraft.pmode === m ? 'selected' : ''}>${m}</option>`).join('')}</select>` : ''}
     </div>
     <button class="green" onclick="savePurch()">${t('savePurch')}</button>` : `<p>${t('noItems')}</p>`}
-  </div>
-  <div class="card">
-    ${db.purchases.length ? `<div style="overflow-x:auto"><table>
-      <tr><th>${t('date')}</th><th>${t('supplier')}</th><th>${t('desc')}</th><th>${t('qty')}</th><th>${t('buy')}</th><th>${t('buyTotal')}</th></tr>
-      ${[...db.purchases].reverse().map(p => `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.supplier)}</td><td>${esc(p.n)}</td>
-        <td>${fmtQty(p.q)} ${uLabel(p.unit)}</td><td>${money(p.r)}</td><td>${money(p.q*p.r)}</td></tr>`).join('')}
-    </table></div>` : `<p>${t('noPurch')}</p>`}
   </div>`;
 }
 function purchCalc(){ const el = document.getElementById('ptot'); if(el) el.value = money((Number(purchDraft.q)||0)*(Number(purchDraft.r)||0)); }
@@ -1285,7 +1758,7 @@ function savePurch(){
       date:pr.date, mode:purchDraft.pmode || t('mCash'), note:t('purchLabel') + ' ' + pr.n, auto:true, inv:pr.id });
   }
   save(); alert(t('purchSaved'));
-  purchDraft = { supplier:'', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
+  purchDraft = { supplier:'Cash', date:new Date().toISOString().slice(0,10), iid:'', q:1, r:0 };
   renderPurch();
 }
 
@@ -1324,14 +1797,15 @@ function upsertSupplier(name){
   return s.id;
 }
 function partyBalance(ty, id){
+  const ret = (db.notes || []).filter(n => n.ty === (ty === 'c' ? 'cn' : 'dn') && n.pid === id).reduce((a,n) => a + n.q * n.r, 0);
   if(ty === 'c'){
     const sale = db.invoices.filter(i => i.cid === id).reduce((a,i) => a + i.total, 0);
     const got = db.payments.filter(p => p.ty === 'c' && p.pid === id).reduce((a,p) => a + p.amt, 0);
-    return sale - got;
+    return sale - got - ret;
   }
   const buy = db.purchases.filter(p => p.sid === id).reduce((a,p) => a + p.q * p.r, 0);
   const paid = db.payments.filter(p => p.ty === 's' && p.pid === id).reduce((a,p) => a + p.amt, 0);
-  return buy - paid;
+  return buy - paid - ret;
 }
 function partyName(ty, id){
   const p = ty === 'c' ? db.customers.find(x => x.id === id) : db.suppliers.find(x => x.id === id);
@@ -1356,7 +1830,14 @@ function renderLedger(){
   const recv = parties.filter(p => p.ty === 'c' && p.bal > 0.005).reduce((a,p) => a + p.bal, 0);
   const pay  = parties.filter(p => p.ty === 's' && p.bal > 0.005).reduce((a,p) => a + p.bal, 0);
   const pend = parties.filter(p => p.bal > 0.005);
-  document.getElementById('ledgerView').innerHTML = `
+  document.getElementById('ledgerView').innerHTML = LIST.ledger ? `
+  <div class="card">
+    <h3>📋 ${t('payHistory')}</h3>
+    ${db.payments.length ? `<div style="overflow-x:auto"><table>${[...db.payments].reverse().map(p => `<tr class="line">
+      <td>${fmtDate(p.date)}</td><td>${esc(partyName(p.ty, p.pid))}</td><td>${p.ty === 'c' ? (p.amt < 0 ? L('लौटाया', 'Refunded') : t('recvLbl')) : (p.amt < 0 ? L('वापस मिला', 'Refund got') : t('paidLbl'))}</td>
+      <td>${money(Math.abs(p.amt))}</td><td>${esc(p.mode)}</td>
+      <td>${p.auto || p.note2 ? '' : `<button class="light sm" onclick="editPayment('${p.id}')">${t('editBtn')}</button>`} ${p.note2 ? '' : `<button class="red sm" onclick="delPayment('${p.id}')">${t('del')}</button>`}</td></tr>`).join('')}</table></div>` : `<p>${t('noPay')}</p>`}
+  </div>` : `
   <div class="card summary">
     <div>${t('recvDue')}<b class="due">${money(recv)}</b></div>
     <div>${t('payDue')}<b class="low">${money(pay)}</b></div>
@@ -1376,14 +1857,11 @@ function renderLedger(){
   </div>
   <div class="card">
     <h3>${t('pendingList')}</h3>
-    ${pend.length ? `<table>${pend.map(p => `<tr><td>${p.ty === 'c' ? '👤' : '🏭'} ${esc(p.name)}</td><td class="${p.ty === 'c' ? 'due' : 'low'}">${money(p.bal)}</td></tr>`).join('')}</table>` : `<p>${t('noPending')}</p>`}
-  </div>
-  <div class="card">
-    <h3>${t('payHistory')}</h3>
-    ${db.payments.length ? `<div style="overflow-x:auto"><table>${[...db.payments].reverse().slice(0,50).map(p => `<tr>
-      <td>${fmtDate(p.date)}</td><td>${esc(partyName(p.ty, p.pid))}</td><td>${p.ty === 'c' ? t('recvLbl') : t('paidLbl')}</td>
-      <td>${money(p.amt)}</td><td>${esc(p.mode)}</td>
-      <td>${p.auto ? '' : `<button class="light sm" onclick="editPayment('${p.id}')">${t('editBtn')}</button>`} <button class="red sm" onclick="delPayment('${p.id}')">${t('del')}</button></td></tr>`).join('')}</table></div>` : `<p>${t('noPay')}</p>`}
+    ${pend.length ? `<table>${pend.map(p => `<tr><td>${p.ty === 'c' ? '👤' : '🏭'} ${esc(p.name)}</td><td class="${p.ty === 'c' ? 'due' : 'low'}">${money(p.bal)}</td>
+      <td><button class="pdfBtn sm" onclick="openStatement('${p.ty}','${p.id}')">📄 PDF</button></td></tr>`).join('')}</table>` : `<p>${t('noPending')}</p>`}
+    ${db.suppliers.length ? `<div class="secT">🏭 ${L('सप्लायर का स्टेटमेंट', 'Supplier statement')}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><select id="supPdf" style="flex:1 1 160px">${db.suppliers.map(x => `<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select>
+      <button class="pdfBtn" style="margin:0" onclick="openStatement('s', document.getElementById('supPdf').value)">📄 PDF</button></div>` : ''}
   </div>`;
 }
 function addPayment(){
@@ -1412,7 +1890,234 @@ function delPayment(id){
   const pm = db.payments.find(p => p.id === id);
   if(pm && pm.auto && pm.ty === 'c'){ const bill = db.invoices.find(i => i.no === pm.inv); if(bill) bill.paid = false; }
   db.payments = db.payments.filter(p => p.id !== id);
-  save(); renderLedger();
+  save(); if(tab === 'rcpt') renderRcpt(); else renderLedger();
+}
+
+/* ---------- "List" button at the top of every section: opens that section's own list in place ---------- */
+const LIST = {};
+const BAR = {
+  new:   () => ({ title:'🧾 ' + t('new'), n:db.invoices.length, go:"showTab('list')" }),
+  list:  () => ({ title:'📋 ' + L('बिक्री की सूची', 'Sales list'), back:"showTab('new')", newTxt:L('नई बिक्री', 'New sale') }),
+  purch: () => ({ title:'🛒 ' + t('purch'), n:db.purchases.length }),
+  ledger:() => ({ title:'📒 ' + t('ledger'), n:db.payments.length }),
+  rcpt:  () => ({ title:'🧾 ' + L('पेमेंट रसीद', 'Payment Receipt'), n:rcptList().length }),
+  cash:  () => ({ title:'💵 ' + L('कैश बुक', 'Cash Book'), n:cashRows().length }),
+  cn:    () => ({ title:'↩️ ' + L('क्रेडिट नोट', 'Credit Note'), n:db.notes.filter(x => x.ty === 'cn').length }),
+  dn:    () => ({ title:'↪️ ' + L('डेबिट नोट', 'Debit Note'), n:db.notes.filter(x => x.ty === 'dn').length })
+};
+function renderBar(){
+  const bar = document.getElementById('vbar'); if(!bar || typeof tab === 'undefined') return;
+  const f = BAR[tab]; if(!f){ bar.innerHTML = ''; return; }
+  const b = f(), inList = tab === 'list' || LIST[tab];
+  const vc = getComputedStyle(document.getElementById(tab + 'View')).getPropertyValue('--vc');
+  bar.style.setProperty('--vc', vc);
+  bar.innerHTML = `<span class="vt">${esc(b.title)}</span>` + (inList
+    ? `<button class="lb" onclick="${b.back || `toggleList('${tab}')`}">✏️ ${b.newTxt || L('नई एंट्री', 'New entry')}</button>`
+    : `<button class="lb" onclick="${b.go || `toggleList('${tab}')`}">📋 ${L('सूची', 'List')}<span class="n">${b.n}</span></button>`);
+}
+function toggleList(v){
+  LIST[v] = !LIST[v];
+  ({ purch:renderPurch, ledger:renderLedger, rcpt:renderRcpt, cash:renderCash, cn:() => renderNote('cn'), dn:() => renderNote('dn') })[v]();
+  renderBar(); window.scrollTo({ top:0, behavior:'smooth' });
+}
+const modeOpts = sel => [t('mCash'), 'UPI', t('mBank'), t('mCheque')].map(m => `<option ${sel === m ? 'selected' : ''}>${m}</option>`).join('');
+const isCash = m => m === 'नकद' || m === 'Cash' || m === LANGS.hi.mCash || m === LANGS.en.mCash;
+const today = () => new Date().toISOString().slice(0,10);
+function partyOpts(ty){
+  const list = ty === 'c' ? db.customers : db.suppliers;
+  return `<option value="">—</option>` + list.map(p => `<option value="${p.id}">${esc(p.name)} (${money(partyBalance(ty, p.id))})</option>`).join('');
+}
+
+/* ---------- Payment receipt: money received from a customer ---------- */
+function rcptList(){ return db.payments.filter(p => p.ty === 'c' && p.amt > 0); }
+function renderRcpt(){
+  const v = document.getElementById('rcptView');
+  if(LIST.rcpt){
+    const list = [...rcptList()].reverse();
+    v.innerHTML = `<div class="card"><h3>📋 ${L('रसीदों की सूची', 'Receipts list')}</h3>
+      ${list.length ? `<div style="overflow-x:auto"><table>
+        <tr><th>${t('date')}</th><th>${L('रसीद नं.', 'Receipt no.')}</th><th>${L('ग्राहक', 'Customer')}</th><th>${t('payAmt')}</th><th>${t('payMode')}</th><th></th></tr>
+        ${list.map(p => `<tr class="line"><td>${fmtDate(p.date)}</td><td>${esc(p.rno || (p.auto ? t('billLabel') + ' ' + (p.inv || '') : '—'))}</td>
+          <td>${esc(partyName('c', p.pid))}</td><td class="paid">${money(p.amt)}</td><td>${esc(p.mode)}</td>
+          <td><button class="light sm" onclick="openRcpt('${p.id}')">${t('prev')}</button>${p.auto ? '' : ` <button class="red sm" onclick="delPayment('${p.id}')">${t('del')}</button>`}</td></tr>`).join('')}
+      </table></div>` : `<p>${L('अभी कोई रसीद नहीं है।', 'No receipts yet.')}</p>`}</div>`;
+    return;
+  }
+  if(!db.customers.length){ v.innerHTML = `<div class="card"><p>${L('पहले कोई बिक्री करें या ग्राहक जोड़ें, फिर उनसे मिले पैसे की रसीद बनेगी।', 'Make a sale or add a customer first, then you can record money received from them.')}</p></div>`; return; }
+  v.innerHTML = `<div class="card">
+    <h3>${L('ग्राहक से पैसा मिला', 'Money received from customer')}</h3>
+    <div class="grid2">
+      <div><label>${L('रसीद नंबर', 'Receipt number')}</label><input value="RCPT-${String(db.settings.nextRcpt).padStart(4,'0')}" disabled></div>
+      <div><label>${t('date')}</label><input id="rc_date" type="date" value="${today()}"></div>
+      <div style="grid-column:1/-1"><label>${L('ग्राहक (बाक़ी रक़म के साथ)', 'Customer (with balance due)')}</label><select id="rc_party">${partyOpts('c')}</select></div>
+      <div><label>${t('payAmt')}</label><input id="rc_amt" type="text" inputmode="decimal" autocomplete="off" oninput="numIn(this)"></div>
+      <div><label>${t('payMode')}</label><select id="rc_mode">${modeOpts(t('mCash'))}</select></div>
+      <div style="grid-column:1/-1"><label>${L('विवरण (जैसे UPI/चेक नंबर)', 'Note (e.g. UPI / cheque number)')}</label><input id="rc_note"></div>
+    </div>
+    <button class="green" onclick="saveRcpt()">💾 ${L('रसीद सेव करें', 'Save receipt')}</button>
+  </div>`;
+}
+function saveRcpt(){
+  const pid = document.getElementById('rc_party').value, amt = parseNum(document.getElementById('rc_amt').value);
+  if(!pid){ alert(t('pickParty')); return; }
+  if(!(amt > 0)){ alert(t('badAmt')); return; }
+  const p = { id:'R' + Date.now(), ty:'c', pid, amt, date:document.getElementById('rc_date').value || today(),
+    mode:document.getElementById('rc_mode').value, note:document.getElementById('rc_note').value.trim(),
+    rno:'RCPT-' + String(db.settings.nextRcpt).padStart(4,'0') };
+  db.payments.push(p); db.settings.nextRcpt++;
+  save(); toast(L('रसीद सेव हो गई', 'Receipt saved')); renderRcpt(); openRcpt(p.id);
+}
+function rcptHTML(p){
+  const s = db.settings, c = db.customers.find(x => x.id === p.pid) || {};
+  return `<div class="bill" style="max-width:420px;margin:auto;border:2px solid ${s.design.color};border-radius:12px;padding:16px">
+    <div style="text-align:center">${s.logo ? `<img src="${s.logo}" style="width:54px;height:54px;object-fit:contain">` : ''}
+      <h2 style="margin:4px 0">${esc(s.name || 'BillEasy')}</h2><div style="font-size:12px;color:#555">${esc([s.addr, s.city, s.phone].filter(Boolean).join(' · '))}</div>
+      <div style="margin:10px 0;font-weight:800;letter-spacing:1px;color:${s.design.color}">${L('पेमेंट रसीद', 'PAYMENT RECEIPT')}</div></div>
+    <table style="font-size:14px">
+      <tr><td>${L('रसीद नं.', 'Receipt no.')}</td><td><b>${esc(p.rno || '—')}</b></td></tr>
+      <tr><td>${t('date')}</td><td>${fmtDate(p.date)}</td></tr>
+      <tr><td>${L('किससे मिला', 'Received from')}</td><td><b>${esc(c.name || '')}</b>${c.phone ? '<br>' + esc(c.phone) : ''}</td></tr>
+      <tr><td>${t('payMode')}</td><td>${esc(p.mode)}${p.note ? ' · ' + esc(p.note) : ''}</td></tr>
+      <tr><td>${L('रक़म', 'Amount')}</td><td style="font-size:20px;font-weight:800;color:#15803d">${money(p.amt)}</td></tr>
+      <tr><td>${L('अब बाक़ी', 'Balance now')}</td><td>${money(partyBalance('c', p.pid))}</td></tr>
+    </table>
+    <p style="text-align:right;margin-top:${s.sign ? 12 : 26}px;font-size:12px">${s.sign ? `<img src="${s.sign}" style="height:48px;max-width:160px;object-fit:contain"><br>` : ''}${t('authSign')}</p></div>`;
+}
+function openRcpt(id){
+  const p = db.payments.find(x => x.id === id); if(!p) return;
+  const c = db.customers.find(x => x.id === p.pid) || {};
+  const txt = `*${db.settings.name || 'BillEasy'}*\n${L('पेमेंट रसीद', 'Payment Receipt')} ${p.rno || ''}\n${t('date')}: ${fmtDate(p.date)}\n${L('किससे मिला', 'Received from')}: ${c.name || ''}\n${L('रक़म', 'Amount')}: *${money(p.amt)}* (${p.mode})\n${L('अब बाक़ी', 'Balance now')}: ${money(partyBalance('c', p.pid))}\n\n${t('thanks')}`;
+  let num = digits(c.phone); if(num.length === 10) num = '91' + num;
+  document.getElementById('modalBody').innerHTML = rcptHTML(p) + `<div style="margin-top:12px">
+    <button onclick="document.getElementById('print').innerHTML=rcptHTML(db.payments.find(x=>x.id==='${p.id}'));window.print()">${t('print')}</button>
+    <button class="wa" onclick="window.open('${num ? 'https://wa.me/' + num : 'https://wa.me/'}?text='+encodeURIComponent(${JSON.stringify(txt).replace(/"/g, '&quot;')}),'_blank','noopener,noreferrer')">${t('wa')}</button>
+    <button class="gray" onclick="closePreview()">${t('close')}</button></div>`;
+  const m = document.getElementById('modal');
+  if(m.style.display !== 'block'){ m.style.display = 'block'; try{ history.pushState({ tab, modal:1 }, ''); }catch(e){} }
+}
+
+/* ---------- Cash book: every cash payment in or out, plus entries typed by hand ---------- */
+function cashRows(){
+  const rows = [];
+  db.payments.filter(p => isCash(p.mode)).forEach(p => {
+    const inflow = (p.ty === 'c') === (p.amt > 0);
+    rows.push({ date:p.date, dir:inflow ? 'in' : 'out', amt:Math.abs(p.amt), who:partyName(p.ty, p.pid),
+      note:p.rno || p.note || (p.auto ? (p.ty === 'c' ? t('billLabel') : t('purchLabel')) : ''), ts:p.id });
+  });
+  db.cashbook.forEach(c => rows.push({ date:c.date, dir:c.dir, amt:c.amt, who:'', note:c.note, id:c.id, ts:c.id }));
+  const tnum = x => Number(String(x).replace(/\D/g, '').slice(0, 13)) || 0;
+  return rows.sort((a, b) => (a.date || '').localeCompare(b.date || '') || tnum(a.ts) - tnum(b.ts));
+}
+let cashDir = 'out';
+function renderCash(){
+  const rows = cashRows();
+  const inT = rows.filter(r => r.dir === 'in').reduce((a, r) => a + r.amt, 0), outT = rows.filter(r => r.dir === 'out').reduce((a, r) => a + r.amt, 0);
+  const d0 = today(), tIn = rows.filter(r => r.date === d0 && r.dir === 'in').reduce((a, r) => a + r.amt, 0), tOut = rows.filter(r => r.date === d0 && r.dir === 'out').reduce((a, r) => a + r.amt, 0);
+  const sum = `<div class="card summary">
+    <div>${L('हाथ में कैश', 'Cash in hand')}<b class="${inT - outT < 0 ? 'due' : 'paid'}">${money(inT - outT)}</b></div>
+    <div>${L('आज आया', 'In today')}<b class="paid">${money(tIn)}</b></div>
+    <div>${L('आज गया', 'Out today')}<b class="due">${money(tOut)}</b></div></div>`;
+  const v = document.getElementById('cashView');
+  if(LIST.cash){
+    let bal = 0;
+    const lines = rows.map(r => { bal += r.dir === 'in' ? r.amt : -r.amt; return Object.assign({ bal }, r); }).reverse();
+    v.innerHTML = sum + `<div class="card"><h3>📋 ${L('कैश बुक की सूची', 'Cash book list')}</h3>
+      ${lines.length ? `<div style="overflow-x:auto"><table>
+        <tr><th>${t('date')}</th><th>${t('desc')}</th><th>${L('आया', 'In')}</th><th>${L('गया', 'Out')}</th><th>${L('बाक़ी', 'Balance')}</th><th></th></tr>
+        ${lines.map(r => `<tr class="line"><td>${fmtDate(r.date)}</td><td>${esc([r.who, r.note].filter(Boolean).join(' · '))}</td>
+          <td class="paid">${r.dir === 'in' ? money(r.amt) : ''}</td><td class="due">${r.dir === 'out' ? money(r.amt) : ''}</td><td><b>${money(r.bal)}</b></td>
+          <td>${r.id ? `<button class="red sm" onclick="delCash('${r.id}')">${t('del')}</button>` : ''}</td></tr>`).join('')}
+      </table></div>` : `<p>${L('अभी कोई कैश एंट्री नहीं है।', 'No cash entries yet.')}</p>`}</div>`;
+    return;
+  }
+  v.innerHTML = sum + `<div class="card">
+    <h3>${L('कैश की एंट्री', 'Cash entry')}</h3>
+    <p style="font-size:13px;color:#666;margin-top:0">${L('नकद वाली बिक्री, रसीद और भुगतान यहाँ अपने-आप जुड़ते हैं। ख़र्चे (किराया, बिजली, तनख़्वाह) या गल्ले में डाला पैसा यहाँ लिखें।', 'Cash sales, receipts and payments are added here automatically. Write expenses (rent, power, salary) or cash added here.')}</p>
+    <div class="inout">
+      <button class="${cashDir === 'in' ? 'green' : 'light'}" onclick="cashDir='in';renderCash()">⬇️ ${L('कैश आया', 'Cash in')}</button>
+      <button class="${cashDir === 'out' ? 'red' : 'light'}" onclick="cashDir='out';renderCash()">⬆️ ${L('कैश गया / ख़र्चा', 'Cash out / expense')}</button>
+    </div>
+    <div class="grid2">
+      <div><label>${t('payAmt')}</label><input id="ca_amt" type="text" inputmode="decimal" autocomplete="off" oninput="numIn(this)"></div>
+      <div><label>${t('date')}</label><input id="ca_date" type="date" value="${d0}"></div>
+      <div style="grid-column:1/-1"><label>${t('desc')}</label><input id="ca_note" placeholder="${cashDir === 'in' ? L('जैसे: शुरुआती कैश, गल्ले में डाला', 'e.g. opening cash, cash added') : L('जैसे: दुकान का किराया, बिजली बिल', 'e.g. shop rent, electricity bill')}"></div>
+    </div>
+    <button class="green" onclick="saveCash()">💾 ${L('एंट्री सेव करें', 'Save entry')}</button>
+  </div>`;
+}
+function saveCash(){
+  const amt = parseNum(document.getElementById('ca_amt').value);
+  if(!(amt > 0)){ alert(t('badAmt')); return; }
+  db.cashbook.push({ id:'K' + Date.now(), date:document.getElementById('ca_date').value || today(), dir:cashDir, amt, note:document.getElementById('ca_note').value.trim() });
+  save(); toast(L('कैश एंट्री सेव हो गई', 'Cash entry saved')); renderCash();
+}
+function delCash(id){
+  if(!confirm(t('confDel'))) return;
+  db.cashbook = db.cashbook.filter(c => c.id !== id); save(); renderCash();
+}
+
+/* ---------- Credit note (customer returns goods) and debit note (we return goods to supplier) ---------- */
+const noteDraft = { cn:{ pid:'', iid:'', q:1, r:0, date:'', reason:'', refund:false, mode:'' }, dn:{ pid:'', iid:'', q:1, r:0, date:'', reason:'', refund:false, mode:'' } };
+function renderNote(ty){
+  const v = document.getElementById(ty + 'View'), isCn = ty === 'cn', pty = isCn ? 'c' : 's', d = noteDraft[ty];
+  if(LIST[ty]){
+    const list = db.notes.filter(n => n.ty === ty).reverse();
+    v.innerHTML = `<div class="card"><h3>📋 ${isCn ? L('क्रेडिट नोट की सूची', 'Credit notes list') : L('डेबिट नोट की सूची', 'Debit notes list')}</h3>
+      ${list.length ? `<div style="overflow-x:auto"><table>
+        <tr><th>${t('date')}</th><th>${L('नंबर', 'No.')}</th><th>${isCn ? L('ग्राहक', 'Customer') : L('सप्लायर', 'Supplier')}</th><th>${t('desc')}</th><th>${t('qty')}</th><th>${L('रक़म', 'Amount')}</th><th></th></tr>
+        ${list.map(n => `<tr class="line"><td>${fmtDate(n.date)}</td><td>${esc(n.no)}</td><td>${esc(partyName(pty, n.pid) || n.pname)}</td>
+          <td>${esc(n.n)}${n.reason ? `<br><small style="color:#6b7a90">${esc(n.reason)}</small>` : ''}</td><td>${fmtQty(n.q)} ${uLabel(n.unit)}</td><td>${money(n.q * n.r)}</td>
+          <td><button class="red sm" onclick="delNote('${n.id}')">${t('del')}</button></td></tr>`).join('')}
+      </table></div>` : `<p>${L('अभी कोई एंट्री नहीं है।', 'No entries yet.')}</p>`}</div>`;
+    return;
+  }
+  const parties = isCn ? db.customers : db.suppliers;
+  if(!parties.length || !db.items.length){ v.innerHTML = `<div class="card"><p>${isCn
+    ? L('क्रेडिट नोट तब बनता है जब ग्राहक बिका हुआ सामान वापस करे। पहले कोई ग्राहक और सामान होना चाहिए।', 'A credit note is made when a customer returns goods. You need a customer and an item first.')
+    : L('डेबिट नोट तब बनता है जब आप सप्लायर को सामान वापस करें। पहले कोई ख़रीद (सप्लायर) और सामान होना चाहिए।', 'A debit note is made when you return goods to a supplier. You need a purchase (supplier) and an item first.')}</p></div>`; return; }
+  const next = (isCn ? 'CN-' : 'DN-') + String(db.settings[isCn ? 'nextCn' : 'nextDn']).padStart(4, '0');
+  v.innerHTML = `<div class="card">
+    <h3>${isCn ? L('ग्राहक ने सामान वापस किया (बिक्री वापसी)', 'Customer returned goods (sale return)') : L('सप्लायर को सामान वापस किया (ख़रीद वापसी)', 'Goods returned to supplier (purchase return)')}</h3>
+    <div class="grid2">
+      <div><label>${L('नंबर', 'Number')}</label><input value="${next}" disabled></div>
+      <div><label>${t('date')}</label><input type="date" value="${d.date || today()}" oninput="noteDraft.${ty}.date=this.value"></div>
+      <div style="grid-column:1/-1"><label>${isCn ? L('ग्राहक', 'Customer') : L('सप्लायर', 'Supplier')}</label>
+        <select onchange="noteDraft.${ty}.pid=this.value">${partyOpts(pty).replace(`value="${d.pid}"`, `value="${d.pid}" selected`)}</select></div>
+      <div style="grid-column:1/-1"><label>${t('desc')}</label><select onchange="noteDraft.${ty}.iid=this.value;noteDraft.${ty}.r=(itemById(this.value)||{}).${isCn ? 'sale' : 'buy'}||0;renderNote('${ty}')">
+        <option value="">—</option>${db.items.map(i => `<option value="${i.id}" ${i.id === d.iid ? 'selected' : ''}>${esc(i.name)} (${t('stock')}: ${fmtQty(i.stock)})</option>`).join('')}</select></div>
+      <div><label>${t('qty')}</label>${amtBox(d.q, `noteDraft.${ty}.q=numIn(this);document.getElementById('nt_tot').value=money(noteDraft.${ty}.q*noteDraft.${ty}.r)`)}</div>
+      <div><label>${t('rate')}</label>${amtBox(d.r, `noteDraft.${ty}.r=numIn(this);document.getElementById('nt_tot').value=money(noteDraft.${ty}.q*noteDraft.${ty}.r)`)}</div>
+      <div><label>${L('कुल रक़म', 'Total amount')}</label><input id="nt_tot" value="${money((Number(d.q)||0) * (Number(d.r)||0))}" disabled></div>
+      <div><label>${L('कारण', 'Reason')}</label><input value="${esc(d.reason)}" placeholder="${L('जैसे: टूटा हुआ, ख़राब, ग़लत सामान', 'e.g. damaged, wrong item')}" oninput="noteDraft.${ty}.reason=this.value"></div>
+    </div>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:12px"><input type="checkbox" style="width:auto" ${d.refund ? 'checked' : ''} onchange="noteDraft.${ty}.refund=this.checked;renderNote('${ty}')">
+      ${isCn ? L('ग्राहक को पैसा अभी लौटा दिया', 'Money refunded to customer now') : L('सप्लायर से पैसा अभी वापस मिल गया', 'Money received back from supplier now')}</label>
+    ${d.refund ? `<select onchange="noteDraft.${ty}.mode=this.value">${modeOpts(d.mode || t('mCash'))}</select>` : `<p style="font-size:13px;color:#666">${isCn ? L('पैसा नहीं लौटाया तो यह रक़म ग्राहक के बाक़ी में से घट जाएगी।', 'If not refunded, this amount is reduced from the customer’s balance.') : L('पैसा वापस नहीं मिला तो यह रक़म सप्लायर को देने वाले बाक़ी में से घट जाएगी।', 'If not refunded, this amount is reduced from what you owe the supplier.')}</p>`}
+    <button class="green" onclick="saveNote('${ty}')">💾 ${L('सेव करें', 'Save')}</button>
+    <p style="font-size:12.5px;color:#6b7a90">${isCn ? L('सेव करने पर सामान स्टॉक में वापस जुड़ जाएगा।', 'On save, the items go back into stock.') : L('सेव करने पर सामान स्टॉक से घट जाएगा।', 'On save, the items are removed from stock.')}</p>
+  </div>`;
+}
+function saveNote(ty){
+  const d = noteDraft[ty], isCn = ty === 'cn', it = itemById(d.iid), q = Number(d.q) || 0, r = Number(d.r) || 0;
+  if(!d.pid){ alert(t('pickParty')); return; }
+  if(!it){ alert(t('pickItem')); return; }
+  if(!(q > 0) || !(r >= 0)){ alert(t('badAmt')); return; }
+  const k = isCn ? 'nextCn' : 'nextDn';
+  const n = { id:'N' + Date.now(), ty, no:(isCn ? 'CN-' : 'DN-') + String(db.settings[k]).padStart(4, '0'), date:d.date || today(), pid:d.pid,
+    pname:partyName(isCn ? 'c' : 's', d.pid), iid:it.id, n:it.name, unit:it.unit, q, r, reason:(d.reason || '').trim(), ts:Date.now() };
+  db.notes.push(n); db.settings[k]++;
+  it.stock = (Number(it.stock) || 0) + (isCn ? q : -q);
+  if(d.refund && q * r > 0) db.payments.push({ id:'Y' + Date.now(), ty:isCn ? 'c' : 's', pid:d.pid, amt:-(q * r), date:n.date,
+    mode:d.mode || t('mCash'), note:n.no, note2:n.id });
+  noteDraft[ty] = { pid:'', iid:'', q:1, r:0, date:'', reason:'', refund:false, mode:'' };
+  save(); toast(n.no + ' ' + L('सेव हो गया', 'saved')); renderNote(ty);
+}
+function delNote(id){
+  const n = db.notes.find(x => x.id === id); if(!n || !confirm(t('confDel'))) return;
+  const it = itemById(n.iid); if(it) it.stock = (Number(it.stock) || 0) - (n.ty === 'cn' ? n.q : -n.q);
+  db.notes = db.notes.filter(x => x.id !== id);
+  db.payments = db.payments.filter(p => p.note2 !== id);
+  save(); renderNote(n.ty);
 }
 
 /* ---------- Customers and history ---------- */
@@ -1439,7 +2144,8 @@ function renderCustRows(){
     return `<tr class="cust-row" onclick="openCust('${c.id}')">
       <td><b>${esc(c.name)}</b><br><small>${esc(c.phone)}</small></td>
       <td>${bills.length} ${t('bills')}</td>
-      <td>${money(bills.reduce((a,i)=>a+i.total,0))}<br><small class="due">${money(due)}</small></td></tr>`;
+      <td>${money(bills.reduce((a,i)=>a+i.total,0))}<br><small class="due">${money(due)}</small></td>
+      <td><button class="pdfBtn sm" onclick="event.stopPropagation();openStatement('c','${c.id}')">📄 PDF</button></td></tr>`;
   }).join('')}</table>`;
 }
 function openCust(id){ selCid = id; renderCustomers(); }
@@ -1470,6 +2176,7 @@ function renderCustDetail(){
     </div>
     <button class="green" onclick="saveCustEdit()">${t('edit')}</button>
     <button onclick="newBillFor('${c.id}')">${t('newFor')}</button>
+    <button class="pdfBtn" onclick="openStatement('c','${c.id}')">📄 ${L('PDF स्टेटमेंट / शेयर', 'PDF statement / share')}</button>
   </div>
   <div class="card">
     <h3>${t('history')}</h3>
@@ -1552,7 +2259,7 @@ function invoiceHTML(inv){
       </div>` : ''}
       ${S.terms && s.terms ? `<div style="font-size:12px;margin-top:14px;white-space:pre-wrap">${esc(s.terms)}</div>` : ''}
       ${S.paidStamp && inv.paid ? `<div style="color:#2e8b57;font-weight:bold;font-size:22px;border:3px solid #2e8b57;display:inline-block;padding:4px 12px;margin-top:12px">PAID</div>` : ''}
-      ${S.signature ? `<div style="margin-top:30px;text-align:right">____________________<br>${t('authSign')}</div>` : ''}
+      ${S.signature ? `<div style="margin-top:${s.sign ? 14 : 30}px;text-align:right">${s.sign ? `<img src="${s.sign}" style="height:54px;max-width:180px;object-fit:contain;display:inline-block">` : '____________________'}<br>${t('authSign')}</div>` : ''}
       ${S.thanks ? `<p style="margin-top:20px">${t('thanks')}</p>` : ''}
       ${S.footer && s.footer ? `<div style="font-size:12px;text-align:center;margin-top:10px">${esc(s.footer)}</div>` : ''}
     </div>`;
@@ -1595,104 +2302,95 @@ function shareInv(inv){
 }
 
 /* ---------- Settings, QR and backup ---------- */
+const SET_OPEN = new Set();
+const SHOW_GROUPS = [
+  ['🏪', 'दुकान की जानकारी', 'Shop details', ['logo','bizName','addr','city','phone','gstin']],
+  ['👤', 'ग्राहक की जानकारी', 'Customer details', ['custPhone','custGstin','custAddr','custExtra']],
+  ['📊', 'सामान की टेबल के कॉलम', 'Item table columns', ['photo','hsn','qtyCol','rateCol','gstCol','amtCol','gstAmtCol','lineTotalCol']],
+  ['💳', 'पेमेंट और बैंक', 'Payment and bank', ['upi','qr','bank','bankName','accNo','ifsc']],
+  ['✍️', 'बिल के नीचे', 'Bottom of bill', ['signature','paidStamp','terms','footer','thanks']]
+];
+function setSec(id, icon, color, title, sub, body){
+  return `<details class="sset" id="ss_${id}" style="--sc:${color}" ${SET_OPEN.has(id) ? 'open' : ''} ontoggle="this.open?SET_OPEN.add('${id}'):SET_OPEN.delete('${id}')">
+    <summary><span class="si">${icon}</span><span class="st"><b>${title}</b><small>${sub}</small></span><span class="sc">⌄</span></summary>
+    <div class="sb">${body}</div></details>`;
+}
+const swc = (id, on, label) => `<label class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><span>${label}</span></label>`;
 function renderSettings(){
-  const s = db.settings, qr = qrUrl(0);
+  const s = db.settings, qr = qrUrl(0), D = s.design;
+  const opt = (v, cur, txt) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${txt}</option>`;
   document.getElementById('settingsView').innerHTML = `
-  <div class="card">
-    <h3>${t('biz')}</h3>
+  <div class="card setHead">
+    <div class="shLogo">${s.logo ? `<img src="${s.logo}" alt="">` : '🏪'}</div>
+    <div class="shTxt"><b>${esc(s.name || L('मेरी कंपनी', 'My company'))}</b>
+      <small>${esc([s.phone, s.gstin && 'GSTIN ' + s.gstin, s.city].filter(Boolean).join(' · ') || L('नाम, फ़ोन, बैंक और सिग्नेचर यहाँ भरें', 'Add name, phone, bank and signature'))}</small></div>
+    <button class="sm" onclick="openCompany()">✏️ ${L('कंपनी, बैंक, सिग्नेचर', 'Company, bank, signature')}</button>
+  </div>
+
+  ${setSec('bill', '🧾', '#2563eb', L('बिलिंग', 'Billing'), L('GST, बिल नंबर, सामान जोड़ने का तरीका', 'GST, bill numbers, how items are added'), `
     <div class="grid2">
-      <div><label>${t('biz')}</label><input id="sn" value="${esc(s.name)}"></div>
-      <div><label>${t('phone')}</label><input id="sp" value="${esc(s.phone)}"></div>
-      <div><label>${t('gstin')}</label><input id="sgi" value="${esc(s.gstin)}"></div>
-      <div><label>${t('upi')}</label><input id="su" value="${esc(s.upi)}" placeholder="name@upi"></div>
-      <div style="grid-column:1/-1"><label>${t('address')}</label><input id="sa" value="${esc(s.addr)}"></div>
-      <div><label>${t('gst')}</label><input id="sg" type="number" min="0" step="any" value="${s.gst}"></div>
-      <div><label>${t('cfields')}</label><input id="scf" value="${esc(s.cfields.join(', '))}"></div>
+      <div><label>${L('डिफ़ॉल्ट GST %', 'Default GST %')}</label><input id="sg" type="number" min="0" step="any" value="${s.gst}"></div>
+      <div><label>${t('entryMode')}</label><select id="entm">${opt('manual', s.entryMode === 'scan' ? '' : 'manual', t('entryManual'))}${opt('scan', s.entryMode, t('entryScan'))}</select></div>
+      <div style="grid-column:1/-1"><label>${t('cfields')}</label><input id="scf" value="${esc(s.cfields.join(', '))}"><p class="hint2">${t('cfieldsHint')}</p></div>
     </div>
-    <p style="font-size:13px;color:#666">${t('cfieldsHint')}</p>
-    <h3 style="margin-top:16px">${t('bankSec')}</h3>
-    <div class="grid2">
-      <div><label>${t('holder')}</label><input id="bn_holder" value="${esc(s.bank.holder)}"></div>
-      <div><label>${t('bankName')}</label><input id="bn_name" value="${esc(s.bank.name)}"></div>
-      <div><label>${t('accNo')}</label><input id="bn_acc" value="${esc(s.bank.acc)}"></div>
-      <div><label>${t('ifsc')}</label><input id="bn_ifsc" value="${esc(s.bank.ifsc)}"></div>
-      <div><label>${t('city')}</label><input id="sc_city" value="${esc(s.city)}"></div>
-    </div>
-    <h3 style="margin-top:16px">${t('showSec')}</h3>
-    <div class="grid2">
-      ${SHOW_KEYS.map(k => `<label style="display:flex;gap:8px;align-items:center;margin:4px 0"><input type="checkbox" id="sh_${k}" ${s.show[k]?'checked':''} style="width:auto"> ${t('s_'+k)}</label>`).join('')}
-    </div>
-    <h3 style="margin-top:16px">${t('billNoSec')}</h3>
+    <div class="secT">🔢 ${t('billNoSec')}</div>
     <div class="grid3">
-      <div><label>${t('billNoMode')}</label><select id="bnm"><option value="auto" ${db.settings.billNoMode !== 'manual' ? 'selected' : ''}>${t('billNoAuto')}</option><option value="manual" ${db.settings.billNoMode === 'manual' ? 'selected' : ''}>${t('billNoManual')}</option></select></div>
-      <div><label>${t('billPrefix')}</label><input id="bpf" value="${esc(db.settings.billPrefix)}"></div>
-      <div><label>${t('billNext')}</label><input id="bnx" type="number" min="1" value="${db.settings.next}"></div>
-    </div>
-    <h3 style="margin-top:16px">${t('entrySec')}</h3>
+      <div><label>${t('billNoMode')}</label><select id="bnm">${opt('auto', s.billNoMode === 'manual' ? '' : 'auto', t('billNoAuto'))}${opt('manual', s.billNoMode, t('billNoManual'))}</select></div>
+      <div><label>${t('billPrefix')}</label><input id="bpf" value="${esc(s.billPrefix)}"></div>
+      <div><label>${t('billNext')}</label><input id="bnx" type="number" min="1" value="${s.next}"></div>
+    </div>`)}
+
+  ${setSec('print', '🖨️', '#ea580c', L('प्रिंट और बिल का डिज़ाइन', 'Print and bill design'), L('काग़ज़, बिल पर क्या दिखे, रंग, शर्तें', 'Paper, what shows on the bill, colours, terms'), `
     <div class="grid2">
-      <div><label>${t('entryMode')}</label><select id="entm"><option value="manual" ${db.settings.entryMode !== 'scan' ? 'selected' : ''}>${t('entryManual')}</option><option value="scan" ${db.settings.entryMode === 'scan' ? 'selected' : ''}>${t('entryScan')}</option></select></div>
+      <div><label>${t('paper')}</label><select id="paper">${opt('a4', s.paper === 'thermal' ? '' : 'a4', t('paperA4'))}${opt('thermal', s.paper, t('paperThermal'))}</select></div>
+      <div><label>${t('dTitle')}</label><input id="dTitle" value="${esc(D.title)}" onchange="designChanged()"></div>
     </div>
-    <h3 style="margin-top:16px">${t('designSec')}</h3>
+    <div class="secT">👁️ ${t('showSec')}</div>
+    ${SHOW_GROUPS.map(([ic, hi, en, keys]) => `<div class="swg"><div class="swgT">${ic} ${L(hi, en)}</div><div class="swgB">${keys.map(k => swc('sh_' + k, s.show[k], t('s_' + k))).join('')}</div></div>`).join('')}
+    <div class="secT">🎨 ${t('designSec')}</div>
     <div class="grid2">
-      <div><label>${t('tplLabel')}</label><select id="dTpl" onchange="designChanged()">
-        <option value="classic" ${db.settings.design.template === 'classic' ? 'selected' : ''}>${t('tplClassic')}</option>
-        <option value="modern" ${db.settings.design.template === 'modern' ? 'selected' : ''}>${t('tplModern')}</option>
-        <option value="minimal" ${db.settings.design.template === 'minimal' ? 'selected' : ''}>${t('tplMinimal')}</option>
-      </select></div>
-      <div><label>${t('dColor')}</label><input id="dColor" type="color" value="${db.settings.design.color}" onchange="designChanged()" style="height:42px"></div>
-      <div><label>${t('dFont')}</label><select id="dFont" onchange="designChanged()">
-        <option value="system" ${db.settings.design.font === 'system' ? 'selected' : ''}>${t('fontSys')}</option>
-        <option value="serif" ${db.settings.design.font === 'serif' ? 'selected' : ''}>${t('fontSerif')}</option>
-        <option value="rounded" ${db.settings.design.font === 'rounded' ? 'selected' : ''}>${t('fontRound')}</option>
-      </select></div>
-      <div><label>${t('dAlign')}</label><select id="dAlign" onchange="designChanged()">
-        <option value="left" ${db.settings.design.align === 'left' ? 'selected' : ''}>${t('alignL')}</option>
-        <option value="center" ${db.settings.design.align === 'center' ? 'selected' : ''}>${t('alignC')}</option>
-        <option value="right" ${db.settings.design.align === 'right' ? 'selected' : ''}>${t('alignR')}</option>
-      </select></div>
-      <div style="grid-column:1/-1"><label>${t('dTitle')}</label><input id="dTitle" value="${esc(db.settings.design.title)}" onchange="designChanged()"></div>
+      <div><label>${t('tplLabel')}</label><select id="dTpl" onchange="designChanged()">${opt('classic', D.template, t('tplClassic'))}${opt('modern', D.template, t('tplModern'))}${opt('minimal', D.template, t('tplMinimal'))}</select></div>
+      <div><label>${t('dColor')}</label><input id="dColor" type="color" value="${D.color}" onchange="designChanged()" style="height:42px"></div>
+      <div><label>${t('dFont')}</label><select id="dFont" onchange="designChanged()">${opt('system', D.font, t('fontSys'))}${opt('serif', D.font, t('fontSerif'))}${opt('rounded', D.font, t('fontRound'))}</select></div>
+      <div><label>${t('dAlign')}</label><select id="dAlign" onchange="designChanged()">${opt('left', D.align, t('alignL'))}${opt('center', D.align, t('alignC'))}${opt('right', D.align, t('alignR'))}</select></div>
+      <div style="grid-column:1/-1"><label>${t('termsTxt')}</label><textarea id="termsTxt" rows="3">${esc(s.terms || '')}</textarea></div>
+      <div style="grid-column:1/-1"><label>${t('footerTxt')}</label><input id="footerTxt" value="${esc(s.footer || '')}"></div>
     </div>
-    <p style="font-size:13px;color:#666">${t('designHint')}</p>
-    <div style="border:1px dashed #9bb3d9;padding:10px;border-radius:8px;overflow:auto;background:#fff"><div id="designPreview"></div></div>
-    <h3 style="margin-top:16px">${t('paperSec')}</h3>
-    <div class="grid2">
-      <div><label>${t('paper')}</label><select id="paper"><option value="a4" ${db.settings.paper !== 'thermal' ? 'selected' : ''}>${t('paperA4')}</option><option value="thermal" ${db.settings.paper === 'thermal' ? 'selected' : ''}>${t('paperThermal')}</option></select></div>
-      <div><label>${t('logoUp')}</label><input type="file" accept="image/*" onchange="pickLogo(this)">${db.settings.logo ? `<img src="${db.settings.logo}" style="width:56px;height:56px;object-fit:contain;margin-top:6px">` : ''}</div>
-      <div style="grid-column:1/-1"><label>${t('termsTxt')}</label><textarea id="termsTxt" rows="3" style="width:100%;padding:9px;border:1px solid #cfd7e6;border-radius:8px">${esc(db.settings.terms || '')}</textarea></div>
-      <div style="grid-column:1/-1"><label>${t('footerTxt')}</label><input id="footerTxt" value="${esc(db.settings.footer || '')}"></div>
-    </div>
-    <h3 style="margin-top:16px">${t('pinSec')}</h3>
-    <label style="display:flex;gap:8px;align-items:center"><input id="pin_on" type="checkbox" ${db.settings.pinOn ? 'checked' : ''} style="width:auto"> ${t('pinOn')}</label>
+    <p class="hint2">${t('designHint')}</p>
+    <div class="dprev"><div id="designPreview"></div></div>`)}
+
+  ${setSec('sec', '🔒', '#dc2626', t('pinSec'), L('ऐप खोलने पर PIN माँगे', 'Ask for a PIN when the app opens'), `
+    ${swc('pin_on', s.pinOn, t('pinOn'))}
     <div class="grid2"><div><label>${t('pinNew')}</label><input id="pin_new" type="password" inputmode="numeric" placeholder="${t('pinHint')}"></div></div>
-    <p style="font-size:13px;color:#666">${t('pinNote')}</p>
-    <h3 style="margin-top:16px">${L('ऐप खुलने की स्क्रीन', 'Opening screen')}</h3>
-    <label style="display:flex;gap:8px;align-items:center"><input id="zip_on" type="checkbox" ${db.settings.zipOn ? 'checked' : ''} style="width:auto"> ${L('ऐप खुलते समय ज़िप वाली स्क्रीन दिखाएँ (नीचे खींचकर खोलें)', 'Show the zip screen when the app opens (pull down to open)')}</label>
-    <button class="green" onclick="saveSettings()">${t('saveSet')}</button>
-  </div>
-  <div class="card">
-    <h3>${t('qrTitle')}</h3>
+    <p class="hint2">${t('pinNote')}</p>`)}
+
+  ${setSec('app', '✨', '#7c3aed', L('ऐप का रूप', 'App look'), L('खुलने वाली ज़िप स्क्रीन', 'Opening zip screen'), `
+    ${swc('zip_on', s.zipOn, L('ऐप खुलते समय ज़िप वाली स्क्रीन दिखाएँ (नीचे खींचकर खोलें)', 'Show the zip screen when the app opens (pull down to open)'))}`)}
+
+  ${setSec('qr', '📱', '#0d9488', t('qrTitle'), s.upi ? esc(s.upi) : L('पहले कंपनी में UPI ID भरें', 'Add a UPI ID in company details first'), `
     ${qr ? `<img class="qr" src="${qr}" alt="QR"><br><a href="${qr}" download="upi-qr.gif"><button class="light">${t('qrDownload')}</button></a>`
-         : `<p style="font-size:13px;color:#666">${t('upi')}</p>`}
-  </div>
-  <div class="card">
-    <h3>${t('backup')}</h3>
+         : `<p class="hint2">${L('UPI ID "✏️ कंपनी, बैंक, सिग्नेचर" में भरें, फिर यहाँ QR बन जाएगा।', 'Add your UPI ID under "✏️ Company, bank, signature" and the QR appears here.')}</p>
+            <button class="light" onclick="openCompany()">✏️ ${L('UPI ID भरें', 'Add UPI ID')}</button>`}`)}
+
+  ${setSec('backup', '💾', '#16a34a', t('backup'), L('डेटा सुरक्षित रखें और वापस लाएँ', 'Keep your data safe and restore it'), `
     <button onclick="exportData()">${t('backupDo')}</button>
-    <h3 style="margin-top:14px">${t('backupFolderTitle')}</h3>
-    <p style="font-size:13px;color:#666">${t('backupHelp')}</p>
+    <div class="secT">📁 ${t('backupFolderTitle')}</div>
+    <p class="hint2">${t('backupHelp')}</p>
     <p>${backupDir ? t('backupOk').replace('{f}', esc(backupDir.name)) + (lastBackup ? ' · ' + lastBackup : '') : t('backupNone')}</p>
     <button class="green" onclick="pickBackupFolder()">${t('backupFolder')}</button>
     ${backupDir ? `<button class="light" onclick="grantBackup()">${t('backupGrant')}</button>` : ''}
-    <h3 style="margin-top:14px">${t('backupModeTitle')}</h3>
-    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${db.settings.backupMode !== 'auto' ? 'checked' : ''} onchange="setBackupMode('manual')" style="width:auto"> ${t('backupManual')}</label>
-    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${db.settings.backupMode === 'auto' ? 'checked' : ''} onchange="setBackupMode('auto')" style="width:auto"> ${t('backupAuto')}</label>
+    <div class="secT">⚙️ ${t('backupModeTitle')}</div>
+    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${s.backupMode !== 'auto' ? 'checked' : ''} onchange="setBackupMode('manual')" style="width:auto"> ${t('backupManual')}</label>
+    <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="bmode" ${s.backupMode === 'auto' ? 'checked' : ''} onchange="setBackupMode('auto')" style="width:auto"> ${t('backupAuto')}</label>
     <label>${t('restore')}</label>
-    <input type="file" accept=".json" onchange="importData(this)">
-  </div>
-  <div class="card" style="font-size:14px">
-    <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">गोपनीयता नीति / Privacy Policy</a> ·
+    <input type="file" accept=".json" onchange="importData(this)">`)}
+
+  ${setSec('help', 'ℹ️', '#475569', L('मदद और नीतियाँ', 'Help and policies'), 'billeasysupport@gmail.com', `
+    <p style="font-size:14px"><a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">गोपनीयता नीति / Privacy Policy</a> ·
     <a href="terms.html" target="_blank" rel="noopener noreferrer">उपयोग की शर्तें / Terms of Use</a><br>
-    <span style="color:#666">सहायता / Support: billeasysupport@gmail.com</span>
-  </div>`;
+    <span style="color:#666">सहायता / Support: billeasysupport@gmail.com</span></p>`)}
+
+  <div class="saveBar"><button class="green" onclick="saveSettings()">💾 ${t('saveSet')}</button></div>`;
 }
 /* ---------- Video tutorials tab ---------- */
 function renderVideos(){
@@ -1706,20 +2404,9 @@ function renderVideos(){
 }
 async function saveSettings(){
   const s = db.settings;
-  s.name = document.getElementById('sn').value.trim();
-  s.phone = document.getElementById('sp').value.trim();
-  s.gstin = document.getElementById('sgi').value.trim();
-  s.upi = document.getElementById('su').value.trim();
-  s.addr = document.getElementById('sa').value.trim();
+  /* business name, phone, UPI and bank details now live in the company window (✏️ Edit) */
   s.gst = Number(document.getElementById('sg').value) || 0;
   s.cfields = document.getElementById('scf').value.split(',').map(x=>x.trim()).filter(Boolean);
-  s.city = document.getElementById('sc_city').value.trim();
-  s.bank = {
-    holder: document.getElementById('bn_holder').value.trim(),
-    name: document.getElementById('bn_name').value.trim(),
-    acc: document.getElementById('bn_acc').value.trim(),
-    ifsc: document.getElementById('bn_ifsc').value.trim()
-  };
   SHOW_KEYS.forEach(k => { s.show[k] = document.getElementById('sh_' + k).checked; });
   s.billNoMode = document.getElementById('bnm').value;
   s.billPrefix = document.getElementById('bpf').value;
@@ -1739,7 +2426,7 @@ async function saveSettings(){
     s.pinVer = 2;
   }
   else if(!s.pinHash){ alert(t('pinNeed')); s.pinOn = false; }
-  save(); alert(t('saveDone')); renderSettings();
+  save(); toast('✅ ' + t('saveDone')); renderSettings(); renderDesignPreview();
 }
 async function exportData(){
   const pass = prompt(t('askBackupPass'));
@@ -1773,7 +2460,8 @@ function importData(input){
 
 /* ---------- Zip opening screen: pull the zip down to open the app (can be turned off in Settings) ---------- */
 function startZip(){
-  if(!db.settings.zipOn || document.getElementById('zip')) return;
+  let noZip = false; try{ noZip = sessionStorage.getItem('be_nozip') === '1'; sessionStorage.removeItem('be_nozip'); }catch(e){}
+  if(noZip || !db.settings.zipOn || document.getElementById('zip')) return;
   const z = document.createElement('div');
   z.id = 'zip'; z.tabIndex = 0; z.setAttribute('role', 'button');
   z.setAttribute('aria-label', L('ऐप खोलने के लिए ज़िप नीचे खींचें', 'Pull the zip down to open the app'));
@@ -1816,7 +2504,7 @@ function startZip(){
 
   function rr(c, x, y, w, h, r){ c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
   function build(){
-    dpr = Math.min(2, window.devicePixelRatio || 1); W = window.innerWidth; H = window.innerHeight; cx = Math.round(W / 2);
+    dpr = Math.min(2, window.devicePixelRatio || 1); W = Math.max(320, window.innerWidth || 0); H = Math.max(480, window.innerHeight || 0); cx = Math.round(W / 2);
     Y0 = Math.max(54, Math.round(H * 0.08)); if(!dragging && !opening) Y = Y0;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     base = document.createElement('canvas'); base.width = W * dpr; base.height = H * dpr;
@@ -2103,8 +2791,302 @@ function startZip(){
   setTimeout(() => { try{ z.focus({ preventScroll:true }); }catch(e){} }, 50);
 }
 
+/* ================= PDF reports (work offline) =================
+   Pages are drawn on a canvas with the phone's own fonts (so Hindi prints correctly),
+   then packed into a real PDF file that can be shared to WhatsApp, email or any app. */
+const PG = { W:1240, H:1754, M:70 };          /* A4 page at 150 dpi */
+const PFONT = 'system-ui,"Noto Sans Devanagari","Noto Sans",Arial,sans-serif';
+function b64Bytes(dataUrl){ const s = atob(dataUrl.split(',')[1]); const u = new Uint8Array(s.length); for(let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+function pdfFromPages(pages){
+  const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+  const put = x => { const b = typeof x === 'string' ? enc.encode(x) : x; parts.push(b); len += b.length; };
+  const obj = (id, body) => { offs[id] = len; put(id + ' 0 obj\n' + body + '\nendobj\n'); };
+  put('%PDF-1.4\n'); put(new Uint8Array([37, 226, 227, 207, 211, 10]));
+  obj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2, `<< /Type /Pages /Kids [${pages.map((_, i) => (3 + i * 3) + ' 0 R').join(' ')}] /Count ${pages.length} >>`);
+  pages.forEach((c, i) => {
+    const pid = 3 + i * 3, cid = pid + 1, iid = pid + 2, jpg = b64Bytes(c.toDataURL('image/jpeg', 0.85));
+    obj(pid, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 ${iid} 0 R >> >> /Contents ${cid} 0 R >>`);
+    const cs = 'q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';
+    obj(cid, `<< /Length ${cs.length} >>\nstream\n${cs}\nendstream`);
+    offs[iid] = len;
+    put(`${iid} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${c.width} /Height ${c.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`);
+    put(jpg); put('\nendstream\nendobj\n');
+  });
+  const total = 3 + pages.length * 3, xref = len;
+  let x = `xref\n0 ${total}\n0000000000 65535 f \n`;
+  for(let i = 1; i < total; i++) x += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+  put(x + `trailer\n<< /Size ${total} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+  return new Blob(parts, { type:'application/pdf' });
+}
+function fitTxt(g, s, w){
+  s = String(s ?? ''); if(g.measureText(s).width <= w) return s;
+  while(s.length > 1 && g.measureText(s + '…').width > w) s = s.slice(0, -1);
+  return s + '…';
+}
+async function loadImg(src){ if(!src) return null; const im = new Image(); im.src = src; try{ await im.decode(); return im; }catch(e){ return null; } }
+/* doc = { title, period, party:[lines], cols:[{h, w, a}], rows:[{c:[..], b, sub, tone}], summary:[[label, value, tone]] } */
+async function drawReport(doc){
+  const s = db.settings, color = s.design.color || '#1f5fbf', logo = await loadImg(s.logo);
+  const pages = []; let g, y;
+  const W = PG.W, M = PG.M, IW = W - 2 * M, colX = []; let acc = M;
+  doc.cols.forEach(c => { colX.push(acc); acc += c.w * IW; });
+  const font = (sz, wt) => { g.font = `${wt || 400} ${sz}px ${PFONT}`; };
+  const newPage = () => {
+    const c = document.createElement('canvas'); c.width = W; c.height = PG.H; pages.push(c);
+    g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, W, PG.H); g.textBaseline = 'middle';
+    if(pages.length === 1){
+      let tx = M;
+      if(logo){ const r = Math.min(110 / logo.width, 110 / logo.height); g.drawImage(logo, M, M, logo.width * r, logo.height * r); tx = M + logo.width * r + 24; }
+      g.fillStyle = '#111827'; font(44, 800); g.fillText(fitTxt(g, s.name || 'BillEasy', 620), tx, M + 26);
+      g.fillStyle = '#4b5563'; font(23);
+      const info = [[s.addr, s.city].filter(Boolean).join(', '), [s.phone && '📞 ' + s.phone, s.gstin && 'GSTIN ' + s.gstin].filter(Boolean).join('   ')].filter(Boolean);
+      info.forEach((l, i) => g.fillText(fitTxt(g, l, 640), tx, M + 70 + i * 32));
+      g.textAlign = 'right'; g.fillStyle = color; font(36, 800); g.fillText(fitTxt(g, doc.title, 420), W - M, M + 26);
+      g.fillStyle = '#374151'; font(23, 600); g.fillText(doc.period || '', W - M, M + 70);
+      g.fillStyle = '#6b7280'; font(19); g.fillText(L('बनाया: ', 'Made: ') + fmtDate(today()) + ' ' + new Date().toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' }), W - M, M + 102);
+      g.textAlign = 'left';
+      y = M + 150; g.fillStyle = color; g.fillRect(M, y, IW, 5); y += 26;
+      if(doc.party && doc.party.length){
+        const h = 30 + doc.party.length * 32;
+        g.fillStyle = '#f5f7fb'; g.fillRect(M, y, IW, h); g.fillStyle = color; g.fillRect(M, y, 7, h);
+        doc.party.forEach((l, i) => { g.fillStyle = i ? '#374151' : '#111827'; font(i ? 22 : 27, i ? 400 : 800); g.fillText(fitTxt(g, l, IW - 50), M + 26, y + 30 + i * 32); });
+        y += h + 22;
+      }
+    } else {
+      g.fillStyle = '#111827'; font(26, 800); g.fillText(fitTxt(g, s.name || 'BillEasy', 600), M, M + 10);
+      g.textAlign = 'right'; g.fillStyle = color; g.fillText(fitTxt(g, doc.title + (doc.period ? ' · ' + doc.period : ''), 520), W - M, M + 10); g.textAlign = 'left';
+      y = M + 36; g.fillStyle = color; g.fillRect(M, y, IW, 3); y += 18;
+    }
+    head();
+  };
+  const head = () => {
+    g.fillStyle = color; g.fillRect(M, y, IW, 50); g.fillStyle = '#fff'; font(21, 700);
+    doc.cols.forEach((c, i) => cell(c.h, i, y + 25));
+    y += 50;
+  };
+  const cell = (txt, i, cy) => {
+    const c = doc.cols[i], x = colX[i], w = c.w * IW - 16;
+    const t2 = fitTxt(g, txt, w);
+    if(c.a === 'r'){ g.textAlign = 'right'; g.fillText(t2, x + c.w * IW - 8, cy); g.textAlign = 'left'; } else g.fillText(t2, x + 8, cy);
+  };
+  const bottom = () => PG.H - M - 50;
+  newPage();
+  let zebra = false;
+  doc.rows.forEach(r => {
+    const h = r.sub ? 34 : 46;
+    if(y + h > bottom()){ newPage(); zebra = false; }
+    if(r.sub){
+      g.fillStyle = '#6b7280'; font(19); g.fillText(fitTxt(g, '   ' + r.sub, IW - 30), M + 24, y + h / 2);
+    } else {
+      if(r.tone === 'open'){ g.fillStyle = '#fef9c3'; g.fillRect(M, y, IW, h); }
+      else if(zebra){ g.fillStyle = '#f8fafc'; g.fillRect(M, y, IW, h); }
+      zebra = !zebra;
+      font(21, r.b ? 700 : 400);
+      r.c.forEach((v, i) => { g.fillStyle = (r.colors && r.colors[i]) || '#111827'; cell(v, i, y + h / 2); });
+    }
+    y += h;
+    if(!r.sub){ g.fillStyle = '#e5e7eb'; g.fillRect(M, y - 1, IW, 1); }
+  });
+  if(!doc.rows.length){ g.fillStyle = '#6b7280'; font(24); g.fillText(L('इस समय में कोई एंट्री नहीं है।', 'No entries in this period.'), M + 10, y + 40); y += 80; }
+  if(doc.summary && doc.summary.length){
+    const bh = 26 + doc.summary.length * 42;
+    if(y + bh + 30 > bottom()) newPage();
+    y += 26; const bx = W - M - 560;
+    g.fillStyle = '#f5f7fb'; g.fillRect(bx, y, 560, bh); g.strokeStyle = color; g.lineWidth = 2; g.strokeRect(bx, y, 560, bh);
+    doc.summary.forEach(([lab, val, tone], i) => {
+      const cy = y + 34 + i * 42; font(22, tone === 'big' ? 800 : 500);
+      g.fillStyle = '#374151'; g.fillText(fitTxt(g, lab, 300), bx + 20, cy);
+      g.textAlign = 'right'; g.fillStyle = tone === 'red' ? '#b91c1c' : tone === 'green' ? '#15803d' : '#111827';
+      font(tone === 'big' ? 26 : 22, 800); g.fillText(val, W - M - 20, cy); g.textAlign = 'left';
+    });
+    y += bh;
+  }
+  if(s.sign){
+    const si = await loadImg(s.sign);
+    if(si){ if(y + 150 > bottom()) newPage(); const r = Math.min(260 / si.width, 80 / si.height); g.drawImage(si, W - M - si.width * r, y + 40, si.width * r, si.height * r); }
+    g.fillStyle = '#374151'; font(20); g.textAlign = 'right'; g.fillText(t('authSign'), W - M, y + 140); g.textAlign = 'left';
+  }
+  pages.forEach((c, i) => {
+    const p = c.getContext('2d'); p.textBaseline = 'middle'; p.font = `400 19px ${PFONT}`; p.fillStyle = '#9ca3af';
+    p.fillText(L('BillEasy से बनाया गया', 'Made with BillEasy'), M, PG.H - M + 10);
+    p.textAlign = 'right'; p.fillText(L(`पेज ${i + 1} / ${pages.length}`, `Page ${i + 1} of ${pages.length}`), W - M, PG.H - M + 10); p.textAlign = 'left';
+  });
+  return pages;
+}
+
+/* ---------- Date range: quick choices plus from / to ---------- */
+function ymd(d){ return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function rangeOf(k){
+  const n = new Date(), y = n.getFullYear(), m = n.getMonth();
+  const fyStart = m >= 3 ? y : y - 1;
+  return ({ today:[ymd(n), ymd(n)], month:[ymd(new Date(y, m, 1)), ymd(n)], last:[ymd(new Date(y, m - 1, 1)), ymd(new Date(y, m, 0))],
+    fy:[fyStart + '-04-01', ymd(n)], lastfy:[(fyStart - 1) + '-04-01', fyStart + '-03-31'], all:['', ''] })[k];
+}
+function rangeBox(def){
+  const [f, t2] = rangeOf(def || 'month');
+  const chip = (k, txt) => `<button class="light sm rchip${k === (def || 'month') ? ' on' : ''}" onclick="setRange('${k}', this)">${txt}</button>`;
+  return `<div class="secT">📅 ${L('किस तारीख़ से किस तारीख़ तक', 'From which date to which date')}</div>
+    <div class="rchips">${chip('today', L('आज', 'Today'))}${chip('month', L('यह महीना', 'This month'))}${chip('last', L('पिछला महीना', 'Last month'))}${chip('fy', L('यह साल (अप्रैल से)', 'This year (from April)'))}${chip('lastfy', L('पिछला साल', 'Last year'))}${chip('all', L('पूरा', 'All'))}</div>
+    <div class="grid2"><div><label>${L('से', 'From')}</label><input id="rg_f" type="date" value="${f}" oninput="clearChips()"></div>
+      <div><label>${L('तक', 'To')}</label><input id="rg_t" type="date" value="${t2}" oninput="clearChips()"></div></div>`;
+}
+function setRange(k, b){
+  const [f, t2] = rangeOf(k), F = document.getElementById('rg_f'), T = document.getElementById('rg_t');
+  F.value = f; T.value = t2; F.dispatchEvent(new Event('input')); T.dispatchEvent(new Event('input'));
+  document.querySelectorAll('.rchip').forEach(x => x.classList.toggle('on', x === b));
+}
+function clearChips(){ document.querySelectorAll('.rchip').forEach(x => x.classList.remove('on')); }
+function getRange(){ return { f:document.getElementById('rg_f').value || '', t:document.getElementById('rg_t').value || '' }; }
+const inRange = (d, r) => (!r.f || (d || '') >= r.f) && (!r.t || (d || '') <= r.t);
+const rangeTxt = r => r.f || r.t ? `${r.f ? fmtDate(r.f) : L('शुरू', 'Start')} – ${r.t ? fmtDate(r.t) : L('आज', 'Today')}` : L('पूरा समय', 'All time');
+const optBox = (id, on, label) => `<label class="sw"><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><span>${label}</span></label>`;
+const chk = id => { const e = document.getElementById(id); return !!(e && e.checked); };
+
+/* ---------- Make the PDF, then show it with Share / Download ---------- */
+let lastPdf = null;
+async function makePdf(doc, fileName){
+  const out = document.getElementById('pdfOut'); if(out) out.innerHTML = `<p class="hint2">⏳ ${L('PDF बन रही है…', 'Making the PDF…')}</p>`;
+  await new Promise(r => setTimeout(r, 30));
+  const pages = await drawReport(doc), blob = pdfFromPages(pages);
+  lastPdf = { blob, name:fileName.replace(/[\\/:*?"<>|]+/g, '-') + '.pdf', text:doc.title + ' · ' + (doc.period || '') };
+  if(out) out.innerHTML = `<div class="pdfReady">
+      <img src="${pages[0].toDataURL('image/jpeg', 0.6)}" alt="">
+      <div><b>✅ ${L('PDF तैयार है', 'PDF is ready')}</b><small>${pages.length} ${L('पेज', pages.length > 1 ? 'pages' : 'page')} · ${(blob.size / 1024).toFixed(0)} KB</small>
+        <button class="green" onclick="sharePdf()">📤 ${L('शेयर करें (WhatsApp आदि)', 'Share (WhatsApp etc.)')}</button>
+        <button class="light" onclick="downloadPdf()">⬇️ ${L('डाउनलोड', 'Download')}</button></div></div>`;
+}
+async function sharePdf(){
+  if(!lastPdf) return;
+  const file = new File([lastPdf.blob], lastPdf.name, { type:'application/pdf' });
+  if(navigator.canShare && navigator.canShare({ files:[file] })){
+    try{ await navigator.share({ files:[file], title:lastPdf.name, text:lastPdf.text }); return; }
+    catch(e){ if(e && e.name === 'AbortError') return; }
+  }
+  toast(L('यहाँ सीधा शेयर नहीं हो सकता, PDF डाउनलोड कर रहे हैं', 'Direct share not available here, downloading the PDF'));
+  downloadPdf();
+}
+function downloadPdf(){
+  if(!lastPdf) return;
+  const a = document.createElement('a'); a.href = URL.createObjectURL(lastPdf.blob); a.download = lastPdf.name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 5000);
+}
+
+/* ---------- Party statement: everything sold to / bought from one party ---------- */
+function linkedParty(ty, id){
+  /* a customer and a supplier with the same name or phone are treated as one party */
+  const me = ty === 'c' ? db.customers.find(x => x.id === id) : db.suppliers.find(x => x.id === id); if(!me) return { c:null, s:null, me:null };
+  const same = o => o && ((o.name || '').trim().toLowerCase() === (me.name || '').trim().toLowerCase() || (digits(o.phone) && digits(o.phone) === digits(me.phone)));
+  if(id === 'CASH') return { c:ty === 'c' ? 'CASH' : null, s:ty === 's' ? 'CASH' : null, me };
+  return ty === 'c' ? { c:id, s:(db.suppliers.find(same) || {}).id || null, me } : { s:id, c:(db.customers.find(same) || {}).id || null, me };
+}
+function partyEntries(p){
+  const E = [];  /* amt > 0: they owe us more (debit) · amt < 0: we owe them / they paid (credit) */
+  if(p.c){
+    db.invoices.filter(i => i.cid === p.c).forEach(i => E.push({ d:i.cd, k:'sale', no:i.no, txt:L('बिक्री बिल ', 'Sale bill ') + i.no, amt:i.total, lines:i.lines, ts:i.ts || 0 }));
+    db.payments.filter(x => x.ty === 'c' && x.pid === p.c).forEach(x => E.push({ d:x.date, k:'pay', txt:(x.amt > 0 ? L('पैसा मिला', 'Received') : L('पैसा लौटाया', 'Refunded')) + (x.rno ? ' ' + x.rno : '') + ' · ' + x.mode + (x.note && !x.auto ? ' · ' + x.note : ''), amt:-x.amt, ts:Number(String(x.id).replace(/\D/g, '').slice(0, 13)) || 0 }));
+    db.notes.filter(n => n.ty === 'cn' && n.pid === p.c).forEach(n => E.push({ d:n.date, k:'ret', txt:L('क्रेडिट नोट ', 'Credit note ') + n.no + ' · ' + n.n + ' ×' + fmtQty(n.q), amt:-(n.q * n.r), ts:n.ts || 0 }));
+  }
+  if(p.s){
+    db.purchases.filter(x => x.sid === p.s).forEach(x => E.push({ d:x.date, k:'purch', txt:L('ख़रीद · ', 'Purchase · ') + x.n + ' ' + fmtQty(x.q) + ' ' + uLabel(x.unit) + ' × ' + money(x.r), amt:-(x.q * x.r), ts:Number(String(x.id).replace(/\D/g, '').slice(0, 13)) || 0 }));
+    db.payments.filter(x => x.ty === 's' && x.pid === p.s).forEach(x => E.push({ d:x.date, k:'pay', txt:(x.amt > 0 ? L('पैसा दिया', 'Paid') : L('पैसा वापस मिला', 'Refund received')) + ' · ' + x.mode + (x.note && !x.auto ? ' · ' + x.note : ''), amt:x.amt, ts:Number(String(x.id).replace(/\D/g, '').slice(0, 13)) || 0 }));
+    db.notes.filter(n => n.ty === 'dn' && n.pid === p.s).forEach(n => E.push({ d:n.date, k:'ret', txt:L('डेबिट नोट ', 'Debit note ') + n.no + ' · ' + n.n + ' ×' + fmtQty(n.q), amt:n.q * n.r, ts:n.ts || 0 }));
+  }
+  return E.sort((a, b) => (a.d || '').localeCompare(b.d || '') || a.ts - b.ts);
+}
+const balTxt = v => Math.abs(v) < 0.005 ? money(0) : money(Math.abs(v)) + (v > 0 ? ' ' + L('लेना', 'Dr') : ' ' + L('देना', 'Cr'));
+function openStatement(ty, id){
+  const p = linkedParty(ty, id); if(!p.me) return;
+  openWin(`<h3>📄 ${L('PDF स्टेटमेंट', 'PDF statement')} · ${esc(p.me.name)}</h3>
+    <p class="hint2">${L('इस पार्टी से हुए सारे लेन-देन की PDF बनाकर किसी भी ऐप पर शेयर करें।', 'Make a PDF of all dealings with this party and share it to any app.')}</p>
+    ${rangeBox('fy')}
+    <div class="secT">✅ ${L('PDF में क्या-क्या हो', 'What to include')}</div>
+    ${p.c ? optBox('op_sale', true, L('बिक्री के बिल', 'Sale bills')) + optBox('op_lines', true, L('हर बिल का सामान (विवरण)', 'Items in each bill')) : ''}
+    ${p.s ? optBox('op_purch', true, L('ख़रीद', 'Purchases')) : ''}
+    ${optBox('op_pay', true, L('पैसा मिला / दिया (रसीद, भुगतान)', 'Money received / paid'))}
+    ${optBox('op_ret', true, L('वापसी (क्रेडिट / डेबिट नोट)', 'Returns (credit / debit notes)'))}
+    ${optBox('op_bal', true, L('हर लाइन के बाद बाक़ी रक़म', 'Running balance on each line'))}
+    <button class="green" style="margin-top:12px" onclick="makeStatement('${ty}','${id}')">📄 ${L('PDF बनाएँ', 'Make PDF')}</button>
+    <button class="gray" style="margin-top:12px" onclick="closePreview()">${t('close')}</button>
+    <div id="pdfOut"></div>`);
+}
+function makeStatement(ty, id){
+  const p = linkedParty(ty, id), r = getRange(), all = partyEntries(p);
+  const want = e => (e.k === 'sale' && chk('op_sale')) || (e.k === 'purch' && chk('op_purch')) || (e.k === 'pay' && chk('op_pay')) || (e.k === 'ret' && chk('op_ret'));
+  const showBal = chk('op_bal'), lines = chk('op_lines');
+  let bal = all.filter(e => r.f && (e.d || '') < r.f).reduce((a, e) => a + e.amt, 0);
+  const open = bal, rows = [];
+  const cols = showBal
+    ? [{ h:t('date'), w:.13 }, { h:L('विवरण', 'Particulars'), w:.42 }, { h:L('लेना (Dr)', 'Debit'), w:.14, a:'r' }, { h:L('देना (Cr)', 'Credit'), w:.14, a:'r' }, { h:L('बाक़ी', 'Balance'), w:.17, a:'r' }]
+    : [{ h:t('date'), w:.15 }, { h:L('विवरण', 'Particulars'), w:.53 }, { h:L('लेना (Dr)', 'Debit'), w:.16, a:'r' }, { h:L('देना (Cr)', 'Credit'), w:.16, a:'r' }];
+  if(r.f) rows.push({ c:['', L('पिछला बाक़ी (Opening)', 'Opening balance'), '', '', showBal ? balTxt(open) : ''].slice(0, cols.length), b:true, tone:'open' });
+  let dr = 0, cr = 0;
+  all.filter(e => inRange(e.d, r)).forEach(e => {
+    bal += e.amt;
+    if(!want(e)) return;
+    if(e.amt > 0) dr += e.amt; else cr += -e.amt;
+    const c = [fmtDate(e.d), e.txt, e.amt > 0 ? money(e.amt) : '', e.amt < 0 ? money(-e.amt) : ''];
+    if(showBal) c.push(balTxt(bal));
+    rows.push({ c, colors:[null, null, '#b45309', '#15803d', bal > 0.005 ? '#b91c1c' : '#15803d'] });
+    if(lines && e.lines) e.lines.forEach(l => rows.push({ sub:`• ${l.n}  ${fmtQty(l.q)} ${uLabel(l.unit)} × ${money(l.r)}${l.gst ? ' + GST ' + l.gst + '%' : ''} = ${money(l.q * l.r * (1 + (l.gst || 0) / 100))}` }));
+  });
+  const me = p.me, party = [me.name, [me.phone && '📞 ' + me.phone, me.gstin && 'GSTIN ' + me.gstin].filter(Boolean).join('   '), me.address || ''].filter(Boolean);
+  const doc = { title:L('खाता स्टेटमेंट', 'Account Statement'), period:rangeTxt(r), party, cols, rows,
+    summary:[...(r.f ? [[L('पिछला बाक़ी', 'Opening balance'), balTxt(open)]] : []), [L('कुल लेना (Dr)', 'Total debit'), money(dr)], [L('कुल देना (Cr)', 'Total credit'), money(cr)],
+      [bal > 0.005 ? L('आपसे लेना बाक़ी', 'Balance due from you') : bal < -0.005 ? L('आपको देना बाक़ी', 'Balance payable to you') : L('बाक़ी', 'Balance'), money(Math.abs(bal)), 'big']] };
+  makePdf(doc, `${me.name} statement ${r.f || 'start'} to ${r.t || today()}`);
+}
+
+/* ---------- Sales list and purchase list PDFs ---------- */
+function openListPdf(kind){
+  const sale = kind === 'sale';
+  openWin(`<h3>📄 ${sale ? L('बिक्री की सूची की PDF', 'Sales list PDF') : L('ख़रीद की सूची की PDF', 'Purchase list PDF')}</h3>
+    <p class="hint2">${L('पूरे महीने या साल की PDF बनाकर शेयर करें।', 'Make a PDF for a whole month or year and share it.')}</p>
+    ${rangeBox('month')}
+    <div class="secT">✅ ${L('PDF में क्या-क्या हो', 'What to include')}</div>
+    ${sale ? optBox('op_lines', false, L('हर बिल का सामान (विवरण)', 'Items in each bill')) + optBox('op_status', true, L('पेड / पेंडिंग स्थिति', 'Paid / pending status')) : optBox('op_rate', true, L('रेट और मात्रा', 'Rate and quantity'))}
+    <button class="green" style="margin-top:12px" onclick="makeListPdf('${kind}')">📄 ${L('PDF बनाएँ', 'Make PDF')}</button>
+    <button class="gray" style="margin-top:12px" onclick="closePreview()">${t('close')}</button>
+    <div id="pdfOut"></div>`);
+}
+function makeListPdf(kind){
+  const r = getRange(), rows = [];
+  if(kind === 'sale'){
+    const list = db.invoices.filter(i => inRange(i.cd, r)).sort((a, b) => (a.cd || '').localeCompare(b.cd || '') || (a.ts || 0) - (b.ts || 0));
+    const st = chk('op_status'), lines = chk('op_lines');
+    const cols = [{ h:t('date'), w:.12 }, { h:t('billNo'), w:.15 }, { h:L('ग्राहक', 'Customer'), w:st ? .25 : .33 }, { h:L('GST से पहले', 'Taxable'), w:.16, a:'r' }, { h:'GST', w:.12, a:'r' }, { h:t('total'), w:st ? .12 : .12, a:'r' }];
+    if(st) cols.push({ h:L('स्थिति', 'Status'), w:.08 });
+    let sub = 0, gst = 0, tot = 0, paid = 0;
+    list.forEach(i => {
+      const x = totals(i); sub += x.sub; gst += x.gstAmt; tot += x.total; if(i.paid) paid += x.total;
+      const c = [fmtDate(i.cd), i.no, i.cn, money(x.sub), money(x.gstAmt), money(x.total)];
+      if(st) c.push(i.paid ? L('पेड', 'Paid') : L('बाक़ी', 'Due'));
+      rows.push({ c, colors:[null, null, null, null, null, null, i.paid ? '#15803d' : '#b91c1c'] });
+      if(lines) i.lines.forEach(l => rows.push({ sub:`• ${l.n}  ${fmtQty(l.q)} ${uLabel(l.unit)} × ${money(l.r)}${l.gst ? ' + GST ' + l.gst + '%' : ''}` }));
+    });
+    makePdf({ title:L('बिक्री की सूची', 'Sales Register'), period:rangeTxt(r), cols, rows,
+      summary:[[L('कुल बिल', 'Total bills'), String(list.length)], [L('GST से पहले', 'Taxable value'), money(sub)], ['GST', money(gst)],
+        [L('पैसा मिला', 'Received'), money(paid), 'green'], [L('बाक़ी', 'Pending'), money(tot - paid), 'red'], [L('कुल बिक्री', 'Total sales'), money(tot), 'big']] },
+      `Sales ${r.f || 'start'} to ${r.t || today()}`);
+  } else {
+    const list = db.purchases.filter(p => inRange(p.date, r)).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+    const rq = chk('op_rate');
+    const cols = rq ? [{ h:t('date'), w:.13 }, { h:L('सप्लायर', 'Supplier'), w:.25 }, { h:t('desc'), w:.25 }, { h:t('qty'), w:.12, a:'r' }, { h:t('rate'), w:.11, a:'r' }, { h:L('रक़म', 'Amount'), w:.14, a:'r' }]
+                    : [{ h:t('date'), w:.15 }, { h:L('सप्लायर', 'Supplier'), w:.33 }, { h:t('desc'), w:.34 }, { h:L('रक़म', 'Amount'), w:.18, a:'r' }];
+    let tot = 0;
+    list.forEach(p => { const a = p.q * p.r; tot += a;
+      rows.push({ c:rq ? [fmtDate(p.date), p.supplier, p.n, fmtQty(p.q) + ' ' + uLabel(p.unit), money(p.r), money(a)] : [fmtDate(p.date), p.supplier, p.n, money(a)] }); });
+    makePdf({ title:L('ख़रीद की सूची', 'Purchase Register'), period:rangeTxt(r), cols, rows,
+      summary:[[L('कुल एंट्री', 'Total entries'), String(list.length)], [L('कुल ख़रीद', 'Total purchases'), money(tot), 'big']] },
+      `Purchases ${r.f || 'start'} to ${r.t || today()}`);
+  }
+}
+
+db.settings.lang = 'en'; /* the app always opens in English; Hindi can be picked from the top-right box */
 save();
 applyLang();
+fitHeader();
+setMenu((() => { try{ return localStorage.getItem('be_menu') !== '0'; }catch(e){ return true; } })());
 loadDraft();
 try{ history.replaceState({ tab:'new' }, ''); }catch(e){}
 showTab('new', true);
